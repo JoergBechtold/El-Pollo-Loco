@@ -27,8 +27,6 @@ class Character extends MovableObject {
             this.img = this.imageCache[path];
             this.currentImage++;
         },100);
-
-      
     }
 
     jump(){
