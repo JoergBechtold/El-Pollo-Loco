@@ -4,10 +4,8 @@ class Character extends MovableObject {
     y = 155;
     speed = 10;
     world;
-    idleTimeout;
-    longIdleInterval;
-    longIdleIndex = 0;
-    
+    walkin_sound = new Audio('audio/running.mp3');
+   
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -15,6 +13,18 @@ class Character extends MovableObject {
         'img/2_character_pepe/2_walk/W-24.png',
         'img/2_character_pepe/2_walk/W-25.png',
         'img/2_character_pepe/2_walk/W-26.png'
+     ];
+
+     IMAGES_JUMPING = [
+        'img/2_character_pepe/3_jump/J-31.png',
+        'img/2_character_pepe/3_jump/J-32.png',
+        'img/2_character_pepe/3_jump/J-33.png',
+        'img/2_character_pepe/3_jump/J-34.png',
+        'img/2_character_pepe/3_jump/J-35.png',
+        'img/2_character_pepe/3_jump/J-36.png',
+        'img/2_character_pepe/3_jump/J-37.png',
+        'img/2_character_pepe/3_jump/J-38.png',
+        'img/2_character_pepe/3_jump/J-39.png'
      ];
 
      IMAGES_IDLE = [
@@ -49,55 +59,51 @@ class Character extends MovableObject {
         // super().loadImage('img/2_character_pepe/2_walk/W-21.png')
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png')
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
+        this.applyGravity();
         this.animate();
-        this.resetIdleTimer();
     }
 
-    resetIdleTimer = () => {
-        clearTimeout(this.idleTimeout);
-        clearInterval(this.longIdleInterval);
-        this.longIdleIndex = 0;
-        this.idleTimeout = setTimeout(this.playLongIdle.bind(this), 4000);
-    };
-
-    playLongIdle = () => {
-        this.longIdleInterval = setInterval(() => {
-            this.playAnimationOnce(this.IMAGES_LONG_IDLE, this.longIdleIndex);
-            this.longIdleIndex = (this.longIdleIndex + 1) % this.IMAGES_LONG_IDLE.length;
-        }, 500);
-    };
-
+   
     animate(){
 
         setInterval(() => {
             if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x){
                 this.x += this.speed;
                 this.otherDirection = false;
-                this.resetIdleTimer();
+                
             }
 
             if(this.world.keyboard.LEFT && this.x > 0){
                 this.x -= this.speed;
-                this.otherDirection = true;
-                this.resetIdleTimer();
-            } else {
-                this.resetIdleTimer(); 
+                this.otherDirection = true; 
             } 
+
+            
+            if(this.world.keyboard.UP){
+                this.speedY = 20;
+
+            }
 
             this.world.camera_x = -this.x + 100;
         },1000 / 60);
        
 
         setInterval( () => {
-           if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT){
-             this.playAnimation(this.IMAGES_WALKING);
-           } else {
-            this.loadImage(this.IMAGES_IDLE[0])
-           }
+            if(this.isAboceGround()){
+                this.playAnimation(this.IMAGES_JUMPING);
+            } else {
+                if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT){
+                    this.playAnimation(this.IMAGES_WALKING);
+                  } else {
+                   this.loadImage(this.IMAGES_IDLE[0])
+                  }
+            }
         },50);
     }
+
 
     jump(){
 
