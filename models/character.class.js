@@ -90,11 +90,8 @@ class Character extends MovableObject {
         },1000 / 60);
        
 
-
-
         setInterval( () => {
            if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT){
-            //Walk animation
              this.playAnimation(this.IMAGES_WALKING);
            } else {
             this.loadImage(this.IMAGES_IDLE[0])
