@@ -40,4 +40,6 @@ class MovableObject {
         this.img = this.imageCache[path];
         this.currentImage++;
     }
+
+    
 }
