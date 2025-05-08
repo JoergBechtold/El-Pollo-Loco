@@ -5,7 +5,7 @@ class World {
   ctx;
   keyboard;
   camera_x = 0;
-
+  
 
     constructor(canvas, keyboard){
      this.ctx = canvas.getContext('2d');
@@ -13,10 +13,25 @@ class World {
      this.keyboard = keyboard;
      this.draw();
      this.setWorld();
+     this.checkCollisions();
     }
 
   setWorld(){
     this.character.world = this;
+  }
+
+  checkCollisions(){
+    setInterval(() => {
+      this.level.enemies.forEach( (enemy) => {
+       if (this.character.isColliding(enemy)) {
+        this.character.hit();
+        console.log('Current Energy', this.character.energy);
+        
+        
+       }
+
+      })
+    }, 200);
   }
 
   draw(){
@@ -49,7 +64,10 @@ class World {
       this.flipImage(movableObject);
     }
 
-    this.ctx.drawImage(movableObject.img, movableObject.x, movableObject.y, movableObject.width, movableObject.height);
+    movableObject.draw(this.ctx)
+    movableObject.drawFrame(this.ctx)
+    // movableObject.drawRedFrame(this.ctx)
+
 
     if(movableObject.otherDirection){
       this.flipImageBack(movableObject);

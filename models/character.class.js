@@ -5,6 +5,12 @@ class Character extends MovableObject {
     speed = 10;
     world;
     walkin_sound = new Audio('audio/running.mp3');
+    offset = {
+        top:120,
+        left:30,
+        right:40,
+        bottom:30
+      };
    
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -53,18 +59,44 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-20.png'
      ];
 
-     
-      
+     IMAGES_DEAD = [
+        'img/2_character_pepe/5_dead/D-51.png',
+        'img/2_character_pepe/5_dead/D-52.png',
+        'img/2_character_pepe/5_dead/D-53.png',
+        'img/2_character_pepe/5_dead/D-54.png',
+        'img/2_character_pepe/5_dead/D-55.png',
+        'img/2_character_pepe/5_dead/D-56.png',
+        'img/2_character_pepe/5_dead/D-57.png'
+     ]
+
+     IMAGES_HURT = [
+        'img/2_character_pepe/4_hurt/H-41.png',
+        'img/2_character_pepe/4_hurt/H-42.png',
+        'img/2_character_pepe/4_hurt/H-43.png'
+     ]
+
     constructor(){
         // super().loadImage('img/2_character_pepe/2_walk/W-21.png')
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png')
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.applyGravity();
         this.animate();
     }
+
+    // drawRedFrame(ctx){
+    //     if(this instanceof Character || this instanceof Chicken || this instanceof Endboss){
+    //         ctx.beginPath();
+    //         ctx.lineWidth = '5';
+    //         ctx.strokeStyle = 'red';
+    //         ctx.rect(this.offset.left, this.offset.bottom);
+    //         ctx.stroke();
+    //     }
+    // }
 
    
     animate(){
@@ -94,16 +126,18 @@ class Character extends MovableObject {
        
 
         setInterval( () => {
-            if(this.isAboceGround()){
+            if(this.isDead()){
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if(this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            } else if(this.isAboceGround()){
                 this.playAnimation(this.IMAGES_JUMPING);
+            } else if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT){
+                this.playAnimation(this.IMAGES_WALKING);
             } else {
-                if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT){
-                    this.playAnimation(this.IMAGES_WALKING);
-                  } else {
-                   this.loadImage(this.IMAGES_IDLE[0])
-                  }
+                this.loadImage(this.IMAGES_IDLE[0]);
             }
-        },50);
+        }, 50);
     }
   
 } 
