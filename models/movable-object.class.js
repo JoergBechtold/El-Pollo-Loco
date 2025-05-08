@@ -1,11 +1,4 @@
-class MovableObject {
-    x = 120;
-    y = 280;
-    height = 150;
-    width = 100;    
-    img;
-    imageCache = {};
-    currentImage = 0;
+class MovableObject extends DrawableObject {   
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -52,16 +45,6 @@ class MovableObject {
 
     }
 
-
-    loadImage(path){
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-    draw(ctx){
-     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
     drawFrame(ctx){
         // instanceof ist dafür das es nur für die klassen angewendet wird
         if(this instanceof Character || this instanceof Chicken || this instanceof Endboss){
@@ -73,7 +56,6 @@ class MovableObject {
         }
     }
 
-   
     // isColliding(chicken) beispiel
     isColliding(movableObject){
         return this.x + this.width > movableObject.x &&
@@ -87,14 +69,6 @@ class MovableObject {
         this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
         this.x + this.offset.left < movableObject.x + movableObject.width - movableObject.offset.right &&
         this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom;
-    }
-
-    loadImages(array){
-       array.forEach((path) => {
-        let img = new Image();
-        img.src = path;
-        this.imageCache[path] = img;
-       });
     }
 
     moveRight() {
