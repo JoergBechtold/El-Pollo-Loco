@@ -22,12 +22,12 @@ h1{
 
 canvas{
     background-color: black;
-border-radius: 16px;
-box-shadow:
-    4px 0 4px rgba(0, 0, 0, 0.5),   /* Rechter Schatten */
-    -4px 0 4px rgba(0, 0, 0, 0.5),  /* Linker Schatten */
-    0 4px 4px rgba(0, 0, 0, 0.5),   /* Unterer Schatten */
-    0 -4px 4px rgba(0, 0, 0, 0.5);  /* Oberer Schatten */
+    border-radius: 16px;
+    box-shadow:
+      4px 0 4px rgba(0, 0, 0, 0.5),   /* Rechter Schatten */
+      -4px 0 4px rgba(0, 0, 0, 0.5),  /* Linker Schatten */
+      0 4px 4px rgba(0, 0, 0, 0.5),   /* Unterer Schatten */
+      0 -4px 4px rgba(0, 0, 0, 0.5);  /* Oberer Schatten */
 }
 
 /* maiden-orange-regular - latin */
