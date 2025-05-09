@@ -50,12 +50,12 @@ class MovableObject extends DrawableObject {
     }
 
     // isColliding(chicken) beispiel
-    isColliding(movableObject){
-        return this.x + this.width > movableObject.x &&
-        this.y + this.height > movableObject.y &&
-        this.x < movableObject.x +movableObject.width &&
-        this.y < movableObject.y + movableObject.height;
-    }
+    // isColliding(movableObject){
+    //     return this.x + this.width > movableObject.x &&
+    //     this.y + this.height > movableObject.y &&
+    //     this.x < movableObject.x +movableObject.width &&
+    //     this.y < movableObject.y + movableObject.height;
+    // }
 
     isColliding(movableObject){
         return this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&

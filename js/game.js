@@ -1,7 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let walkin_sound = new Audio('audio/running.mp3');
+let walkin_sound = new Audio('assets/audio/running.mp3');
 
 
 function init(){

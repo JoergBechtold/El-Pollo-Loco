@@ -1,11 +1,40 @@
 body{
-    height: 100dvh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-family: 'Maiden Orange';
+    margin: 0;
+    background-image: url(assets/img/body_background/1.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+}
+
+h1{
+    font-size: 54px;
+    letter-spacing: 2px;
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+    
 }
 
 canvas{
     background-color: black;
+border-radius: 16px;
+box-shadow:
+    4px 0 4px rgba(0, 0, 0, 0.5),   /* Rechter Schatten */
+    -4px 0 4px rgba(0, 0, 0, 0.5),  /* Linker Schatten */
+    0 4px 4px rgba(0, 0, 0, 0.5),   /* Unterer Schatten */
+    0 -4px 4px rgba(0, 0, 0, 0.5);  /* Oberer Schatten */
+}
+
+/* maiden-orange-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Maiden Orange';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../assets/fonts/maiden-orange-v30-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
