@@ -32,10 +32,10 @@ class World {
   checkThrowBottles(){
     setInterval(() => {
       if(this.keyboard.D){
-      let bottle = new Bottles(this.character.x + 80, this.character.y + 130);
+      let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
       this.bottles.push(bottle); 
     }
-    }, 800);
+    }, 1000);
   }
 
   checkCollisions(){
