@@ -14,15 +14,19 @@ class MovableObject extends DrawableObject {
 
     applyGravity(){
         setInterval(() => {
-            if(this.isAboceGround() || this.speedY > 0){
+            if(this.isAboveGround() || this.speedY > 0){
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
         },1000 / 25);
     }
 
-    isAboceGround(){
-        return this.y < 155;
+    isAboveGround(){
+       if(this instanceof Bottles){
+        return true;
+       } else {
+         return this.y < 155;
+       }
     }
 
     hit(){
