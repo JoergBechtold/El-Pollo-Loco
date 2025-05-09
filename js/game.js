@@ -17,7 +17,7 @@ window.addEventListener('keydown', (event) => {
 
     if (event.keyCode == 37) {
         keyboard.LEFT = true;
-        walkin_sound.play();
+        // walkin_sound.play();
     }
 
     if (event.keyCode == 38) {
@@ -26,7 +26,7 @@ window.addEventListener('keydown', (event) => {
 
     if (event.keyCode == 39) {
         keyboard.RIGHT = true;
-        walkin_sound.play();
+        // walkin_sound.play();
     }
 
     if (event.keyCode == 40) {
