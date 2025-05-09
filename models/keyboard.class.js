@@ -1,4 +1,4 @@
-class Keyboard{
+class Keyboard {
     LEFT = false;
     RIGHT = false;
     SPACE = false;
@@ -7,9 +7,9 @@ class Keyboard{
     D = false;
 
 
-constructor(){
+    constructor() {
 
-}
+    }
 
 
 }

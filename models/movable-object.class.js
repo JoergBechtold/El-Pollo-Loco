@@ -1,4 +1,4 @@
-class MovableObject extends DrawableObject {   
+class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -6,43 +6,43 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
     offset = {
-        top:0,
-        left:0,
-        right:0,
-        bottom:0
-      };
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    };
 
-    applyGravity(){
+    applyGravity() {
         setInterval(() => {
-            if(this.isAboveGround() || this.speedY > 0){
+            if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-        },1000 / 25);
+        }, 1000 / 25);
     }
 
-    isAboveGround(){
-       if(this instanceof ThrowableObject){
-        return true;
-       } else {
-         return this.y < 155;
-       }
+    isAboveGround() {
+        if (this instanceof ThrowableObject) {
+            return true;
+        } else {
+            return this.y < 155;
+        }
     }
 
-    hit(){
+    hit() {
         this.energy -= 5;
-        if(this.energy < 0){
+        if (this.energy < 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
         }
     }
 
-    isDead(){
+    isDead() {
         return this.energy == 0;
     }
 
-    isHurt(){
+    isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
         return timepassed < 0.4;
@@ -57,29 +57,29 @@ class MovableObject extends DrawableObject {
     //     this.y < movableObject.y + movableObject.height;
     // }
 
-    isColliding(movableObject){
+    isColliding(movableObject) {
         return this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&
-        this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
-        this.x + this.offset.left < movableObject.x + movableObject.width - movableObject.offset.right &&
-        this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom;
+            this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
+            this.x + this.offset.left < movableObject.x + movableObject.width - movableObject.offset.right &&
+            this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom;
     }
 
     moveRight() {
         this.x += this.speed;
     }
 
-    moveLeft(){
+    moveLeft() {
         this.x -= this.speed;
     }
 
-    playAnimation(images){
+    playAnimation(images) {
         let index = this.currentImage % images.length; // modulo let index = 0 % 6;
         let path = images[index];
         this.img = this.imageCache[path];
         this.currentImage++;
     }
 
-    jump(){
+    jump() {
         this.speedY = 25;
 
     }
