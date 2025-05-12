@@ -25,7 +25,7 @@ class World {
 
   allwaysExecuted() {
     setInterval(() => {
-      this.checkCollisions();
+      // this.checkCollisions();
       this.checkThrowBottles();
     }, 200);
   }
@@ -61,7 +61,7 @@ class World {
     this.ctx.translate(this.camera_x, 0);
 
     this.addToMap(this.character);
-    this.addObjectsToMap(this.level.enemies);
+    // this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.bottles);
 
     this.ctx.translate(-this.camera_x, 0);

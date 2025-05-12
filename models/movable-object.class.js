@@ -49,14 +49,6 @@ class MovableObject extends DrawableObject {
 
     }
 
-    // isColliding(chicken) beispiel
-    // isColliding(movableObject){
-    //     return this.x + this.width > movableObject.x &&
-    //     this.y + this.height > movableObject.y &&
-    //     this.x < movableObject.x +movableObject.width &&
-    //     this.y < movableObject.y + movableObject.height;
-    // }
-
     isColliding(movableObject) {
         return this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&
             this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
@@ -71,6 +63,8 @@ class MovableObject extends DrawableObject {
     moveLeft() {
         this.x -= this.speed;
     }
+
+
 
     playAnimation(images) {
         let index = this.currentImage % images.length; // modulo let index = 0 % 6;
