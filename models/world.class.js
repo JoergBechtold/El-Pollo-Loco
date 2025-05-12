@@ -84,8 +84,8 @@ class World {
     }
 
     movableObject.draw(this.ctx)
-    movableObject.drawFrame(this.ctx)
-    // movableObject.drawRedFrame(this.ctx)
+    movableObject.drawBlueFrame(this.ctx)
+    movableObject.drawRedFrame(this.ctx)
 
 
     if (movableObject.otherDirection) {
