@@ -1,8 +1,8 @@
 class Level {
-    // barrel;
     enemies;
     clouds;
     backgroundObjects;
+    // barrel;
     level_end_x = 2150;
 
 

@@ -38,16 +38,17 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    isDead() {
-        return this.energy == 0;
-    }
-
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
         return timepassed < 0.4;
 
     }
+
+    isDead() {
+        return this.energy == 0;
+    }
+
 
     isColliding(movableObject) {
         return this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&

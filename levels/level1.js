@@ -10,9 +10,9 @@ const level1 = new Level(
   ],
 
   // [
-  //   new Barrel('assets/img/wooden_barrel_final_cleaned.png'),
-  //   new Barrel('assets/img/wooden_barrel_final_cleaned.png'),
-  //   new Barrel('assets/img/wooden_barrel_final_cleaned.png')
+  //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 50),
+  //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 150),
+  //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 100)
   // ],
 
 

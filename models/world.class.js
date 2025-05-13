@@ -6,6 +6,8 @@ class World {
   keyboard;
   camera_x = 0;
   statusBar = new StatusBar();
+  lastThrow = 0;
+  throwInterval = 500;
   bottles = [];
 
 
@@ -30,95 +32,19 @@ class World {
     }, 200);
   }
 
-  // checkThrowBottles() {
-  //   setTimeout(() => {
-  //     if (this.keyboard.D) {
-  //       let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
-  //       this.bottles.push(bottle);
-
-  //     }
-  //   }, 3000);
-  // }
-
   checkThrowBottles() {
-    let canThrowDown = true;
-    let canThrowUp = true;
+    if (this.keyboard.D) {
+      let currentTime = new Date().getTime();
+      let timeSinceLastThrow = currentTime - this.lastThrow;
 
 
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'd' && canThrowDown && !e.repeat) {
-        canThrowDown = false;
+      if (timeSinceLastThrow >= this.throwInterval) {
         let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
         this.bottles.push(bottle);
-
-        setTimeout(() => {
-          canThrowDown = true;
-          console.log('keydown');
-
-        }, 2000);
+        this.lastThrow = currentTime;
       }
-    })
-
-    // window.addEventListener('keyup', (e) => {
-    //   if (e.key === 'd' && canThrowUp) {
-    //     canThrowUp = false;
-    //     let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
-    //     this.bottles.push(bottle);
-
-    //     setTimeout(() => {
-    //       canThrowUp = true;
-    //       console.log('keyup');
-
-
-    //     }, 2000);
-    //   }
-
-    // })
+    }
   }
-
-
-
-
-
-
-
-
-
-
-  // checkThrowBottles() {
-  //   let start = new Date().getTime();
-  //   setInterval(() => {
-  //     let currentTime = new Date().getTime();
-  //     let delta = currentTime - start;
-  //     if (this.keyboard.D && delta > 3000) {
-  //       let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
-  //       this.bottles.push(bottle);
-  //       start = new Date().getTime();
-  //     }
-  //   }, 1000);
-  // }
-
-
-
-
-
-
-  // checkThrowBottles() {
-  //   let start = new Date().getTime();
-  //   setInterval(() => {
-  //     let currentTime = new Date().getTime();
-  //     let delta = currentTime - start;
-  //     if (delta > 1000) {
-  //       if (this.keyboard.D && delta > 500) {
-  //         let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
-  //         this.bottles.push(bottle);
-  //         start = new Date().getTime();
-  //       }
-  //     }
-
-  //   }, 100);
-  // }
-
 
 
   checkCollisions() {
@@ -136,6 +62,7 @@ class World {
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
+    // this.addObjectsToMap(this.level.barrel);
 
     this.ctx.translate(-this.camera_x, 0);
     // ------------Space for fixed objects-----------
@@ -169,6 +96,7 @@ class World {
     movableObject.draw(this.ctx)
     movableObject.drawBlueFrame(this.ctx)
     movableObject.drawRedFrame(this.ctx)
+
 
 
     if (movableObject.otherDirection) {
