@@ -8,8 +8,8 @@ class Character extends MovableObject {
     jump_sound = new Audio('assets/audio/jump.ogg');
     landing_sound = new Audio('assets/audio/landing.mp3');
     hurt_sound = new Audio('assets/audio/short-oww-46070.mp3');
-    isJumping = false;
-    isPlaying = false;
+    // isJumping = false;
+    // isPlaying = false;
 
     offset = {
         top: 120,
@@ -81,6 +81,8 @@ class Character extends MovableObject {
         'assets/img/2_character_pepe/4_hurt/H-43.png'
     ]
 
+
+
     constructor() {
         // super().loadImage('assets/img/2_character_pepe/2_walk/W-21.png')
         super().loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png')
@@ -90,20 +92,10 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
+        // this.loadImages(this.IMAGES_BOTTLES);
         this.applyGravity();
         this.animate();
     }
-
-    // drawRedFrame(ctx){
-    //     if(this instanceof Character || this instanceof Chicken || this instanceof Endboss){
-    //         ctx.beginPath();
-    //         ctx.lineWidth = '5';
-    //         ctx.strokeStyle = 'red';
-    //         ctx.rect(this.offset.left, this.offset.bottom);
-    //         ctx.stroke();
-    //     }
-    // }
-
 
     animate() {
         setInterval(() => {
@@ -156,7 +148,8 @@ class Character extends MovableObject {
             } else if (this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
                 this.playAnimation(this.IMAGES_WALKING);
             } else {
-                this.loadImage(this.IMAGES_IDLE[0]);
+                this.playAnimation(this.IMAGES_IDLE);
+
             }
         }, 50);
 

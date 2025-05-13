@@ -30,14 +30,96 @@ class World {
     }, 200);
   }
 
+  // checkThrowBottles() {
+  //   setTimeout(() => {
+  //     if (this.keyboard.D) {
+  //       let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
+  //       this.bottles.push(bottle);
+
+  //     }
+  //   }, 3000);
+  // }
+
   checkThrowBottles() {
-    setInterval(() => {
-      if (this.keyboard.D) {
+    let canThrowDown = true;
+    let canThrowUp = true;
+
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'd' && canThrowDown && !e.repeat) {
+        canThrowDown = false;
         let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
         this.bottles.push(bottle);
+
+        setTimeout(() => {
+          canThrowDown = true;
+          console.log('keydown');
+
+        }, 2000);
       }
-    }, 1000);
+    })
+
+    // window.addEventListener('keyup', (e) => {
+    //   if (e.key === 'd' && canThrowUp) {
+    //     canThrowUp = false;
+    //     let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
+    //     this.bottles.push(bottle);
+
+    //     setTimeout(() => {
+    //       canThrowUp = true;
+    //       console.log('keyup');
+
+
+    //     }, 2000);
+    //   }
+
+    // })
   }
+
+
+
+
+
+
+
+
+
+
+  // checkThrowBottles() {
+  //   let start = new Date().getTime();
+  //   setInterval(() => {
+  //     let currentTime = new Date().getTime();
+  //     let delta = currentTime - start;
+  //     if (this.keyboard.D && delta > 3000) {
+  //       let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
+  //       this.bottles.push(bottle);
+  //       start = new Date().getTime();
+  //     }
+  //   }, 1000);
+  // }
+
+
+
+
+
+
+  // checkThrowBottles() {
+  //   let start = new Date().getTime();
+  //   setInterval(() => {
+  //     let currentTime = new Date().getTime();
+  //     let delta = currentTime - start;
+  //     if (delta > 1000) {
+  //       if (this.keyboard.D && delta > 500) {
+  //         let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
+  //         this.bottles.push(bottle);
+  //         start = new Date().getTime();
+  //       }
+  //     }
+
+  //   }, 100);
+  // }
+
+
 
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
@@ -61,6 +143,7 @@ class World {
     this.ctx.translate(this.camera_x, 0);
 
     this.addToMap(this.character);
+
     // this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.bottles);
 

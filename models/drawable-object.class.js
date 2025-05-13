@@ -7,9 +7,12 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
 
+
+
     constructor() {
 
     }
+
 
     drawBlueFrame(ctx) {
         if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof ThrowableObject) {
@@ -31,6 +34,8 @@ class DrawableObject {
             ctx.stroke();
         }
     }
+
+
 
     loadImage(path) {
         this.img = new Image();
