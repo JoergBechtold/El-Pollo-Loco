@@ -6,6 +6,8 @@ let walkin_sound = new Audio('assets/audio/running.mp3');
 let start_screen_sound = new Audio('assets/audio/beginning-2.mp3');
 start_screen_sound.volume = 0.6;
 
+
+
 function menuScreen() {
     let startScreenRef = document.getElementById('start_screen');
     let menuScreenRef = document.getElementById('menu_screen');
@@ -36,10 +38,10 @@ function startGame() {
 function soundToggle() {
     if (isMuted) {
         isMuted = false;
-        setPropertiesSoundToggle(1, 'assets/icons/Audio-on.png', 'Audio On', 'Icon audio on', 'Mute Menu Music')
+        setPropertiesSoundToggle(1, 'assets/icons/Audio-on.png', 'Musik an', 'Icon audio an', 'Menü Musik aus')
     } else {
         isMuted = true;
-        setPropertiesSoundToggle(0, 'assets/icons/Audio-mute.png', 'Audio Off', 'Icon audio off', 'Unmute Menu Music')
+        setPropertiesSoundToggle(0, 'assets/icons/Audio-mute.png', 'Musik aus', 'Icon audio aus', 'Menü Musik an')
     }
 }
 

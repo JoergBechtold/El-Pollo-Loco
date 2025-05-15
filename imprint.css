@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  font-family: 'Maiden Orange';
+}
+
+.body-imprint {
+  min-height: 100dvh;
+  width: 100%;
+  background-image: url('assets/img/body_background/1.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  position: relative;
+}
+
+main {
+  padding-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  justify-content: center;
+  width: 50%;
+}
+
+p {
+  font-size: 28px;
+}
+
+.arrow-back {
+  position: absolute;
+  top: 35px;
+  left: 45px;
+  width: 80px;
+  aspect-ratio: 1 / 1;
+  animation: arrow-animation 1s infinite;
+}
+
+@keyframes arrow-animation {
+  from {
+    scale: 1;
+  }
+
+  to {
+    scale: 1.1;
+  }
+}
+
+.arrow-back img {
+  width: 100%;
+  cursor: pointer;
+}

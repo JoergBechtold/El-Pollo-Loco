@@ -23,33 +23,23 @@
     <!-- <script src="models/barrel.class.js"></script> -->
     <script src="models/level.class.js"></script>
     <script src="levels/level1.js"></script>
+    <script src="script.js"></script>
     <script src="js/game.js"></script>
   </head>
-  <body>
-    <!-- <div class="start-screen" id="start_screen">
-      <button class="btn-start-screen" onclick="menuScreen()">MENU</button>
-    </div>
-
-    <div class="menu-screen" id="menu_screen">
-      <nav class="menu-nav">
-        <button title="Start Game" class="btn-menu-screen" onclick="startGame()">Start Game</button>
-        <a title="Imprint" href="#">Impint</a>
-        <img title="Audio On" src="assets/icons/Audio-on.png" alt="Icon audio on" />
-      </nav>
-    </div> -->
+  <body class="body-index">
     <div class="start-screen" id="start_screen">
       <nav class="start-nav">
-        <button title="Menu" class="btn-start-screen" onclick="menuScreen()">Menu</button>
-        <button title="Pmprint" class="btn-start-screen">Imprint</button>
+        <button title="Menü" class="btn-start-screen" onclick="menuScreen()">Menü</button>
+        <button title="Impressum" class="btn-start-screen" onclick="goToUrl('../imprint.html')">Impressum</button>
         <div onclick="soundToggle()" class="sound-box" id="sound_box">
-          <img id="sound_box_img" title="Audio On" src="assets/icons/Audio-on.png" alt="Icon audio on" />
-          <span id="sound_box_span">Mute Menu Music</span>
+          <img id="sound_box_img" title="Musik an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
+          <span id="sound_box_span">Menü Musik aus</span>
         </div>
       </nav>
     </div>
 
     <div class="menu-screen" id="menu_screen">
-      <button class="btn-menu-screen" onclick="startGame()">Start Game</button>
+      <button class="btn-menu-screen" onclick="startGame()">Spiel Starten</button>
     </div>
 
     <div class="play-screen" id="play_screen">
