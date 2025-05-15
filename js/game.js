@@ -38,10 +38,10 @@ function startGame() {
 function soundToggle() {
     if (isMuted) {
         isMuted = false;
-        setPropertiesSoundToggle(1, 'assets/icons/Audio-on.png', 'Musik an', 'Icon audio an', 'Menü Musik aus')
+        setPropertiesSoundToggle(1, 'assets/icons/Audio-on.png', 'Musik aus', 'Icon audio an', 'Menü Musik an')
     } else {
         isMuted = true;
-        setPropertiesSoundToggle(0, 'assets/icons/Audio-mute.png', 'Musik aus', 'Icon audio aus', 'Menü Musik an')
+        setPropertiesSoundToggle(0, 'assets/icons/Audio-mute.png', 'Musik an', 'Icon audio aus', 'Menü Musik aus')
     }
 }
 

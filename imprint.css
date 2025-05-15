@@ -23,6 +23,8 @@ main {
   align-self: flex-start;
   justify-content: center;
   width: 50%;
+  text-align: center;
+  gap: 15px;
 }
 
 p {
