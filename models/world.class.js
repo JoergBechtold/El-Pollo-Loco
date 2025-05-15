@@ -68,7 +68,6 @@ class World {
 
     this.ctx.translate(-this.camera_x, 0);
     // ------------Space for fixed objects-----------
-    // this.addToMap(this.statusBar);
     this.addToMap(this.statusBarHealth);
     this.addToMap(this.statusBarCoins);
     this.addToMap(this.statusBarBottles);
@@ -78,6 +77,7 @@ class World {
 
     // this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.bottles);
+
 
     this.ctx.translate(-this.camera_x, 0);
 

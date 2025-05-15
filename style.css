@@ -1,15 +1,12 @@
 body {
   min-height: 100dvh;
-  display: flex;
+  display: block;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
   justify-content: center;
   font-family: 'Maiden Orange';
   margin: 0;
-  background-image: url(assets/img/body_background/1.jpg);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
   width: 100%;
 }
 
@@ -19,10 +16,98 @@ h1 {
   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
+button {
+  cursor: pointer;
+}
+
 canvas {
   background-color: black;
   border-radius: 16px;
   box-shadow: 4px 0 4px rgba(0, 0, 0, 0.5), -4px 0 4px rgba(0, 0, 0, 0.5), 0 4px 4px rgba(0, 0, 0, 0.5), 0 -4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.start-screen {
+  height: 100dvh;
+  width: 100%;
+  background-image: url('assets/img/9_intro_outro_screens/start/startscreen_1.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* position: relative; */
+}
+
+.start-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 100px;
+  height: 80px;
+  width: 100%;
+  gap: 25px;
+}
+
+.start-nav button {
+  height: 100%;
+}
+
+.sound-box {
+  width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.sound-box span {
+  font-size: 18px;
+}
+
+.sound-box img {
+  width: 90px;
+  aspect-ratio: 1 / 1;
+}
+
+.btn-start-screen {
+  font-size: 48px;
+  padding: 10px;
+}
+
+.menu-screen {
+  display: none;
+  background-image: url('assets/img/body_background/1.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  width: 100%;
+}
+
+.play-screen {
+  background-image: url('assets/img/body_background/1.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.play-screen {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  width: 100%;
+}
+.d-none {
+  display: none;
+}
+
+.d-flex {
+  display: flex;
 }
 
 /* maiden-orange-regular - latin */

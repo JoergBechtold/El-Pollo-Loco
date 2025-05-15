@@ -6,6 +6,9 @@
     <meta name="google" content="notranslate" />
     <title>El Pollo Loco</title>
 
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="assets/icons/favicon.ico" type="image/x-icon" />
+
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/cloud.class.js"></script>
@@ -21,13 +24,45 @@
     <script src="models/level.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
-
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" href="assets/icons/favicon.ico" type="image/x-icon" />
   </head>
-  <body onload="init()">
-    <h1>El Pollo Loco</h1>
+  <body>
+    <!-- <div class="start-screen" id="start_screen">
+      <button class="btn-start-screen" onclick="menuScreen()">MENU</button>
+    </div>
 
-    <canvas id="canvas" width="720" height="480"> </canvas>
+    <div class="menu-screen" id="menu_screen">
+      <nav class="menu-nav">
+        <button title="Start Game" class="btn-menu-screen" onclick="startGame()">Start Game</button>
+        <a title="Imprint" href="#">Impint</a>
+        <img title="Audio On" src="assets/icons/Audio-on.png" alt="Icon audio on" />
+      </nav>
+    </div> -->
+    <div class="start-screen" id="start_screen">
+      <nav class="start-nav">
+        <button title="Menu" class="btn-start-screen" onclick="menuScreen()">Menu</button>
+        <button title="Pmprint" class="btn-start-screen">Imprint</button>
+        <div onclick="soundToggle()" class="sound-box" id="sound_box">
+          <img id="sound_box_img" title="Audio On" src="assets/icons/Audio-on.png" alt="Icon audio on" />
+          <span id="sound_box_span">Mute Menu Music</span>
+        </div>
+      </nav>
+    </div>
+
+    <div class="menu-screen" id="menu_screen">
+      <button class="btn-menu-screen" onclick="startGame()">Start Game</button>
+    </div>
+
+    <div class="play-screen" id="play_screen">
+      <h1>El Pollo Loco</h1>
+      <canvas id="canvas" width="720" height="480"> </canvas>
+    </div>
+
+    <!-- <div>
+      <div class="description">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </div>
+    </div> -->
   </body>
 </html>

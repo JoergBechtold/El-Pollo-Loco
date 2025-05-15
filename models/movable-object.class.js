@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    groundLevel = 352;
     offset = {
         top: 0,
         left: 0,
@@ -23,11 +24,13 @@ class MovableObject extends DrawableObject {
 
     isAboveGround() {
         if (this instanceof ThrowableObject) {
-            return true;
+            return this.y < this.groundLevel;
         } else {
             return this.y < 155;
         }
     }
+
+
 
     hit() {
         this.energy -= 5;
