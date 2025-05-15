@@ -24,8 +24,8 @@ canvas {
   box-shadow: 4px 0 4px rgba(0, 0, 0, 0.5), -4px 0 4px rgba(0, 0, 0, 0.5), 0 4px 4px rgba(0, 0, 0, 0.5), 0 -4px 4px rgba(0, 0, 0, 0.5);
 }
 
-:root {
-}
+/* :root {
+} */
 
 .start-screen {
   height: 100dvh;
