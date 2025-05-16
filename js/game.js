@@ -1,62 +1,7 @@
 let canvas;
 let world;
-let isMuted = false;
 let keyboard = new Keyboard();
 let walkin_sound = new Audio('assets/audio/running.mp3');
-let start_screen_sound = new Audio('assets/audio/beginning-2.mp3');
-start_screen_sound.volume = 0.6;
-
-
-
-function menuScreen() {
-    let startScreenRef = document.getElementById('start_screen');
-    let menuScreenRef = document.getElementById('menu_screen');
-    startScreenRef.classList.add('d-none');
-    menuScreenRef.classList.add('d-flex');
-    setTimeout(() => {
-        start_screen_sound.play();
-
-    }, 500);
-
-}
-
-
-function startGame() {
-    let menuScreenRef = document.getElementById('menu_screen');
-    let playScreenRef = document.getElementById('play_screen');
-    menuScreenRef.classList.remove('d-flex');
-    playScreenRef.classList.add('d-flex');
-
-
-    start_screen_sound.pause();
-    start_screen_sound.currentTime = 0;
-    initLevel()
-    canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
-}
-
-function soundToggle() {
-    if (isMuted) {
-        isMuted = false;
-        setPropertiesSoundToggle(1, 'assets/icons/Audio-on.png', 'Musik aus', 'Icon audio an', 'Menü Musik an')
-    } else {
-        isMuted = true;
-        setPropertiesSoundToggle(0, 'assets/icons/Audio-mute.png', 'Musik an', 'Icon audio aus', 'Menü Musik aus')
-    }
-}
-
-function setPropertiesSoundToggle(volume, img, audioStatus, alt, text) {
-    const soundBoxImgRef = document.getElementById('sound_box_img');
-    const soundBoxSpanRef = document.getElementById('sound_box_span');
-
-    start_screen_sound.volume = volume;
-    soundBoxImgRef.src = img;
-    soundBoxImgRef.title = audioStatus;
-    soundBoxImgRef.alt = alt;
-    soundBoxSpanRef.textContent = text;
-}
-
-
 
 
 window.addEventListener('keydown', (event) => {
