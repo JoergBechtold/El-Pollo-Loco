@@ -49,23 +49,55 @@ function startGame() {
     world = new World(canvas, keyboard);
 }
 
+// function soundToggle() {
+//     if (isMuted) {
+//         isMuted = false;
+//         setPropertiesSoundToggle(1, 'assets/icons/Audio-on.png', 'Musik aus', 'Icon audio an', 'Menü Musik an')
+//     } else {
+//         isMuted = true;
+//         setPropertiesSoundToggle(0, 'assets/icons/Audio-mute.png', 'Musik an', 'Icon audio aus', 'Menü Musik aus')
+//     }
+// }
+
+// function setPropertiesSoundToggle(volume, img, audioStatus, alt, text) {
+//     const soundBoxImgRef = document.getElementById('sound_box_img');
+//     const soundBoxSpanRef = document.getElementById('sound_box_span');
+
+//     start_screen_sound.volume = volume;
+//     soundBoxImgRef.src = img;
+//     soundBoxImgRef.title = audioStatus;
+//     soundBoxImgRef.alt = alt;
+//     soundBoxSpanRef.textContent = text;
+// }
+
 function soundToggle() {
-    if (isMuted) {
-        isMuted = false;
-        setPropertiesSoundToggle(1, 'assets/icons/Audio-on.png', 'Musik aus', 'Icon audio an', 'Menü Musik an')
-    } else {
-        isMuted = true;
-        setPropertiesSoundToggle(0, 'assets/icons/Audio-mute.png', 'Musik an', 'Icon audio aus', 'Menü Musik aus')
-    }
+    isMuted = !isMuted;
+    updateSoundToggleDisplay();
 }
 
-function setPropertiesSoundToggle(volume, img, audioStatus, alt, text) {
-    const soundBoxImgRef = document.getElementById('sound_box_img');
-    const soundBoxSpanRef = document.getElementById('sound_box_span');
+function updateSoundToggleDisplay() {
+    const soundBoxImgStartRef = document.getElementById('sound_box_img');
+    const soundBoxSpanStartRef = document.getElementById('sound_box_span');
+    const soundBoxImgMenuRef = document.getElementById('sound_box_img_menu');
+    const soundBoxSpanMenuRef = document.getElementById('sound_box_span_menu');
+    const volume = isMuted ? 0 : 1;
+    const img = isMuted ? 'assets/icons/Audio-mute.png' : 'assets/icons/Audio-on.png';
+    const audioStatus = isMuted ? 'Musik an' : 'Musik aus';
+    const alt = isMuted ? 'Icon audio aus' : 'Icon audio an';
+    const text = isMuted ? 'Menü Musik aus' : 'Menü Musik an';
 
     start_screen_sound.volume = volume;
-    soundBoxImgRef.src = img;
-    soundBoxImgRef.title = audioStatus;
-    soundBoxImgRef.alt = alt;
-    soundBoxSpanRef.textContent = text;
+    if (soundBoxImgStartRef && soundBoxSpanStartRef) {
+        soundBoxImgStartRef.src = img;
+        soundBoxImgStartRef.title = audioStatus;
+        soundBoxImgStartRef.alt = alt;
+        soundBoxSpanStartRef.textContent = text;
+    }
+
+    if (soundBoxImgMenuRef && soundBoxSpanMenuRef) {
+        soundBoxImgMenuRef.src = img;
+        soundBoxImgMenuRef.title = audioStatus;
+        soundBoxImgMenuRef.alt = alt;
+        soundBoxSpanMenuRef.textContent = text;
+    }
 }
