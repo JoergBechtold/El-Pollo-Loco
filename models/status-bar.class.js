@@ -38,7 +38,7 @@ class StatusBar extends MovableObject {
     constructor(statusBarType) {
         super();
         this.statusBarType = statusBarType;
-        const imageArray = this.getImageArray(); // Hole das entsprechende Bildarray
+        const imageArray = this.getImageArray();
         this.loadImages(imageArray);
         this.setPercentage();
         this.setInitialPercentage()

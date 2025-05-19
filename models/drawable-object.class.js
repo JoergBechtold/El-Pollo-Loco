@@ -7,15 +7,13 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
 
-
-
     constructor() {
 
     }
 
 
     drawBlueFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof ThrowableObject) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof ThrowableObject || this instanceof CollectBottle) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
@@ -26,7 +24,7 @@ class DrawableObject {
     }
 
     drawRedFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof ThrowableObject) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof ThrowableObject || this instanceof CollectBottle) {
             ctx.beginPath();
             ctx.lineWidth = '4';
             ctx.strokeStyle = 'red';
@@ -34,8 +32,6 @@ class DrawableObject {
             ctx.stroke();
         }
     }
-
-
 
     loadImage(path) {
         this.img = new Image();

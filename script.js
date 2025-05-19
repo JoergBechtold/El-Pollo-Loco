@@ -39,10 +39,10 @@ function menuScreen() {
     const { startScreenRef, menuScreenRef } = getIdRefs();
     startScreenRef.classList.add('d-none');
     menuScreenRef.classList.add('d-flex');
-    setTimeout(() => {
-        start_screen_sound.play();
+    // setTimeout(() => {
+    //     start_screen_sound.play();
 
-    }, 500);
+    // }, 500);
 }
 
 
@@ -52,8 +52,8 @@ function startGame() {
     playScreenRef.classList.add('d-flex');
 
 
-    start_screen_sound.pause();
-    start_screen_sound.currentTime = 0;
+    // start_screen_sound.pause();
+    // start_screen_sound.currentTime = 0;
     initLevel()
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);

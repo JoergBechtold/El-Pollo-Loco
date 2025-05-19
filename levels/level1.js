@@ -5,8 +5,6 @@ function initLevel() {
   level1 = new Level(
     // playMusic.play()
 
-
-
     [
       new Chicken(),
       new Chicken(),
@@ -16,13 +14,6 @@ function initLevel() {
       new Chicken(),
       new Endboss()
     ],
-
-    // [
-    //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 50),
-    //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 150),
-    //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 100)
-    // ],
-
 
     [
       new Cloud('assets/img/5_background/layers/4_clouds/2.png', -500),
@@ -62,7 +53,22 @@ function initLevel() {
       new BackgroundObject('assets/img/5_background/layers/3_third_layer/2.png', 719 * 3),
       new BackgroundObject('assets/img/5_background/layers/2_second_layer/2.png', 719 * 3),
       new BackgroundObject('assets/img/5_background/layers/1_first_layer/2.png', 719 * 3)
-    ]
+    ],
+
+    [
+      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-left.png'),
+      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
+      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-left.png'),
+      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
+      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
+      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
+    ],
+
+    // [
+    //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 50),
+    //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 150),
+    //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 100)
+    // ]
   );
 
 }

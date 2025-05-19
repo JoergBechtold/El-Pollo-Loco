@@ -29,7 +29,7 @@ class World {
 
   allwaysExecuted() {
     setInterval(() => {
-      // this.checkCollisions();
+      this.checkCollisions();
       this.checkThrowBottles();
     }, 200);
   }
@@ -53,7 +53,7 @@ class World {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         this.character.hit();
-        this.statusBar.setPercentage(this.character.energy)
+        this.statusBarHealth.setPercentage(this.character.energy)
       }
     });
   }
@@ -64,7 +64,6 @@ class World {
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
-    // this.addObjectsToMap(this.level.barrel);
 
     this.ctx.translate(-this.camera_x, 0);
     // ------------Space for fixed objects-----------
@@ -75,8 +74,10 @@ class World {
 
     this.addToMap(this.character);
 
-    // this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.bottles);
+    this.addObjectsToMap(this.level.bottle)
+    // this.addObjectsToMap(this.level.barrel)
 
 
     this.ctx.translate(-this.camera_x, 0);

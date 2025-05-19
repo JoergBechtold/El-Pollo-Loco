@@ -1,11 +1,20 @@
 class Barrel extends DrawableObject {
-    width = 60
-    heigt = 120
+    // width = 80
+    // heigt = 30
     x = 20
-    y = 155
+    y = 275
 
-    constructor() {
-        super();
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    };
+
+    constructor(path) {
+        super().loadImage(path)
+        this.x = 20 + Math.random() * 2000;
+
 
 
     }
