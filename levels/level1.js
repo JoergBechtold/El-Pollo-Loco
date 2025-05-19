@@ -1,9 +1,10 @@
 let level1;
 
 function initLevel() {
+  // playMusic.play()
+
 
   level1 = new Level(
-    // playMusic.play()
 
     [
       new Chicken(),
