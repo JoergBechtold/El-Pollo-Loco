@@ -29,8 +29,10 @@
   <body class="body-index">
     <div class="start-screen" id="start_screen">
       <nav class="start-nav">
-        <button title="Menü" class="btn-start-screen" onclick="menuScreen()">Menü</button>
-        <button title="Impressum" class="btn-start-screen" onclick="goToUrl('../imprint.html')">Impressum</button>
+        <button title="Menü" class="btn-desktop" onclick="menuScreen()">Menü</button>
+        <!-- <button title="Spiel Steuerung" class="btn-desktop" onclick="goToUrl('imprint.html')">Impressum</button> -->
+
+        <button title="Impressum" class="btn-desktop" onclick="goToUrl('imprint.html')">Impressum</button>
         <div onclick="soundToggle()" class="sound-box" id="sound_box">
           <img id="sound_box_img" title="Musik an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
           <span id="sound_box_span">Menü Musik an</span>
@@ -39,27 +41,41 @@
     </div>
 
     <div class="menu-screen" id="menu_screen">
-      <button class="btn-menu-screen" onclick="startGame()">Spiel Starten</button>
-      <div onclick="soundToggle()" class="sound-box" id="sound_box_menu">
-        <img id="sound_box_img_menu" title="Musik an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
-        <span id="sound_box_span_menu">Menü Musik an</span>
+      <nav class="menu-nav">
+        <button title="Spiel Starten" class="btn-desktop" onclick="startGame()">Spiel Starten</button>
+        <!-- <button title="Impressum" class="btn-desktop" onclick="goToUrl('imprint.html')">Impressum</button> -->
+        <div onclick="soundToggle()" class="sound-box" id="sound_box_menu">
+          <img id="sound_box_img_menu" title="Musik an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
+          <span id="sound_box_span_menu">Menü Musik an</span>
+        </div>
+      </nav>
+
+      <div class="menu-container">
+        <h2>Steuerung</h2>
+        <div class="controls-box">
+          <div class="control-left">
+            <img src="assets/icons/arrow-left.png" alt="Pfeil Links" />
+            <p>Nach links Laufen</p>
+          </div>
+          <div class="control-right">
+            <img src="assets/icons/arrow-right.png" alt="Pfeil Rechts" />
+            <p>Nach rechts Laufen</p>
+          </div>
+          <div class="control-jump">
+            <img src="assets/icons/button-space.png" alt="Leertaste" />
+            <p>Springen</p>
+          </div>
+          <div class="control-throw">
+            <img src="assets/icons/button-d.png" alt="Taste D" />
+            <p>Flasche Werfen</p>
+          </div>
+        </div>
       </div>
     </div>
-    <!-- <div class="menu-screen" id="menu_screen">
-      <button class="btn-menu-screen" onclick="startGame()">Spiel Starten</button>
-    </div> -->
 
     <div class="play-screen" id="play_screen">
       <h1>El Pollo Loco</h1>
       <canvas id="canvas" width="720" height="480"> </canvas>
     </div>
-
-    <!-- <div>
-      <div class="description">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-      </div>
-    </div> -->
   </body>
 </html>

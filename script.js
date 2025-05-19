@@ -1,3 +1,16 @@
+function getIdRefs() {
+    return {
+        startScreenRef: document.getElementById('start_screen'),
+        menuScreenRef: document.getElementById('menu_screen'),
+        playScreenRef: document.getElementById('play_screen'),
+        soundBoxImgStartRef: document.getElementById('sound_box_img'),
+        soundBoxSpanStartRef: document.getElementById('sound_box_span'),
+        soundBoxImgMenuRef: document.getElementById('sound_box_img_menu'),
+        soundBoxSpanMenuRef: document.getElementById('sound_box_span_menu')
+    };
+}
+
+
 let start_screen_sound = new Audio('assets/audio/beginning-2.mp3');
 start_screen_sound.volume = 0.6;
 let isMuted = false;
@@ -23,21 +36,18 @@ function goToUrl(url) {
 }
 
 function menuScreen() {
-    let startScreenRef = document.getElementById('start_screen');
-    let menuScreenRef = document.getElementById('menu_screen');
+    const { startScreenRef, menuScreenRef } = getIdRefs();
     startScreenRef.classList.add('d-none');
     menuScreenRef.classList.add('d-flex');
     setTimeout(() => {
         start_screen_sound.play();
 
     }, 500);
-
 }
 
 
 function startGame() {
-    let menuScreenRef = document.getElementById('menu_screen');
-    let playScreenRef = document.getElementById('play_screen');
+    const { playScreenRef, menuScreenRef } = getIdRefs();
     menuScreenRef.classList.remove('d-flex');
     playScreenRef.classList.add('d-flex');
 
@@ -49,40 +59,16 @@ function startGame() {
     world = new World(canvas, keyboard);
 }
 
-// function soundToggle() {
-//     if (isMuted) {
-//         isMuted = false;
-//         setPropertiesSoundToggle(1, 'assets/icons/Audio-on.png', 'Musik aus', 'Icon audio an', 'Menü Musik an')
-//     } else {
-//         isMuted = true;
-//         setPropertiesSoundToggle(0, 'assets/icons/Audio-mute.png', 'Musik an', 'Icon audio aus', 'Menü Musik aus')
-//     }
-// }
-
-// function setPropertiesSoundToggle(volume, img, audioStatus, alt, text) {
-//     const soundBoxImgRef = document.getElementById('sound_box_img');
-//     const soundBoxSpanRef = document.getElementById('sound_box_span');
-
-//     start_screen_sound.volume = volume;
-//     soundBoxImgRef.src = img;
-//     soundBoxImgRef.title = audioStatus;
-//     soundBoxImgRef.alt = alt;
-//     soundBoxSpanRef.textContent = text;
-// }
-
 function soundToggle() {
     isMuted = !isMuted;
     updateSoundToggleDisplay();
 }
 
 function updateSoundToggleDisplay() {
-    const soundBoxImgStartRef = document.getElementById('sound_box_img');
-    const soundBoxSpanStartRef = document.getElementById('sound_box_span');
-    const soundBoxImgMenuRef = document.getElementById('sound_box_img_menu');
-    const soundBoxSpanMenuRef = document.getElementById('sound_box_span_menu');
+    const { soundBoxImgStartRef, soundBoxSpanStartRef, soundBoxImgMenuRef, soundBoxSpanMenuRef } = getIdRefs();
     const volume = isMuted ? 0 : 1;
     const img = isMuted ? 'assets/icons/Audio-mute.png' : 'assets/icons/Audio-on.png';
-    const audioStatus = isMuted ? 'Musik an' : 'Musik aus';
+    const audioStatus = isMuted ? 'Musik aus' : 'Musik an';
     const alt = isMuted ? 'Icon audio aus' : 'Icon audio an';
     const text = isMuted ? 'Menü Musik aus' : 'Menü Musik an';
 
