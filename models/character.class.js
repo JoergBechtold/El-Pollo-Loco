@@ -8,6 +8,7 @@ class Character extends MovableObject {
     inactivityTimeout = 10000;
     isInactive = false;
     throwableBottleArray = [];
+    CollectCoinsArray = [];
     bottles = [];
     lastThrow = 0;
     throwInterval = 500;

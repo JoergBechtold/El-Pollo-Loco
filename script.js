@@ -1,4 +1,3 @@
-let isMuted = false;
 
 /**
  * 
@@ -43,6 +42,8 @@ function goToUrl(url) {
 //     startScreenRef.classList.add('d-none');
 //     menuScreenRef.classList.add('d-flex');
 // }
+
+isMuted = false;
 
 
 function startGame() {

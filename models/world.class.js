@@ -36,6 +36,8 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.collectBottleObject();
+      this.collectCoinObject();
+
       // this.checkThrowBottles();
       // this.checkBottleCollision();
     }, 50);
@@ -101,6 +103,21 @@ class World {
 
   }
 
+  collectCoinObject() {
+    this.level.coinsArray.forEach((coin, index) => {
+      if (this.character.isColliding(coin)) {
+        this.character.CollectCoinsArray.push(coin);
+        this.level.coinsArray.splice(index, 1);
+        collect_coin_audio.play();
+
+        setTimeout(() => {
+          collect_coin_audio.pause();
+          collect_coin_audio.currentTime = 0;
+        }, 1000);
+      }
+    });
+  }
+
 
 
 
@@ -140,6 +157,8 @@ class World {
     this.addObjectsToMap(this.level.enemiesArray);
     // this.addObjectsToMap(this.character.throwableBottleArray);
     this.addObjectsToMap(this.level.bottlesArray)
+    this.addObjectsToMap(this.level.coinsArray)
+
     this.addObjectsToMap(this.character.bottles)
     // this.addObjectsToMap(this.level.barrel)
 
