@@ -1,5 +1,5 @@
 class ThrowableObject extends MovableObject {
-    bottle_splash = new Audio('assets/audio/bottle-break.mp3')
+    // bottle_splash = new Audio('assets/audio/bottle-break.mp3')
     offset = {
         top: 8,
         left: 15,
@@ -59,7 +59,7 @@ class ThrowableObject extends MovableObject {
     }
 
     playBottleSplash() {
-        this.bottle_splash.play();
+        bottle_splash.play();
         this.width = this.splashWidth;
         this.height = this.splashHeight;
         setInterval(() => {

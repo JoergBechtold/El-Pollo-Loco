@@ -1,6 +1,6 @@
 class World {
   character = new Character();
-  collect_bottle_audio = new Audio('assets/audio/collect-bottle.mp3');
+  // collect_bottle_audio = new Audio('assets/audio/collect-bottle.mp3');
   level = level1;
   canvas;
   ctx;
@@ -90,11 +90,11 @@ class World {
       if (this.character.isColliding(bottle)) {
         this.character.throwableBottleArray.push(bottle);
         this.level.bottlesArray.splice(index, 1);
-        this.collect_bottle_audio.play();
+        collect_bottle_audio.play();
 
         setTimeout(() => {
-          this.collect_bottle_audio.pause();
-          this.collect_bottle_audio.currentTime = 0;
+          collect_bottle_audio.pause();
+          collect_bottle_audio.currentTime = 0;
         }, 1100);
       }
     });

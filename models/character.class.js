@@ -4,10 +4,10 @@ class Character extends MovableObject {
     y = 155;
     speed = 10;
     world;
-    death_sound = new Audio('assets/audio/death.mp3');
-    jump_sound = new Audio('assets/audio/jump.ogg');
-    landing_sound = new Audio('assets/audio/landing.mp3');
-    hurt_sound = new Audio('assets/audio/short-oww-46070.mp3');
+    // death_sound = new Audio('assets/audio/death.mp3');
+    // jump_sound = new Audio('assets/audio/jump.ogg');
+    // landing_sound = new Audio('assets/audio/landing.mp3');
+    // hurt_sound = new Audio('assets/audio/short-oww-46070.mp3');
     inactivityTimer;
     inactivityTimeout = 10000;
     isInactive = false;
@@ -142,7 +142,7 @@ class Character extends MovableObject {
             }
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump_sound.play();
+                jump_sound.play();
                 this.jump();
             }
             this.world.camera_x = -this.x + 100;
@@ -152,10 +152,10 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-                this.death_sound.play();
+                death_sound.play();
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-                this.hurt_sound.play();
+                hurt_sound.play();
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else if (this.world.keyboard.LEFT && this.world.keyboard.RIGHT) {
