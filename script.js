@@ -51,8 +51,9 @@ function startGame() {
     playScreenRef.classList.add('d-flex');
 
     setTimeout(() => {
-        game_music.play();
-
+        setInterval(() => {
+            game_music.play();
+        }, 1400);
     }, 500);
 
     initLevel()
