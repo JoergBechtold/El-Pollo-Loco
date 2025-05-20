@@ -67,17 +67,15 @@ function soundToggle() {
 
 function updateSoundToggleDisplay() {
     const { soundBoxImgStartRef, soundBoxSpanStartRef, soundBoxImgMenuRef, soundBoxSpanMenuRef } = getIdRefs();
-    // const volume = isMuted ? 0 : 0.1;
     const img = isMuted ? 'assets/icons/Audio-mute.png' : 'assets/icons/Audio-on.png';
     const audioStatus = isMuted ? 'Spiel Audio aus' : 'Spiel Audio an';
     const alt = isMuted ? 'Icon audio aus' : 'Icon audio an';
     const text = isMuted ? 'Spiel Audio aus' : 'Spiel Audio an';
 
     allAudioArray.forEach(sound => {
-        sound.muted = isMuted; // Set muted property based on isMuted state
+        sound.muted = isMuted;
     });
 
-    game_music.volume = volume;
     if (soundBoxImgStartRef && soundBoxSpanStartRef) {
         soundBoxImgStartRef.src = img;
         soundBoxImgStartRef.title = audioStatus;

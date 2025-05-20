@@ -1,5 +1,4 @@
 class ThrowableObject extends MovableObject {
-    // bottle_splash = new Audio('assets/audio/bottle-break.mp3')
     offset = {
         top: 8,
         left: 15,

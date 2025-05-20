@@ -4,10 +4,6 @@ class Character extends MovableObject {
     y = 155;
     speed = 10;
     world;
-    // death_sound = new Audio('assets/audio/death.mp3');
-    // jump_sound = new Audio('assets/audio/jump.ogg');
-    // landing_sound = new Audio('assets/audio/landing.mp3');
-    // hurt_sound = new Audio('assets/audio/short-oww-46070.mp3');
     inactivityTimer;
     inactivityTimeout = 10000;
     isInactive = false;
