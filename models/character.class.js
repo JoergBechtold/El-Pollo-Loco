@@ -12,6 +12,9 @@ class Character extends MovableObject {
     inactivityTimeout = 10000;
     isInactive = false;
     throwableBottleArray = [];
+    bottles = [];
+    lastThrow = 0;
+    throwInterval = 500;
 
     offset = {
         top: 120,
@@ -171,7 +174,7 @@ class Character extends MovableObject {
 
                 if (timeSinceLastThrow >= this.throwInterval) {
                     let bottle = new ThrowableObject(this.x + 80, this.y + 130);
-                    this.throwableBottleArray.push(bottle);
+                    this.bottles.push(bottle);
                     this.lastThrow = currentTime;
 
                 }

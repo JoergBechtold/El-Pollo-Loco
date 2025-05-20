@@ -9,8 +9,8 @@ class World {
   statusBarHealth = new StatusBar('health');
   statusBarCoins = new StatusBar('coins');
   statusBarBottles = new StatusBar('bottle');
-  lastThrow = 0;
-  throwInterval = 500;
+  // lastThrow = 0;
+  // throwInterval = 500;
   // bottles = [];
 
 
@@ -35,35 +35,43 @@ class World {
   allwaysExecuted() {
     setInterval(() => {
       this.checkCollisions();
-      this.collectBottleObject()
+      this.collectBottleObject();
+      // this.checkThrowBottles();
       // this.checkBottleCollision();
     }, 50);
   }
 
-  // checkThrowBottles() {
-  //   if (this.keyboard.D) {
-  //     let currentTime = new Date().getTime();
-  //     let timeSinceLastThrow = currentTime - this.lastThrow;
+  checkThrowBottles() {
+    // if (this.world.keyboard.D) {
+    //   let currentTime = new Date().getTime();
+    //   let timeSinceLastThrow = currentTime - this.lastThrow;
+
+    //   if (timeSinceLastThrow >= this.throwInterval) {
+    //     let bottle = new ThrowableObject(this.x + 80, this.y + 130);
+    //     this.bottles.push(bottle);
+    //     this.lastThrow = currentTime;
+
+    //   }
+    // }
+    // if (this.keyboard.D) {
+    //   let currentTime = new Date().getTime();
+    //   let timeSinceLastThrow = currentTime - this.lastThrow;
 
 
-  //     if (timeSinceLastThrow >= this.throwInterval) {
-  //       let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
-  //       this.bottles.push(bottle);
-  //       this.lastThrow = currentTime;
+    //   if (timeSinceLastThrow >= this.throwInterval) {
+    //     let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
+    //     this.bottles.push(bottle);
+    //     this.lastThrow = currentTime;
 
-  //       this.level.enemies.forEach((enemy) => {
-  //         if (bottle.isColliding(enemy)) {
-  //           console.log('treffer');
+    //     this.level.enemies.forEach((enemy) => {
+    //       if (bottle.isColliding(enemy)) {
+    //         console.log('treffer');
 
-  //         }
-
-  //       });
-  //     }
-
-
-
-  //   }
-  // }
+    //       }
+    //     });
+    //   }
+    // }
+  }
 
   // collectBottleObject() {
   //   this.level.bottles.forEach((bottle) => {
@@ -132,6 +140,7 @@ class World {
     this.addObjectsToMap(this.level.enemiesArray);
     // this.addObjectsToMap(this.character.throwableBottleArray);
     this.addObjectsToMap(this.level.bottlesArray)
+    this.addObjectsToMap(this.character.bottles)
     // this.addObjectsToMap(this.level.barrel)
 
 
