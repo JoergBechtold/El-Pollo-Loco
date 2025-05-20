@@ -31,27 +31,16 @@
     <div class="start-screen" id="start_screen">
       <nav class="start-nav">
         <button title="Menü" class="btn-desktop" onclick="menuScreen()">Menü</button>
-        <!-- <button title="Spiel Steuerung" class="btn-desktop" onclick="goToUrl('imprint.html')">Impressum</button> -->
-
         <button title="Impressum" class="btn-desktop" onclick="goToUrl('imprint.html')">Impressum</button>
-        <!-- <div onclick="soundToggle()" class="sound-box" id="sound_box">
-          <img id="sound_box_img" title="Musik an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
-          <span id="sound_box_span">Menü Musik an</span>
-        </div> -->
       </nav>
     </div>
 
     <div class="menu-screen" id="menu_screen">
       <nav class="menu-nav">
         <button title="Spiel Starten" class="btn-desktop" onclick="startGame()">Spiel Starten</button>
-        <!-- <button title="Impressum" class="btn-desktop" onclick="goToUrl('imprint.html')">Impressum</button> -->
-        <!-- <div onclick="soundToggle()" class="sound-box" id="sound_box_menu">
-          <img id="sound_box_img_menu" title="Musik an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
-          <span id="sound_box_span_menu">Menü Musik an</span>
-        </div> -->
         <div onclick="soundToggle()" class="sound-box" id="sound_box">
           <img id="sound_box_img" title="Musik an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
-          <span id="sound_box_span">Menü Musik an</span>
+          <span id="sound_box_span">Spiel Audio an</span>
         </div>
       </nav>
 
@@ -83,7 +72,7 @@
       <canvas id="canvas" width="720" height="480"> </canvas>
       <div onclick="soundToggle()" class="sound-box" id="sound_box_menu">
         <img id="sound_box_img_menu" title="Musik an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
-        <span id="sound_box_span_menu">Menü Musik an</span>
+        <span id="sound_box_span_menu">Spiel Audio an</span>
       </div>
     </div>
   </body>

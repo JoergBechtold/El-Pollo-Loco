@@ -2,8 +2,8 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let walkin_sound = new Audio('assets/audio/running.mp3');
-let playMusic = new Audio('assets/audio/play-musik.mp3');
-playMusic.volume = 0.1;
+let game_music = new Audio('assets/audio/game-musik.mp3');
+game_music.volume = 0.1;
 
 
 /**

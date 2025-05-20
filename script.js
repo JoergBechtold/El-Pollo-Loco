@@ -1,3 +1,12 @@
+let isMuted = false;
+
+/**
+ * 
+ * Retrieves references to various HTML elements by their respective IDs.
+ *
+ * @returns {Object<string, HTMLElement>} An object where keys are descriptive names
+ * and values are the corresponding HTMLElement objects.
+ */
 function getIdRefs() {
     return {
         startScreenRef: document.getElementById('start_screen'),
@@ -9,12 +18,6 @@ function getIdRefs() {
         soundBoxSpanMenuRef: document.getElementById('sound_box_span_menu')
     };
 }
-
-
-let start_screen_sound = new Audio('assets/audio/beginning-2.mp3');
-start_screen_sound.volume = 0.6;
-let isMuted = false;
-
 
 /**
  * 
@@ -39,10 +42,6 @@ function menuScreen() {
     const { startScreenRef, menuScreenRef } = getIdRefs();
     startScreenRef.classList.add('d-none');
     menuScreenRef.classList.add('d-flex');
-    // setTimeout(() => {
-    //     start_screen_sound.play();
-
-    // }, 500);
 }
 
 
@@ -51,9 +50,11 @@ function startGame() {
     menuScreenRef.classList.remove('d-flex');
     playScreenRef.classList.add('d-flex');
 
+    setTimeout(() => {
+        game_music.play();
 
-    // start_screen_sound.pause();
-    // start_screen_sound.currentTime = 0;
+    }, 500);
+
     initLevel()
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
@@ -66,13 +67,13 @@ function soundToggle() {
 
 function updateSoundToggleDisplay() {
     const { soundBoxImgStartRef, soundBoxSpanStartRef, soundBoxImgMenuRef, soundBoxSpanMenuRef } = getIdRefs();
-    const volume = isMuted ? 0 : 1;
+    const volume = isMuted ? 0 : 0.1;
     const img = isMuted ? 'assets/icons/Audio-mute.png' : 'assets/icons/Audio-on.png';
     const audioStatus = isMuted ? 'Musik aus' : 'Musik an';
     const alt = isMuted ? 'Icon audio aus' : 'Icon audio an';
-    const text = isMuted ? 'Menü Musik aus' : 'Menü Musik an';
+    const text = isMuted ? 'Spiel Audio aus' : 'Spiel Audio an';
 
-    start_screen_sound.volume = volume;
+    game_music.volume = volume;
     if (soundBoxImgStartRef && soundBoxSpanStartRef) {
         soundBoxImgStartRef.src = img;
         soundBoxImgStartRef.title = audioStatus;

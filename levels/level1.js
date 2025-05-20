@@ -1,7 +1,6 @@
 let level1;
 
 function initLevel() {
-  // playMusic.play()
 
 
   level1 = new Level(
