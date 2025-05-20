@@ -29,7 +29,7 @@ const allAudioArray = [
 game_music.volume = 0.1;
 collect_coin_audio.volume = 0.5;
 
-let isMuted = localStorage.getItem('isMuted') === 'true';
+// let isMuted = localStorage.getItem('isMuted') === 'true';
 
 
 

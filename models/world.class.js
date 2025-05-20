@@ -1,6 +1,5 @@
 class World {
   character = new Character();
-  // collect_bottle_audio = new Audio('assets/audio/collect-bottle.mp3');
   level = level1;
   canvas;
   ctx;
@@ -9,14 +8,6 @@ class World {
   statusBarHealth = new StatusBar('health');
   statusBarCoins = new StatusBar('coins');
   statusBarBottles = new StatusBar('bottle');
-  // lastThrow = 0;
-  // throwInterval = 500;
-  // bottles = [];
-
-
-
-
-
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
@@ -113,7 +104,7 @@ class World {
         setTimeout(() => {
           collect_coin_audio.pause();
           collect_coin_audio.currentTime = 0;
-        }, 1000);
+        }, 500);
       }
     });
   }

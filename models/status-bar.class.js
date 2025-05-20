@@ -45,13 +45,6 @@ class StatusBar extends MovableObject {
         this.setPositionByType();
     }
 
-    setInitialPercentage() {
-        if (this.statusBarType === 'health') {
-            this.setPercentage(100);
-        } else {
-            this.setPercentage(0);
-        }
-    }
 
     setPositionByType() {
         if (this.statusBarType === 'health') {
@@ -72,6 +65,15 @@ class StatusBar extends MovableObject {
             return this.IMAGES_BOTTLE;
         }
     }
+
+    setInitialPercentage() {
+        if (this.statusBarType === 'health') {
+            this.setPercentage(100);
+        } else {
+            this.setPercentage(0);
+        }
+    }
+
 
     setPercentage(percentage) {
         this.percentage = percentage;

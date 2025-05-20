@@ -42,8 +42,9 @@ function goToUrl(url) {
 //     startScreenRef.classList.add('d-none');
 //     menuScreenRef.classList.add('d-flex');
 // }
+let isMuted = localStorage.getItem('isMuted') === 'true';
 
-isMuted = false;
+// isMuted = false;
 
 
 function startGame() {
