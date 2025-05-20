@@ -11,6 +11,8 @@ class World {
   statusBarBottles = new StatusBar('bottle');
   lastThrow = 0;
   throwInterval = 500;
+  // bottles = [];
+
 
 
 
@@ -34,7 +36,7 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.collectBottleObject()
-      this.checkBottleCollision();
+      // this.checkBottleCollision();
     }, 50);
   }
 
@@ -76,10 +78,10 @@ class World {
   // }
 
   collectBottleObject() {
-    this.level.bottles.forEach((bottle, index) => {
+    this.level.bottlesArray.forEach((bottle, index) => {
       if (this.character.isColliding(bottle)) {
-        this.character.bottles.push(bottle);
-        this.level.bottles.splice(index, 1);
+        this.character.throwableBottleArray.push(bottle);
+        this.level.bottlesArray.splice(index, 1);
         this.collect_bottle_audio.play();
 
         setTimeout(() => {
@@ -92,8 +94,10 @@ class World {
   }
 
 
+
+
   checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
+    this.level.enemiesArray.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
         this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy)
@@ -102,7 +106,7 @@ class World {
   }
 
   checkBottleCollision() {
-    this.level.enemies.forEach((enemy) => {
+    this.level.enemiesArray.forEach((enemy) => {
       if (this.bottle.isColliding(enemy)) {
         console.log('treffer 1');
       }
@@ -113,8 +117,8 @@ class World {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
     this.ctx.translate(this.camera_x, 0);
-    this.addObjectsToMap(this.level.backgroundObjects);
-    this.addObjectsToMap(this.level.clouds);
+    this.addObjectsToMap(this.level.backgroundObjectsArray);
+    this.addObjectsToMap(this.level.cloudsArray);
 
     this.ctx.translate(-this.camera_x, 0);
     // ------------Space for fixed objects-----------
@@ -125,9 +129,9 @@ class World {
 
     this.addToMap(this.character);
 
-    this.addObjectsToMap(this.level.enemies);
-    // this.addObjectsToMap(this.character.bottles);
-    this.addObjectsToMap(this.level.bottles)
+    this.addObjectsToMap(this.level.enemiesArray);
+    // this.addObjectsToMap(this.character.throwableBottleArray);
+    this.addObjectsToMap(this.level.bottlesArray)
     // this.addObjectsToMap(this.level.barrel)
 
 

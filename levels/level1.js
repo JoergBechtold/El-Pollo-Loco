@@ -65,6 +65,15 @@ function initLevel() {
       new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
     ],
 
+    [
+      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-left.png'),
+      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
+      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-left.png'),
+      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
+      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
+      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
+    ],
+
     // [
     //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 50),
     //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 150),

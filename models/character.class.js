@@ -11,7 +11,7 @@ class Character extends MovableObject {
     inactivityTimer;
     inactivityTimeout = 10000;
     isInactive = false;
-    bottles = [];
+    throwableBottleArray = [];
 
     offset = {
         top: 120,
@@ -113,9 +113,6 @@ class Character extends MovableObject {
     }
 
 
-
-
-
     animate() {
         setInterval(() => {
 
@@ -165,13 +162,16 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             } else if (this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
                 this.playAnimation(this.IMAGES_WALKING);
-            } else if (this.world.keyboard.D) {
+            }
+
+
+            if (this.world.keyboard.D) {
                 let currentTime = new Date().getTime();
                 let timeSinceLastThrow = currentTime - this.lastThrow;
 
                 if (timeSinceLastThrow >= this.throwInterval) {
                     let bottle = new ThrowableObject(this.x + 80, this.y + 130);
-                    this.bottles.push(bottle);
+                    this.throwableBottleArray.push(bottle);
                     this.lastThrow = currentTime;
 
                 }
