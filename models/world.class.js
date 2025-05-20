@@ -1,5 +1,6 @@
 class World {
   character = new Character();
+  collect_bottle_audio = new Audio('assets/audio/collect-bottle.mp3');
   level = level1;
   canvas;
   ctx;
@@ -10,7 +11,9 @@ class World {
   statusBarBottles = new StatusBar('bottle');
   lastThrow = 0;
   throwInterval = 500;
-  bottles = [];
+
+
+
 
 
   constructor(canvas, keyboard) {
@@ -30,22 +33,62 @@ class World {
   allwaysExecuted() {
     setInterval(() => {
       this.checkCollisions();
-      this.checkThrowBottles();
-    }, 200);
+      this.collectBottleObject()
+      this.checkBottleCollision();
+    }, 50);
   }
 
-  checkThrowBottles() {
-    if (this.keyboard.D) {
-      let currentTime = new Date().getTime();
-      let timeSinceLastThrow = currentTime - this.lastThrow;
+  // checkThrowBottles() {
+  //   if (this.keyboard.D) {
+  //     let currentTime = new Date().getTime();
+  //     let timeSinceLastThrow = currentTime - this.lastThrow;
 
 
-      if (timeSinceLastThrow >= this.throwInterval) {
-        let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
-        this.bottles.push(bottle);
-        this.lastThrow = currentTime;
+  //     if (timeSinceLastThrow >= this.throwInterval) {
+  //       let bottle = new ThrowableObject(this.character.x + 80, this.character.y + 130);
+  //       this.bottles.push(bottle);
+  //       this.lastThrow = currentTime;
+
+  //       this.level.enemies.forEach((enemy) => {
+  //         if (bottle.isColliding(enemy)) {
+  //           console.log('treffer');
+
+  //         }
+
+  //       });
+  //     }
+
+
+
+  //   }
+  // }
+
+  // collectBottleObject() {
+  //   this.level.bottles.forEach((bottle) => {
+  //     if (this.character.isColliding(bottle)) {
+  //       console.log('flasche eingesammelt');
+
+  //       this.character.bottles.push(bottle);
+
+
+  //     }
+  //   });
+  // }
+
+  collectBottleObject() {
+    this.level.bottles.forEach((bottle, index) => {
+      if (this.character.isColliding(bottle)) {
+        this.character.bottles.push(bottle);
+        this.level.bottles.splice(index, 1);
+        this.collect_bottle_audio.play();
+
+        setTimeout(() => {
+          this.collect_bottle_audio.pause();
+          this.collect_bottle_audio.currentTime = 0;
+        }, 1100);
       }
-    }
+    });
+
   }
 
 
@@ -54,6 +97,14 @@ class World {
       if (this.character.isColliding(enemy)) {
         this.character.hit();
         this.statusBarHealth.setPercentage(this.character.energy)
+      }
+    });
+  }
+
+  checkBottleCollision() {
+    this.level.enemies.forEach((enemy) => {
+      if (this.bottle.isColliding(enemy)) {
+        console.log('treffer 1');
       }
     });
   }
@@ -75,8 +126,8 @@ class World {
     this.addToMap(this.character);
 
     this.addObjectsToMap(this.level.enemies);
-    this.addObjectsToMap(this.bottles);
-    this.addObjectsToMap(this.level.bottle)
+    // this.addObjectsToMap(this.character.bottles);
+    this.addObjectsToMap(this.level.bottles)
     // this.addObjectsToMap(this.level.barrel)
 
 

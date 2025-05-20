@@ -11,6 +11,7 @@ class Character extends MovableObject {
     inactivityTimer;
     inactivityTimeout = 10000;
     isInactive = false;
+    bottles = [];
 
     offset = {
         top: 120,
@@ -85,7 +86,6 @@ class Character extends MovableObject {
 
 
     constructor() {
-        // super().loadImage('assets/img/2_character_pepe/2_walk/W-21.png')
         super().loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png')
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
@@ -93,8 +93,6 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
-
-        // this.loadImages(this.IMAGES_BOTTLES);
         this.applyGravity();
         this.animate();
         // this.startInactivityTimer();
@@ -167,7 +165,17 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             } else if (this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
                 this.playAnimation(this.IMAGES_WALKING);
-            } 
+            } else if (this.world.keyboard.D) {
+                let currentTime = new Date().getTime();
+                let timeSinceLastThrow = currentTime - this.lastThrow;
+
+                if (timeSinceLastThrow >= this.throwInterval) {
+                    let bottle = new ThrowableObject(this.x + 80, this.y + 130);
+                    this.bottles.push(bottle);
+                    this.lastThrow = currentTime;
+
+                }
+            }
         }, 50);
 
         setInterval(() => {
@@ -175,3 +183,7 @@ class Character extends MovableObject {
         }, 180);
     }
 }
+
+
+
+

@@ -1,6 +1,4 @@
 class CollectBottle extends MovableObject {
-    // heigt = 25;
-    // width = 25;
     x = 300;
     y = 310;
 
