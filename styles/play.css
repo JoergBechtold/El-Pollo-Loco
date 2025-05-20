@@ -1,0 +1,28 @@
+.body-play {
+  min-height: 100dvh;
+  width: 100%;
+  position: relative;
+}
+
+.play-screen {
+  background-image: url('../assets/img/body_background/1.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  width: 100%;
+}
+
+.game-controls-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 60px;
+  height: 80px;
+  width: 100%;
+  gap: 30px;
+}

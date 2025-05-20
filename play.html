@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google" content="notranslate" />
+    <title>El Pollo Loco</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles/play.css" />
+    <link rel="icon" href="assets/icons/favicon.ico" type="image/x-icon" />
+
+    <script src="models/drawable-object.class.js"></script>
+    <script src="models/movable-object.class.js"></script>
+    <script src="models/cloud.class.js"></script>
+    <script src="models/character.class.js"></script>
+    <script src="models/throwable-object.class.js"></script>
+    <script src="models/endboss.class.js"></script>
+    <script src="models/chicken.class.js"></script>
+    <script src="models/status-bar.class.js"></script>
+    <script src="models/world.class.js"></script>
+    <script src="models/keyboard.class.js"></script>
+    <script src="models/background-object.class.js"></script>
+    <script src="models/collect-bottle.class.js"></script>
+    <!-- <script src="models/barrel.class.js"></script> -->
+    <script src="models/level.class.js"></script>
+    <script src="levels/level1.js"></script>
+    <script src="script.js"></script>
+    <script src="js/game.js"></script>
+  </head>
+  <body onload="startGame()" class="body-play">
+    <div class="play-screen" id="play_screen">
+      <div class="game-controls-container">
+        <button title="Zurück zum Menü" class="btn-desktop" onclick="goToUrl('menu.html')">Zurück zum Menü</button>
+        <div onclick="soundToggle()" class="sound-box" id="sound_box_menu">
+          <img id="sound_box_img_menu" title="Spiel Audio an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
+          <span id="sound_box_span_menu">Spiel Audio an</span>
+        </div>
+      </div>
+
+      <canvas id="canvas" width="720" height="480"> </canvas>
+      <!-- <h1>El Pollo Loco</h1> -->
+    </div>
+  </body>
+</html>

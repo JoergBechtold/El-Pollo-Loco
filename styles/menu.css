@@ -1,0 +1,86 @@
+.body-menu {
+  min-height: 100dvh;
+  width: 100%;
+  position: relative;
+}
+
+.menu-screen {
+  display: flex;
+  background-image: url('../assets/img/body_background/1.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  width: 100%;
+}
+
+.menu-container {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #c48b54;
+  width: 720px;
+  height: 480px;
+  border-radius: 16px;
+  box-shadow: 4px 0 4px rgba(0, 0, 0, 0.5), -4px 0 4px rgba(0, 0, 0, 0.5), 0 4px 4px rgba(0, 0, 0, 0.5), 0 -4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.menu-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 60px;
+  height: 80px;
+  width: 100%;
+  gap: 30px;
+}
+
+.controls-box {
+  margin-block: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.game-mechanics {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.controls-box p {
+  white-space: nowrap;
+}
+
+.game-mechanics p,
+.controls-box {
+  font-size: 24px;
+}
+
+.controls-box img {
+  width: 55px;
+  aspect-ratio: 1 / 1;
+}
+
+.control-left,
+.control-right,
+.control-jump,
+.control-throw {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-jump img {
+  width: 115px;
+  aspect-ratio: 2 / 1;
+}

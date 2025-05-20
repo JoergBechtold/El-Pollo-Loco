@@ -1,12 +1,7 @@
-* {
-  margin: 0;
-  font-family: 'Maiden Orange';
-}
-
 .body-imprint {
   min-height: 100dvh;
   width: 100%;
-  background-image: url('assets/img/body_background/1.jpg');
+  background-image: url('../assets/img/body_background/1.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

@@ -9,9 +9,9 @@ let isMuted = false;
  */
 function getIdRefs() {
     return {
-        startScreenRef: document.getElementById('start_screen'),
-        menuScreenRef: document.getElementById('menu_screen'),
-        playScreenRef: document.getElementById('play_screen'),
+        // startScreenRef: document.getElementById('start_screen'),
+        // menuScreenRef: document.getElementById('menu_screen'),
+        // playScreenRef: document.getElementById('play_screen'),
         soundBoxImgStartRef: document.getElementById('sound_box_img'),
         soundBoxSpanStartRef: document.getElementById('sound_box_span'),
         soundBoxImgMenuRef: document.getElementById('sound_box_img_menu'),
@@ -38,17 +38,17 @@ function goToUrl(url) {
     window.location.href = url;
 }
 
-function menuScreen() {
-    const { startScreenRef, menuScreenRef } = getIdRefs();
-    startScreenRef.classList.add('d-none');
-    menuScreenRef.classList.add('d-flex');
-}
+// function menuScreen() {
+//     const { startScreenRef, menuScreenRef } = getIdRefs();
+//     startScreenRef.classList.add('d-none');
+//     menuScreenRef.classList.add('d-flex');
+// }
 
 
 function startGame() {
-    const { playScreenRef, menuScreenRef } = getIdRefs();
-    menuScreenRef.classList.remove('d-flex');
-    playScreenRef.classList.add('d-flex');
+    // const { playScreenRef, menuScreenRef } = getIdRefs();
+    // menuScreenRef.classList.remove('d-flex');
+    // playScreenRef.classList.add('d-flex');
 
     setTimeout(() => {
         setInterval(() => {
