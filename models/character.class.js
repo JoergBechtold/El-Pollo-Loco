@@ -2,7 +2,7 @@ class Character extends MovableObject {
     height = 280;
     width = 150;
     y = 155;
-    speed = 10;
+    speed = 7.5;
     world;
     inactivityTimer;
     inactivityTimeout = 10000;

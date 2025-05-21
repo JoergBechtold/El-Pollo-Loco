@@ -1,4 +1,4 @@
-
+let isMuted;
 /**
  * 
  * Retrieves references to various HTML elements by their respective IDs.
@@ -8,9 +8,6 @@
  */
 function getIdRefs() {
     return {
-        // startScreenRef: document.getElementById('start_screen'),
-        // menuScreenRef: document.getElementById('menu_screen'),
-        // playScreenRef: document.getElementById('play_screen'),
         soundBoxImgStartRef: document.getElementById('sound_box_img'),
         soundBoxSpanStartRef: document.getElementById('sound_box_span'),
         soundBoxImgMenuRef: document.getElementById('sound_box_img_menu'),
@@ -37,20 +34,20 @@ function goToUrl(url) {
     window.location.href = url;
 }
 
-// function menuScreen() {
-//     const { startScreenRef, menuScreenRef } = getIdRefs();
-//     startScreenRef.classList.add('d-none');
-//     menuScreenRef.classList.add('d-flex');
-// }
-let isMuted = localStorage.getItem('isMuted') === 'true';
+function initMenu() {
+    isMuted = localStorage.getItem('isMuted') === 'true';
+    console.log('Initialer isMuted-Status aus localStorage:', isMuted);
+    updateSoundToggleDisplay();
+}
 
-// isMuted = false;
-
+function initPlay() {
+    isMuted = localStorage.getItem('isMuted') === 'true';
+    console.log('Initialer isMuted-Status aus localStorage (Play):', isMuted);
+    updateSoundToggleDisplay();
+}
 
 function startGame() {
-    // const { playScreenRef, menuScreenRef } = getIdRefs();
-    // menuScreenRef.classList.remove('d-flex');
-    // playScreenRef.classList.add('d-flex');
+    initPlay();
 
     setTimeout(() => {
         setInterval(() => {
@@ -63,13 +60,17 @@ function startGame() {
     world = new World(canvas, keyboard);
 }
 
+
 function soundToggle() {
     isMuted = !isMuted;
+    localStorage.setItem('isMuted', isMuted);
+
     updateSoundToggleDisplay();
 }
 
 function updateSoundToggleDisplay() {
     const { soundBoxImgStartRef, soundBoxSpanStartRef, soundBoxImgMenuRef, soundBoxSpanMenuRef } = getIdRefs();
+
     const img = isMuted ? 'assets/icons/Audio-mute.png' : 'assets/icons/Audio-on.png';
     const audioStatus = isMuted ? 'Spiel Audio aus' : 'Spiel Audio an';
     const alt = isMuted ? 'Icon audio aus' : 'Icon audio an';
@@ -78,6 +79,7 @@ function updateSoundToggleDisplay() {
     allAudioArray.forEach(sound => {
         sound.muted = isMuted;
     });
+
 
     if (soundBoxImgStartRef && soundBoxSpanStartRef) {
         soundBoxImgStartRef.src = img;
@@ -93,3 +95,5 @@ function updateSoundToggleDisplay() {
         soundBoxSpanMenuRef.textContent = text;
     }
 }
+
+

@@ -27,17 +27,7 @@
     <script src="script.js"></script>
     <script src="js/game.js"></script>
   </head>
-  <body class="body-menu">
-    <!-- <div class="start-screen" id="start_screen">
-      <nav class="start-nav">
-        <button title="Menü" class="btn-desktop" onclick="menuScreen()">Menü</button>
-        <button title="Impressum" class="btn-desktop" onclick="goToUrl('imprint.html')">Impressum</button>
-      </nav>
-    </div> -->
-    <!-- <div title="Zurück" onclick="back()" class="arrow-back" id="arrow_back">
-      <img src="assets/icons/arrow-left.png" alt="Pfeil zurück" />
-    </div> -->
-
+  <body onload="initMenu()" class="body-menu">
     <div class="menu-screen" id="menu_screen">
       <nav class="menu-nav">
         <button title="Spiel Starten" class="btn-desktop" onclick="goToUrl('play.html')">Spiel Starten</button>
@@ -80,14 +70,5 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="play-screen" id="play_screen">
-      <h1>El Pollo Loco</h1>
-      <canvas id="canvas" width="720" height="480"> </canvas>
-      <div onclick="soundToggle()" class="sound-box" id="sound_box_menu">
-        <img id="sound_box_img_menu" title="Spiel Audio an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
-        <span id="sound_box_span_menu">Spiel Audio an</span>
-      </div>
-    </div> -->
   </body>
 </html>
