@@ -4,17 +4,14 @@ class Character extends MovableObject {
     y = 155;
     speed = 7.5;
     world;
-    inactivityTimer;
-    inactivityTimeout = 10000;
     isInactive = false;
     throwableBottleArray = [];
     CollectCoinsArray = [];
     bottles = [];
     lastThrow = 0;
     throwInterval = 500;
-
-    // idleTimer;
-    // lastActivityTime;
+    lastActivityTime = Date.now();
+    lengthOfInactivity = 5000;
 
 
     offset = {
@@ -87,8 +84,6 @@ class Character extends MovableObject {
         'assets/img/2_character_pepe/4_hurt/H-43.png'
     ]
 
-
-
     constructor() {
         super().loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png')
         this.loadImages(this.IMAGES_WALKING);
@@ -99,40 +94,19 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.applyGravity();
         this.animate();
-        // this.startInactivityTimer();
     }
 
-    // resetIdleTimer() {
-    //     clearTimeout(idleTimer);
-    //     lastActivityTime = Date.now();
-
-
-    //     idleTimer = setTimeout(() => {
-    //         console.log('Der Spieler war 15 Sekunden lang inaktiv!');
-
-
-    //     }, 15000);
-    // }
-
-
-
-    // startInactivityTimer() {
-    //     this.resetInactivityTimer(); 
-    //     window.addEventListener('keydown', this.resetInactivityTimer.bind(this));
-    // }
-
-    resetInactivityTimer() {
-        clearTimeout(this.inactivityTimer);
-        this.isInactive = false; //setze den Zustand auf false
-        this.inactivityTimer = setTimeout(() => {
-            this.isInactive = true; // Wenn der Timer abläuft, setze Zustand auf true
-            this.animate(); //trigger die Animation neu.
-        }, this.inactivityTimeout);
+    isIdle() {
+        let timePassed = Date.now() - this.lastActivityTime;
+        return timePassed > this.lengthOfInactivity;
     }
-
 
     animate() {
         setInterval(() => {
+
+            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE || this.world.keyboard.D) {
+                this.lastActivityTime = Date.now();
+            }
 
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
@@ -163,25 +137,21 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
-
         setInterval(() => {
+
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
                 death_sound.play();
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
                 hurt_sound.play();
+                this.lastActivityTime = Date.now();
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
-            } else if (this.world.keyboard.LEFT && this.world.keyboard.RIGHT) {
-                walkin_sound.pause();
-                walkin_sound.currentTime = 0;
-            } else if (this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_WALKING);
-            } else if (this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
+                this.lastActivityTime = Date.now();
+            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
-
 
             if (this.world.keyboard.D) {
                 let currentTime = new Date().getTime();
@@ -192,13 +162,24 @@ class Character extends MovableObject {
                     let bottle = new ThrowableObject(bottleX, this.y + 130, this.otherDirection);
                     this.bottles.push(bottle);
                     this.lastThrow = currentTime;
+                    this.lastActivityTime = Date.now();
                 }
             }
         }, 50);
 
         setInterval(() => {
-            this.playAnimation(this.IMAGES_IDLE);
-        }, 180);
+            const isCharacterMoving = this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE || this.world.keyboard.D;
+            if (!this.isDead() && !this.isHurt() && !this.isAboveGround() && !isCharacterMoving) {
+                if (this.isIdle()) {
+                    this.playAnimation(this.IMAGES_LONG_IDLE);
+                    snoring_audio.play()
+                } else {
+                    this.playAnimation(this.IMAGES_IDLE);
+                    snoring_audio.pause();
+                    snoring_audio.currentTime = 0;
+                }
+            }
+        }, 200);
     }
 }
 

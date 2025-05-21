@@ -1,6 +1,4 @@
 let isMuted;
-let idleTimer;
-let lastActivityTime;
 
 /**
  * 
@@ -37,36 +35,18 @@ function goToUrl(url) {
     window.location.href = url;
 }
 
-function initMenu() {
-    isMuted = localStorage.getItem('isMuted') === 'true';
-    updateSoundToggleDisplay();
-}
+// function initMenu() {
+//     isMuted = localStorage.getItem('isMuted') === 'true';
+//     updateSoundToggleDisplay();
+// }
 
 function initPlay() {
     isMuted = localStorage.getItem('isMuted') === 'true';
     updateSoundToggleDisplay();
 }
 
-function resetIdleTimer() {
-    clearTimeout(idleTimer);
-    lastActivityTime = Date.now();
-
-
-    idleTimer = setTimeout(() => {
-        console.log('Der Spieler war 15 Sekunden lang inaktiv!');
-
-
-    }, 15000);
-}
-
 function startGame() {
     initPlay();
-    resetIdleTimer();
-
-
-    document.addEventListener('keydown', (event) => {
-        resetIdleTimer();
-    });
 
     setTimeout(() => {
         setInterval(() => {
@@ -83,7 +63,6 @@ function startGame() {
 function soundToggle() {
     isMuted = !isMuted;
     localStorage.setItem('isMuted', isMuted);
-
     updateSoundToggleDisplay();
 }
 
