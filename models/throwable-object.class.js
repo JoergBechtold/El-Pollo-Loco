@@ -24,7 +24,7 @@ class ThrowableObject extends MovableObject {
 
 
 
-    constructor(x, y) {
+    constructor(x, y, otherDirection) {
         super().loadImage('assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMAGES_BOTTLES);
         this.loadImages(this.IMAGES_BOTTLE_SPLASH);
@@ -32,6 +32,7 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.height = 60;
         this.width = 50;
+        this.otherDirection = otherDirection;
         this.throw();
         this.splashWidth = 80;
         this.splashHeight = 80;
@@ -42,8 +43,9 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speedY = 30;
         this.applyGravity();
+        let throwSpeedX = this.otherDirection ? -10 : 10;
         let movementInterval = setInterval(() => {
-            this.x += 10;
+            this.x += throwSpeedX;
             if (this.y >= this.groundLevel) {
                 clearInterval(movementInterval);
                 this.playBottleSplash();

@@ -1,6 +1,8 @@
 class CollectCoins extends MovableObject {
     x = 300;
     y = 250;
+    height = 130;
+    width = 130;
 
     initialY;
     animationDirection = 1;
@@ -8,10 +10,10 @@ class CollectCoins extends MovableObject {
     animationRangeY = 12;
 
     offset = {
-        top: 52,
-        left: 32,
-        right: 32,
-        bottom: 51
+        top: 47,
+        left: 47,
+        right: 48,
+        bottom: 47
     };
 
 

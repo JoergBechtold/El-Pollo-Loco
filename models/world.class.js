@@ -9,6 +9,9 @@ class World {
   statusBarCoins = new StatusBar('coins');
   statusBarBottles = new StatusBar('bottle');
 
+  // idleTimer;
+  // lastActivityTime;
+
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
@@ -17,6 +20,18 @@ class World {
     this.setWorld();
     this.allwaysExecuted();
   }
+
+  // resetIdleTimer() {
+  //   clearTimeout(idleTimer);
+  //   lastActivityTime = Date.now();
+
+
+  //   idleTimer = setTimeout(() => {
+  //     console.log('15 sekunde nicht aktiv');
+
+
+  //   }, 15000);
+  // }
 
 
   setWorld() {

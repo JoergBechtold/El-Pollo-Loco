@@ -13,6 +13,10 @@ class Character extends MovableObject {
     lastThrow = 0;
     throwInterval = 500;
 
+    // idleTimer;
+    // lastActivityTime;
+
+
     offset = {
         top: 120,
         left: 30,
@@ -98,10 +102,24 @@ class Character extends MovableObject {
         // this.startInactivityTimer();
     }
 
-    startInactivityTimer() {
-        this.resetInactivityTimer(); // Initial beim Starten setzen
-        window.addEventListener('keydown', this.resetInactivityTimer.bind(this));
-    }
+    // resetIdleTimer() {
+    //     clearTimeout(idleTimer);
+    //     lastActivityTime = Date.now();
+
+
+    //     idleTimer = setTimeout(() => {
+    //         console.log('Der Spieler war 15 Sekunden lang inaktiv!');
+
+
+    //     }, 15000);
+    // }
+
+
+
+    // startInactivityTimer() {
+    //     this.resetInactivityTimer(); 
+    //     window.addEventListener('keydown', this.resetInactivityTimer.bind(this));
+    // }
 
     resetInactivityTimer() {
         clearTimeout(this.inactivityTimer);
@@ -170,10 +188,10 @@ class Character extends MovableObject {
                 let timeSinceLastThrow = currentTime - this.lastThrow;
 
                 if (timeSinceLastThrow >= this.throwInterval) {
-                    let bottle = new ThrowableObject(this.x + 80, this.y + 130);
+                    let bottleX = this.x + (this.otherDirection ? -5 : 80);
+                    let bottle = new ThrowableObject(bottleX, this.y + 130, this.otherDirection);
                     this.bottles.push(bottle);
                     this.lastThrow = currentTime;
-
                 }
             }
         }, 50);

@@ -7,11 +7,10 @@ let collect_bottle_audio = new Audio('assets/audio/collect-bottle.mp3');
 let death_sound = new Audio('assets/audio/death.mp3');
 let jump_sound = new Audio('assets/audio/jump.ogg');
 let landing_sound = new Audio('assets/audio/landing.mp3');
-let hurt_sound = new Audio('assets/audio/short-oww-46070.mp3');
+let hurt_sound = new Audio('assets/audio/hurt.mp3');
 let bottle_splash = new Audio('assets/audio/bottle-break.mp3');
 let collect_coin_audio = new Audio('assets/audio/collect-coin.mp3');
-
-
+let snoring_audio = new Audio('assets/audio/snoring.mp3');
 
 
 const allAudioArray = [
@@ -23,13 +22,15 @@ const allAudioArray = [
     landing_sound,
     hurt_sound,
     bottle_splash,
-    collect_coin_audio
+    collect_coin_audio,
+    snoring_audio
 ];
 
 game_music.volume = 0.1;
 collect_coin_audio.volume = 0.5;
+snoring_audio.volume = 1;
 
-// let isMuted = localStorage.getItem('isMuted') === 'true';
+
 
 
 

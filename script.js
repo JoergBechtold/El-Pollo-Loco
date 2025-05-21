@@ -1,4 +1,7 @@
 let isMuted;
+let idleTimer;
+let lastActivityTime;
+
 /**
  * 
  * Retrieves references to various HTML elements by their respective IDs.
@@ -36,18 +39,34 @@ function goToUrl(url) {
 
 function initMenu() {
     isMuted = localStorage.getItem('isMuted') === 'true';
-    console.log('Initialer isMuted-Status aus localStorage:', isMuted);
     updateSoundToggleDisplay();
 }
 
 function initPlay() {
     isMuted = localStorage.getItem('isMuted') === 'true';
-    console.log('Initialer isMuted-Status aus localStorage (Play):', isMuted);
     updateSoundToggleDisplay();
+}
+
+function resetIdleTimer() {
+    clearTimeout(idleTimer);
+    lastActivityTime = Date.now();
+
+
+    idleTimer = setTimeout(() => {
+        console.log('Der Spieler war 15 Sekunden lang inaktiv!');
+
+
+    }, 15000);
 }
 
 function startGame() {
     initPlay();
+    resetIdleTimer();
+
+
+    document.addEventListener('keydown', (event) => {
+        resetIdleTimer();
+    });
 
     setTimeout(() => {
         setInterval(() => {
