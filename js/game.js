@@ -27,7 +27,7 @@ const allAudioArray = [
 ];
 
 game_music.volume = 0.1;
-collect_coin_audio.volume = 0.5;
+collect_coin_audio.volume = 1;
 snoring_audio.volume = 1;
 
 

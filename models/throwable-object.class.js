@@ -56,7 +56,7 @@ class ThrowableObject extends MovableObject {
 
         this.animationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLES);
-        }, 250);
+        }, 1000 / 25);
     }
 
     playBottleSplash() {
@@ -65,7 +65,7 @@ class ThrowableObject extends MovableObject {
         this.height = this.splashHeight;
         setInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
-        }, 200);
+        }, 1000 / 25);
 
     }
 }
