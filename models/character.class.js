@@ -11,7 +11,7 @@ class Character extends MovableObject {
     lastThrow = 0;
     throwInterval = 500;
     lastActivityTime = Date.now();
-    lengthOfInactivity = 5000;
+    lengthOfInactivity = 8000;
 
 
     offset = {
