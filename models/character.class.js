@@ -96,6 +96,10 @@ class Character extends MovableObject {
         this.animate();
     }
 
+    resetsCharacterToY() {
+        return this.y = 155;
+    }
+
     isIdle() {
         let timePassed = Date.now() - this.lastActivityTime;
         return timePassed > this.lengthOfInactivity;
@@ -135,6 +139,7 @@ class Character extends MovableObject {
             }
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+
                 jump_sound.play();
                 this.jump();
             }

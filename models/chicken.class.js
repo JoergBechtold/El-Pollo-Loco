@@ -14,22 +14,44 @@ class Chicken extends MovableObject {
         'assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png'
     ];
 
+    IMAGE_DEAD = [
+        'assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
+    ];
+
     constructor() {
         super().loadImage('assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png')
+
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGE_DEAD);
         this.x = 400 + Math.random() * 2000;
         this.speed = 0.15 + Math.random() * 0.35;
         this.animate();
     }
 
     animate() {
+        // setInterval(() => {
+        //     this.moveLeft();
+        // }, 1000 / 60);
         setInterval(() => {
-            this.moveLeft();
+            if (!this.isDead()) { // Huhn bewegt sich nur, wenn es nicht tot ist
+                this.moveLeft();
+            }
         }, 1000 / 60);
 
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
+            if (this.isDead()) {
+                if (!this.isDeadAnimationPlayed) { // Nur einmal die Todesanimation abspielen
+                    this.playAnimation(this.IMAGE_DEAD);
+                    this.isDeadAnimationPlayed = true;
+                }
+            } else {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
         }, 150);
+
+        // setInterval(() => {
+        //     this.playAnimation(this.IMAGES_WALKING);
+        // }, 150);
     }
 
 }

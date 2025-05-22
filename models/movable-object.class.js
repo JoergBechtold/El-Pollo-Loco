@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
     groundLevel = 348;
+    isDeadAnimationPlayed = false;
 
     offset = {
         top: 0,
@@ -32,7 +33,6 @@ class MovableObject extends DrawableObject {
     }
 
 
-
     hit() {
         this.energy -= 5;
         if (this.energy < 0) {
@@ -54,8 +54,6 @@ class MovableObject extends DrawableObject {
     }
 
 
-
-
     isColliding(movableObject) {
         return this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&
             this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
@@ -63,9 +61,6 @@ class MovableObject extends DrawableObject {
             this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom;
     }
 
-    jumpColliding(movableObject) {
-        return this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top;
-    }
 
     moveRight() {
         this.x += this.speed;
@@ -90,7 +85,7 @@ class MovableObject extends DrawableObject {
     }
 
     bounce() {
-        this.speedY = 18;
+        this.speedY = 22;
     }
 
 
