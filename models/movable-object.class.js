@@ -73,7 +73,7 @@ class MovableObject extends DrawableObject {
 
 
     playAnimation(images) {
-        let index = this.currentImage % images.length; // modulo let index = 0 % 6;
+        let index = this.currentImage % images.length;
         let path = images[index];
         this.img = this.imageCache[path];
         this.currentImage++;

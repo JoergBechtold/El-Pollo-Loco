@@ -26,46 +26,66 @@ class World {
   allwaysExecuted() {
     setInterval(() => {
       this.checkCollisions();
-      this.collectBottleObject();
-      this.collectCoinObject();
+      this.collectObjects(this.level.bottlesArray, this.character.throwableBottleArray, 'assets/audio/collect-bottle.mp3', 1, 800);
+      this.collectObjects(this.level.coinsArray, this.character.CollectCoinsArray, 'assets/audio/collect-coin.mp3', 0.5, 500);
+
+      // this.collectBottleObject();
+      // this.collectCoinObject();
     }, 50);
   }
 
-  collectBottleObject() {
-    this.level.bottlesArray.forEach((bottle, index) => {
-      if (this.character.isColliding(bottle)) {
-        this.character.throwableBottleArray.push(bottle);
-        this.level.bottlesArray.splice(index, 1);
-        // collect_bottle_audio.play();
-        let collect_bottle_audio = new Audio('assets/audio/collect-bottle.mp3');
-        collect_bottle_audio.volume = 1;
-        collect_bottle_audio.play();
+  // collectBottleObject() {
+  //   this.level.bottlesArray.forEach((bottle, index) => {
+  //     if (this.character.isColliding(bottle)) {
+  //       this.character.throwableBottleArray.push(bottle);
+  //       this.level.bottlesArray.splice(index, 1);
 
-        setTimeout(() => {
-          collect_bottle_audio.pause();
-          collect_bottle_audio.currentTime = 0;
-        }, 800);
-      }
-    });
+  //       let collect_bottle_audio = new Audio('assets/audio/collect-bottle.mp3');
+  //       collect_bottle_audio.volume = 1;
+  //       collect_bottle_audio.play();
 
-  }
+  //       setTimeout(() => {
+  //         collect_bottle_audio.pause();
+  //         collect_bottle_audio.currentTime = 0;
+  //       }, 800);
+  //     }
+  //   });
 
-  collectCoinObject() {
-    this.level.coinsArray.forEach((coin, index) => {
-      if (this.character.isColliding(coin)) {
-        this.character.CollectCoinsArray.push(coin);
-        this.level.coinsArray.splice(index, 1);
+  // }
+
+  // collectCoinObject() {
+  //   this.level.coinsArray.forEach((coin, index) => {
+  //     if (this.character.isColliding(coin)) {
+  //       this.character.CollectCoinsArray.push(coin);
+  //       this.level.coinsArray.splice(index, 1);
+
+  //       let collect_coin_audio = new Audio('assets/audio/collect-coin.mp3');
+  //       collect_coin_audio.volume = 0.5;
+  //       collect_coin_audio.play();
+
+  //       setTimeout(() => {
+  //         collect_coin_audio.pause();
+  //         collect_coin_audio.currentTime = 0;
+  //       }, 500);
+  //     }
+  //   });
+  // }
+
+
+  collectObjects(levelArray, characterItemArrays, audioPath, audioVolume, timeoutMs) {
+    levelArray.forEach((singleObject, index) => {
+      if (this.character.isColliding(singleObject)) {
+        characterItemArrays.push(singleObject);
+        levelArray.splice(index, 1);
         // collect_coin_audio.play();
-        let collect_coin_audio = new Audio('assets/audio/collect-coin.mp3');
-        collect_coin_audio.volume = 0.5;
-        collect_coin_audio.play();
-
-
+        let objectAudio = new Audio(audioPath);
+        objectAudio.volume = audioVolume;
+        objectAudio.play();
 
         setTimeout(() => {
-          collect_coin_audio.pause();
-          collect_coin_audio.currentTime = 0;
-        }, 500);
+          objectAudio.pause();
+          objectAudio.currentTime = 0;
+        }, timeoutMs);
       }
     });
   }
@@ -85,8 +105,6 @@ class World {
 
             this.character.bounce();
             this.character.resetsCharacterToY();
-
-
 
             setTimeout(() => {
               this.level.enemiesArray.splice(index, 1);
