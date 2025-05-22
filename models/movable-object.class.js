@@ -63,6 +63,10 @@ class MovableObject extends DrawableObject {
             this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom;
     }
 
+    jumpColliding(movableObject) {
+        return this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top;
+    }
+
     moveRight() {
         this.x += this.speed;
     }
@@ -83,6 +87,10 @@ class MovableObject extends DrawableObject {
     jump() {
         this.speedY = 26;
 
+    }
+
+    bounce() {
+        this.speedY = 18;
     }
 
 

@@ -9,9 +9,6 @@ class World {
   statusBarCoins = new StatusBar('coins');
   statusBarBottles = new StatusBar('bottle');
 
-  // idleTimer;
-  // lastActivityTime;
-
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
@@ -20,18 +17,6 @@ class World {
     this.setWorld();
     this.allwaysExecuted();
   }
-
-  // resetIdleTimer() {
-  //   clearTimeout(idleTimer);
-  //   lastActivityTime = Date.now();
-
-
-  //   idleTimer = setTimeout(() => {
-  //     console.log('15 sekunde nicht aktiv');
-
-
-  //   }, 15000);
-  // }
 
 
   setWorld() {
@@ -98,12 +83,15 @@ class World {
       if (this.character.isColliding(bottle)) {
         this.character.throwableBottleArray.push(bottle);
         this.level.bottlesArray.splice(index, 1);
+        // collect_bottle_audio.play();
+        let collect_bottle_audio = new Audio('assets/audio/collect-bottle.mp3');
+        collect_bottle_audio.volume = 1;
         collect_bottle_audio.play();
 
         setTimeout(() => {
           collect_bottle_audio.pause();
           collect_bottle_audio.currentTime = 0;
-        }, 1100);
+        }, 800);
       }
     });
 
@@ -114,7 +102,12 @@ class World {
       if (this.character.isColliding(coin)) {
         this.character.CollectCoinsArray.push(coin);
         this.level.coinsArray.splice(index, 1);
+        // collect_coin_audio.play();
+        let collect_coin_audio = new Audio('assets/audio/collect-coin.mp3');
+        collect_coin_audio.volume = 0.5;
         collect_coin_audio.play();
+
+
 
         setTimeout(() => {
           collect_coin_audio.pause();
@@ -125,24 +118,63 @@ class World {
   }
 
 
-
-
   checkCollisions() {
-    this.level.enemiesArray.forEach((enemy) => {
+    this.level.enemiesArray.forEach((enemy, index) => {
       if (this.character.isColliding(enemy)) {
-        this.character.hit();
-        this.statusBarHealth.setPercentage(this.character.energy)
+
+        if (this.character.isAboveGround() && this.character.speedY < 0) {
+          console.log('Gegner getroffen durch Sprung! Gegner stirbt.');
+
+          let bounceSound = new Audio('assets/audio/bouncing.mp3');
+          bounceSound.volume = 0.5;
+          bounceSound.play();
+
+
+          setTimeout(() => {
+            bounceSound.pause();
+            bounceSound.currentTime = 0;
+
+          }, 500);
+          this.character.bounce();
+          this.level.enemiesArray.splice(index, 1);
+
+        } else if (!this.character.isAboveGround()) {
+
+
+          this.character.hit();
+          this.statusBarHealth.setPercentage(this.character.energy);
+        }
       }
     });
   }
 
-  checkBottleCollision() {
-    this.level.enemiesArray.forEach((enemy) => {
-      if (this.bottle.isColliding(enemy)) {
-        console.log('treffer 1');
-      }
-    });
-  }
+
+  // checkCollisions() {
+  //   this.level.enemiesArray.forEach((enemy) => {
+  //     if (this.character.isColliding(enemy)) {
+  //       if (!this.character.isAboveGround()) {
+  //         this.character.hit();
+  //         this.statusBarHealth.setPercentage(this.character.energy)
+  //       }
+
+  //     }
+  //     if (this.character.jumpColliding(enemy)) {
+  //       if (this.character.isAboveGround()) {
+  //         console.log('treffer beim gegner');
+
+  //       }
+
+  //     }
+  //   });
+  // }
+
+  // checkBottleCollision() {
+  //   this.level.enemiesArray.forEach((enemy) => {
+  //     if (this.bottle.isColliding(enemy)) {
+  //       console.log('treffer 1');
+  //     }
+  //   });
+  // }
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)

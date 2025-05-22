@@ -101,6 +101,10 @@ class Character extends MovableObject {
         return timePassed > this.lengthOfInactivity;
     }
 
+    isFalling() {
+        return this.isAboveGround() && this.speedY > 0;
+    }
+
     animate() {
         setInterval(() => {
 
