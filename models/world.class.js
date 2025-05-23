@@ -54,7 +54,7 @@ class World {
     if (this.totalBottlesInLevel > 0) {
       let currentBottles = this.character.throwableBottleArray.length;
       let percentage = (currentBottles / this.totalBottlesInLevel) * 100;
-      this.statusBarBottles.setPercentage(Math.min(percentage, 100));
+      this.statusBarBottles.setPercentage(percentage);
     } else {
       this.statusBarBottles.setPercentage(100);
     }
