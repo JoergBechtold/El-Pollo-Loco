@@ -35,11 +35,6 @@ function goToUrl(url) {
     window.location.href = url;
 }
 
-// function initMenu() {
-//     isMuted = localStorage.getItem('isMuted') === 'true';
-//     updateSoundToggleDisplay();
-// }
-
 function initPlay() {
     isMuted = localStorage.getItem('isMuted') === 'true';
     updateSoundToggleDisplay();

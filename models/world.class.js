@@ -26,67 +26,37 @@ class World {
   allwaysExecuted() {
     setInterval(() => {
       this.checkCollisions();
-      this.collectObjects(this.level.bottlesArray, this.character.throwableBottleArray, collect_bottle_audio, 800);
-      this.collectObjects(this.level.coinsArray, this.character.CollectCoinsArray, collect_coin_audio, 500);
-
-      // this.collectBottleObject();
-      // this.collectCoinObject();
+      this.collectObjects(this.level.bottlesArray, this.character.throwableBottleArray, PATH_COLLECT_BOTTLE_AUDIO, collect_bottle_audio, 800);
+      this.collectObjects(this.level.coinsArray, this.character.CollectCoinsArray, PATH_COLLECT_COIN_AUDIO, collect_coin_audio, 500);
     }, 50);
   }
 
-  // collectBottleObject() {
-  //   this.level.bottlesArray.forEach((bottle, index) => {
-  //     if (this.character.isColliding(bottle)) {
-  //       this.character.throwableBottleArray.push(bottle);
-  //       this.level.bottlesArray.splice(index, 1);
-
-  //       let collect_bottle_audio = new Audio('assets/audio/collect-bottle.mp3');
-  //       collect_bottle_audio.volume = 1;
-  //       collect_bottle_audio.play();
-
-  //       setTimeout(() => {
-  //         collect_bottle_audio.pause();
-  //         collect_bottle_audio.currentTime = 0;
-  //       }, 800);
-  //     }
-  //   });
-
-  // }
-
-  // collectCoinObject() {
-  //   this.level.coinsArray.forEach((coin, index) => {
-  //     if (this.character.isColliding(coin)) {
-  //       this.character.CollectCoinsArray.push(coin);
-  //       this.level.coinsArray.splice(index, 1);
-
-  //       let collect_coin_audio = new Audio('assets/audio/collect-coin.mp3');
-  //       collect_coin_audio.volume = 0.5;
-  //       collect_coin_audio.play();
-
-  //       setTimeout(() => {
-  //         collect_coin_audio.pause();
-  //         collect_coin_audio.currentTime = 0;
-  //       }, 500);
-  //     }
-  //   });
-  // }
 
 
-  collectObjects(levelArray, characterItemArrays, audio, timeoutMs) {
+
+  collectObjects(levelArray, characterItemArrays, audioPath, audio, timeoutMs) {
     levelArray.forEach((singleObject, index) => {
       if (this.character.isColliding(singleObject)) {
         characterItemArrays.push(singleObject);
         levelArray.splice(index, 1);
         // let objectAudio = new Audio(audioPath);
-        let objectAudio = audio;
+        audio = new Audio(audioPath);
+
+        if (!isMuted) {
+          audio.play();
+          setTimeout(() => {
+            audio.pause();
+            audio.currentTime = 0;
+          }, timeoutMs);
+        }
 
         // objectAudio.volume = audioVolume;
-        objectAudio.play();
+        // array.play();
 
-        setTimeout(() => {
-          objectAudio.pause();
-          objectAudio.currentTime = 0;
-        }, timeoutMs);
+        // setTimeout(() => {
+        //   array.pause();
+        //   array.currentTime = 0;
+        // }, timeoutMs);
       }
     });
   }
@@ -100,17 +70,22 @@ class World {
             enemy.energy = 0;
             enemy.isDeadAnimationPlayed = false;
 
-            let bounceSound = new Audio('assets/audio/bouncing.mp3');
-            bounceSound.volume = 0.5;
-            bounceSound.play();
+            if (!isMuted) {
+              bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
+              bouncing_audio.volume = 0.5;
+              bouncing_audio.play();
+              setTimeout(() => {
+                this.level.enemiesArray.splice(index, 1);
+                bouncing_audio.pause();
+                bouncing_audio.currentTime = 0;
+              }, 500);
+            }
 
             this.character.bounce();
             this.character.resetsCharacterToY();
 
             setTimeout(() => {
               this.level.enemiesArray.splice(index, 1);
-              bounceSound.pause();
-              bounceSound.currentTime = 0;
             }, 500);
           } else if (!this.character.isAboveGround()) {
             this.character.hit();
