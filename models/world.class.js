@@ -104,7 +104,7 @@ class World {
           }, 500);
         } else if (!enemy.isDead()) {
           this.character.hit();
-          // Gesundheitsleiste wird über updateStatusBars() regelmäßig aktualisiert
+
         }
       }
     });
