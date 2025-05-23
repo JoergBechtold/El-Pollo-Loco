@@ -26,8 +26,8 @@ class World {
   allwaysExecuted() {
     setInterval(() => {
       this.checkCollisions();
-      this.collectObjects(this.level.bottlesArray, this.character.throwableBottleArray, 'assets/audio/collect-bottle.mp3', 1, 800);
-      this.collectObjects(this.level.coinsArray, this.character.CollectCoinsArray, 'assets/audio/collect-coin.mp3', 0.5, 500);
+      this.collectObjects(this.level.bottlesArray, this.character.throwableBottleArray, collect_bottle_audio, 800);
+      this.collectObjects(this.level.coinsArray, this.character.CollectCoinsArray, collect_coin_audio, 500);
 
       // this.collectBottleObject();
       // this.collectCoinObject();
@@ -72,14 +72,15 @@ class World {
   // }
 
 
-  collectObjects(levelArray, characterItemArrays, audioPath, audioVolume, timeoutMs) {
+  collectObjects(levelArray, characterItemArrays, audio, timeoutMs) {
     levelArray.forEach((singleObject, index) => {
       if (this.character.isColliding(singleObject)) {
         characterItemArrays.push(singleObject);
         levelArray.splice(index, 1);
-        // collect_coin_audio.play();
-        let objectAudio = new Audio(audioPath);
-        objectAudio.volume = audioVolume;
+        // let objectAudio = new Audio(audioPath);
+        let objectAudio = audio;
+
+        // objectAudio.volume = audioVolume;
         objectAudio.play();
 
         setTimeout(() => {
@@ -95,7 +96,7 @@ class World {
       if (this.character.isColliding(enemy)) {
 
         if (this.character.isAboveGround() && this.character.speedY < 0) {
-          if (enemy instanceof Chicken && !enemy.isDead()) {
+          if (enemy instanceof Chicken || enemy instanceof Chick && !enemy.isDead()) {
             enemy.energy = 0;
             enemy.isDeadAnimationPlayed = false;
 
@@ -134,7 +135,7 @@ class World {
 
 
 
-          if (enemy instanceof Chicken) {
+          if (enemy instanceof Chicken || enemy instanceof Chick) {
             enemy.energy = 0;
             enemy.isDeadAnimationPlayed = false;
             setTimeout(() => {

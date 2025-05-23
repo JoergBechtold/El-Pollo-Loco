@@ -3,34 +3,35 @@ let world;
 let keyboard = new Keyboard();
 let walkin_sound = new Audio('assets/audio/running.mp3');
 let game_music = new Audio('assets/audio/game-musik.mp3');
-// let collect_bottle_audio = new Audio('assets/audio/collect-bottle.mp3');
+let collect_bottle_audio = new Audio('assets/audio/collect-bottle.mp3');
 let death_sound = new Audio('assets/audio/death.mp3');
 let jump_sound = new Audio('assets/audio/jump.ogg');
 let landing_sound = new Audio('assets/audio/landing.mp3');
 let hurt_sound = new Audio('assets/audio/hurt.mp3');
 let bottle_splash = new Audio('assets/audio/bottle-break.mp3');
-// let collect_coin_audio = new Audio('assets/audio/collect-coin.mp3');
+let collect_coin_audio = new Audio('assets/audio/collect-coin.mp3');
 let snoring_audio = new Audio('assets/audio/snoring.mp3');
-// let bouncing_audio = new Audio('assets/audio/bouncing.mp3');
+let bouncing_audio = new Audio('assets/audio/bouncing.mp3');
 
 
 
 const allAudioArray = [
     walkin_sound,
     game_music,
-    // collect_bottle_audio,
+    collect_bottle_audio,
     death_sound,
     jump_sound,
     landing_sound,
     hurt_sound,
     bottle_splash,
-    // collect_coin_audio,
+    collect_coin_audio,
     snoring_audio,
-    // bouncing_audio
+    bouncing_audio
 ];
 
 game_music.volume = 0.1;
-// collect_coin_audio.volume = 1;
+collect_bottle_audio.volume = 1;
+collect_coin_audio.volume = 1;
 snoring_audio.volume = 1;
 
 

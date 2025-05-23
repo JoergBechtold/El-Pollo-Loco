@@ -48,11 +48,11 @@ function initPlay() {
 function startGame() {
     initPlay();
 
-    setTimeout(() => {
-        setInterval(() => {
-            game_music.play();
-        }, 1400);
-    }, 500);
+
+    setInterval(() => {
+        game_music.play();
+    }, 1400);
+
 
     initLevel()
     canvas = document.getElementById('canvas');
