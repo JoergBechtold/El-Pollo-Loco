@@ -9,6 +9,9 @@ class World {
   statusBarCoins = new StatusBar('coins');
   statusBarBottles = new StatusBar('bottle');
 
+  totalCoinsInLevel;
+  totalBottlesInLevel;
+
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
@@ -16,6 +19,10 @@ class World {
     this.draw();
     this.setWorld();
     this.allwaysExecuted();
+
+    this.totalCoinsInLevel = this.level.coinsArray.length;
+    this.totalBottlesInLevel = this.level.bottlesArray.length;
+
   }
 
 
@@ -27,8 +34,29 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.collectObjects(this.level.bottlesArray, this.character.throwableBottleArray, PATH_COLLECT_BOTTLE_AUDIO, collect_bottle_audio_volume, 800);
-      this.collectObjects(this.level.coinsArray, this.character.CollectCoinsArray, PATH_COLLECT_COIN_AUDIO, collect_coin_audio_volume, 500);
+      this.collectObjects(this.level.coinsArray, this.character.collectCoinsArray, PATH_COLLECT_COIN_AUDIO, collect_coin_audio_volume, 500);
+      this.updateStatusBars(); // Neue, zentrale Update-Methode
     }, 50);
+  }
+
+  updateStatusBars() {
+    // Gesundheitsleiste (wird bei Treffer aktualisiert)
+    this.statusBarHealth.setPercentage(this.character.energy);
+
+    // Münz-Statusleiste
+    if (this.totalCoinsInLevel > 0) {
+      let collectedCoins = this.character.collectCoinsArray.length;
+      let percentage = (collectedCoins / this.totalCoinsInLevel) * 100;
+      this.statusBarCoins.setPercentage(percentage);
+    } else {
+      this.statusBarCoins.setPercentage(100); // Wenn keine Münzen da sind, zeige voll
+    }
+
+    // Flaschen-Statusleiste
+    const maxBottles = 5; // Deine maximale Anzahl an Flaschen
+    let currentBottles = this.character.throwableBottleArray.length;
+    let percentage = (currentBottles / maxBottles) * 100;
+    this.statusBarBottles.setPercentage(Math.min(percentage, 100)); // Nicht über 100% gehen
   }
 
 
@@ -39,7 +67,6 @@ class World {
       if (this.character.isColliding(singleObject)) {
         characterItemArrays.push(singleObject);
         levelArray.splice(index, 1);
-
 
         if (!isMuted) {
           let audio = new Audio(audioPath);
@@ -58,57 +85,57 @@ class World {
   //   this.level.enemiesArray.forEach((enemy, index) => {
   //     if (this.character.isColliding(enemy)) {
 
-  //       if (this.character.isAboveGround() && this.character.speedY < 0) {
-  //         if (enemy instanceof Chicken || enemy instanceof Chick && !enemy.isDead()) {
-  //           enemy.energy = 0;
-  //           enemy.isDeadAnimationPlayed = false;
+  //       if (this.character.isAboveGround() && this.character.speedY < 0 && (enemy instanceof Chicken || enemy instanceof Chick) && !enemy.isDead()) {
+  //         enemy.energy = 0;
+  //         enemy.isDeadAnimationPlayed = false;
 
-  //           if (!isMuted) {
-  //             bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
-  //             bouncing_audio.volume = 0.5;
-  //             bouncing_audio.play();
-  //             setTimeout(() => {
-  //               bouncing_audio.pause();
-  //               bouncing_audio.currentTime = 0;
-  //             }, 500);
-  //           }
-
-  //           this.character.bounce();
-  //           this.character.resetsCharacterToY();
-
+  //         if (!isMuted) {
+  //           let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
+  //           bouncing_audio.volume = bouncing_audio_volume;
+  //           bouncing_audio.play();
   //           setTimeout(() => {
-  //             this.level.enemiesArray.splice(index, 1);
+  //             bouncing_audio.pause();
+  //             bouncing_audio.currentTime = 0;
   //           }, 500);
-  //         } else if (!this.character.isAboveGround()) {
-  //           this.character.hit();
-  //           this.statusBarHealth.setPercentage(this.character.energy);
   //         }
-  //       } else if (!this.character.isAboveGround() && !enemy.isDead()) {
+
+  //         this.character.bounce();
+  //         this.character.resetsCharacterToY();
+
+  //         setTimeout(() => {
+  //           this.level.enemiesArray.splice(index, 1);
+  //         }, 500);
+  //       }
+
+  //       else if (!enemy.isDead()) {
   //         this.character.hit();
   //         this.statusBarHealth.setPercentage(this.character.energy);
   //       }
   //     }
   //   });
 
-  //   // flaschen treffer
+  //   //throwing bottle
   //   this.character.bottles.forEach((bottle, bottleIndex) => {
   //     this.level.enemiesArray.forEach((enemy, enemyIndex) => {
   //       if (bottle.isColliding(enemy) && !enemy.isDead()) {
-  //         console.log('treffer');
-
-  //         // let bounceSound = new Audio('assets/audio/bouncing.mp3');
-  //         // bounceSound.volume = 0.5;
-  //         // bounceSound.play();
-
-
 
   //         if (enemy instanceof Chicken || enemy instanceof Chick) {
   //           enemy.energy = 0;
   //           enemy.isDeadAnimationPlayed = false;
+  //           if (!isMuted) {
+  //             let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
+  //             chicken_death_audio.volume = chicken_death_audio_volume;
+  //             chicken_death_audio.play();
+  //             setTimeout(() => {
+  //               chicken_death_audio.pause();
+  //               chicken_death_audio.currentTime = 0;
+  //             }, 500);
+  //           }
   //           setTimeout(() => {
   //             this.level.enemiesArray.splice(enemyIndex, 1);
   //           }, 500);
   //         }
+
 
   //         // this.character.bottles.splice(bottleIndex, 1);
   //       }
@@ -140,11 +167,9 @@ class World {
           setTimeout(() => {
             this.level.enemiesArray.splice(index, 1);
           }, 500);
-        }
-
-        else if (!enemy.isDead()) {
+        } else if (!enemy.isDead()) {
           this.character.hit();
-          this.statusBarHealth.setPercentage(this.character.energy);
+          // Gesundheitsleiste wird über updateStatusBars() regelmäßig aktualisiert
         }
       }
     });
@@ -170,9 +195,7 @@ class World {
               this.level.enemiesArray.splice(enemyIndex, 1);
             }, 500);
           }
-
-
-          // this.character.bottles.splice(bottleIndex, 1);
+          this.character.bottles.splice(bottleIndex, 1);
         }
       });
     });
