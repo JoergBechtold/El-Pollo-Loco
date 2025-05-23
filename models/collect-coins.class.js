@@ -20,9 +20,12 @@ class CollectCoins extends MovableObject {
 
     constructor(path) {
         super().loadImage(path);
-        this.x = 300 + Math.random() * 2000;
-        this.y = 110 + Math.random() * 210;
 
+        let randomX = 300 + Math.random() * 2000;
+        this.x = Math.round(randomX / 20) * 20;
+
+        let randomY = 110 + Math.random() * 210;
+        this.y = Math.round(randomY / 20) * 20;
 
         this.initialY = this.y;
         this.animateFloating();

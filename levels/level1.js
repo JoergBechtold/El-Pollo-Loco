@@ -63,7 +63,7 @@ function initLevel() {
       new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-left.png'),
       new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
       new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
-      new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
+      // new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
     ],
 
     [
@@ -72,7 +72,7 @@ function initLevel() {
       new CollectCoins('assets/img/8_coin/coin_1.png'),
       new CollectCoins('assets/img/8_coin/coin_2.png'),
       new CollectCoins('assets/img/8_coin/coin_1.png'),
-      new CollectCoins('assets/img/8_coin/coin_2.png'),
+      // new CollectCoins('assets/img/8_coin/coin_2.png'),
     ]
 
     // [
