@@ -26,15 +26,15 @@ class World {
   allwaysExecuted() {
     setInterval(() => {
       this.checkCollisions();
-      this.collectObjects(this.level.bottlesArray, this.character.throwableBottleArray, PATH_COLLECT_BOTTLE_AUDIO, 800);
-      this.collectObjects(this.level.coinsArray, this.character.CollectCoinsArray, PATH_COLLECT_COIN_AUDIO, 500);
+      this.collectObjects(this.level.bottlesArray, this.character.throwableBottleArray, PATH_COLLECT_BOTTLE_AUDIO, collect_bottle_audio_volume, 800);
+      this.collectObjects(this.level.coinsArray, this.character.CollectCoinsArray, PATH_COLLECT_COIN_AUDIO, collect_coin_audio_volume, 500);
     }, 50);
   }
 
 
 
 
-  collectObjects(levelArray, characterItemArrays, audioPath, timeoutMs) {
+  collectObjects(levelArray, characterItemArrays, audioPath, volume, timeoutMs) {
     levelArray.forEach((singleObject, index) => {
       if (this.character.isColliding(singleObject)) {
         characterItemArrays.push(singleObject);
@@ -44,6 +44,7 @@ class World {
         if (!isMuted) {
           let audio = new Audio(audioPath);
           audio.play();
+          audio.volume = volume
           setTimeout(() => {
             audio.pause();
             audio.currentTime = 0;
@@ -125,7 +126,7 @@ class World {
 
           if (!isMuted) {
             let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
-            bouncing_audio.volume = 0.5;
+            bouncing_audio.volume = bouncing_audio_volume;
             bouncing_audio.play();
             setTimeout(() => {
               bouncing_audio.pause();
@@ -152,19 +153,13 @@ class World {
     this.character.bottles.forEach((bottle, bottleIndex) => {
       this.level.enemiesArray.forEach((enemy, enemyIndex) => {
         if (bottle.isColliding(enemy) && !enemy.isDead()) {
-          console.log('treffer');
-
-
-          // let bounceSound = new Audio('assets/audio/bouncing.mp3');
-          // bounceSound.volume = 0.5;
-          // bounceSound.play();
 
           if (enemy instanceof Chicken || enemy instanceof Chick) {
             enemy.energy = 0;
             enemy.isDeadAnimationPlayed = false;
             if (!isMuted) {
               let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
-              chicken_death_audio.volume = 1;
+              chicken_death_audio.volume = chicken_death_audio_volume;
               chicken_death_audio.play();
               setTimeout(() => {
                 chicken_death_audio.pause();

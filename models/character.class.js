@@ -182,13 +182,14 @@ class Character extends MovableObject {
                 if (this.isIdle()) {
                     this.playAnimation(this.IMAGES_LONG_IDLE);
                     snoring_audio.play()
-                    game_music.volume = 0.03
+                    snoring_audio.volume = snoring_audio_volume;
+                    game_music.volume = game_music_volume_silence;
 
                 } else {
                     this.playAnimation(this.IMAGES_IDLE);
                     snoring_audio.pause();
                     snoring_audio.currentTime = 0;
-                    game_music.volume = 0.1
+                    game_music.volume = game_music_volume_loude;
                 }
             }
         }, 200);
