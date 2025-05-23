@@ -195,7 +195,7 @@ class World {
               this.level.enemiesArray.splice(enemyIndex, 1);
             }, 500);
           }
-          this.character.bottles.splice(bottleIndex, 1);
+
         }
       });
     });
