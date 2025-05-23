@@ -47,16 +47,12 @@ class World {
       let collectedCoins = this.character.collectCoinsArray.length;
       let percentage = (collectedCoins / this.totalCoinsInLevel) * 100;
       this.statusBarCoins.setPercentage(percentage);
-    } else {
-      this.statusBarCoins.setPercentage(100);
     }
 
     if (this.totalBottlesInLevel > 0) {
       let currentBottles = this.character.throwableBottleArray.length;
       let percentage = (currentBottles / this.totalBottlesInLevel) * 100;
       this.statusBarBottles.setPercentage(percentage);
-    } else {
-      this.statusBarBottles.setPercentage(100);
     }
   }
 
