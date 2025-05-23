@@ -17,6 +17,8 @@ let keyboard = new Keyboard();
 const PATH_COLLECT_BOTTLE_AUDIO = 'assets/audio/collect-bottle.mp3';
 const PATH_COLLECT_COIN_AUDIO = 'assets/audio/collect-coin.mp3';
 const PATH_BOUNCING_AUDIO = 'assets/audio/bouncing.mp3';
+const PATH_CHICKEN_DEATH_AUDIO = 'assets/audio/chicken-dead.mp3';
+
 
 let walkin_sound = new Audio('assets/audio/running.mp3');
 let game_music = new Audio('assets/audio/game-musik.mp3');
@@ -26,29 +28,27 @@ let jump_sound = new Audio('assets/audio/jump.ogg');
 let hurt_sound = new Audio('assets/audio/hurt.mp3');
 let bottle_splash = new Audio('assets/audio/bottle-break.mp3');
 
-let collect_bottle_audio;
-let collect_coin_audio;
-let bouncing_audio;
+// let collect_bottle_audio = '';
+// let collect_coin_audio = '';
+// let bouncing_audio = '';
+// let chicken_death_audio = '';
 
 
 
 const allAudioArray = [
     walkin_sound,
     game_music,
-    // collect_bottle_audio,
     death_sound,
     jump_sound,
     hurt_sound,
     bottle_splash,
-    // collect_coin_audio,
     snoring_audio,
-    // bouncing_audio
 ];
 
 game_music.volume = 0.1;
 // collect_bottle_audio.volume = 1;
 // collect_coin_audio.volume = 1;
-// snoring_audio.volume = 1;
+snoring_audio.volume = 1;
 
 
 

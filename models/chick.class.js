@@ -4,7 +4,7 @@ class Chick extends MovableObject {
     height = 50;
     width = 70;
     offset = {
-        top: 5,
+        top: -10,
         left: 10,
         right: 10,
         bottom: 5

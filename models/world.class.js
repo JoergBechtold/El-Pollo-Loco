@@ -26,97 +26,156 @@ class World {
   allwaysExecuted() {
     setInterval(() => {
       this.checkCollisions();
-      this.collectObjects(this.level.bottlesArray, this.character.throwableBottleArray, PATH_COLLECT_BOTTLE_AUDIO, collect_bottle_audio, 800);
-      this.collectObjects(this.level.coinsArray, this.character.CollectCoinsArray, PATH_COLLECT_COIN_AUDIO, collect_coin_audio, 500);
+      this.collectObjects(this.level.bottlesArray, this.character.throwableBottleArray, PATH_COLLECT_BOTTLE_AUDIO, 800);
+      this.collectObjects(this.level.coinsArray, this.character.CollectCoinsArray, PATH_COLLECT_COIN_AUDIO, 500);
     }, 50);
   }
 
 
 
 
-  collectObjects(levelArray, characterItemArrays, audioPath, audio, timeoutMs) {
+  collectObjects(levelArray, characterItemArrays, audioPath, timeoutMs) {
     levelArray.forEach((singleObject, index) => {
       if (this.character.isColliding(singleObject)) {
         characterItemArrays.push(singleObject);
         levelArray.splice(index, 1);
-        // let objectAudio = new Audio(audioPath);
-        audio = new Audio(audioPath);
+
 
         if (!isMuted) {
+          let audio = new Audio(audioPath);
           audio.play();
           setTimeout(() => {
             audio.pause();
             audio.currentTime = 0;
           }, timeoutMs);
         }
-
-        // objectAudio.volume = audioVolume;
-        // array.play();
-
-        // setTimeout(() => {
-        //   array.pause();
-        //   array.currentTime = 0;
-        // }, timeoutMs);
       }
     });
   }
+
+  // checkCollisions() {
+  //   this.level.enemiesArray.forEach((enemy, index) => {
+  //     if (this.character.isColliding(enemy)) {
+
+  //       if (this.character.isAboveGround() && this.character.speedY < 0) {
+  //         if (enemy instanceof Chicken || enemy instanceof Chick && !enemy.isDead()) {
+  //           enemy.energy = 0;
+  //           enemy.isDeadAnimationPlayed = false;
+
+  //           if (!isMuted) {
+  //             bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
+  //             bouncing_audio.volume = 0.5;
+  //             bouncing_audio.play();
+  //             setTimeout(() => {
+  //               bouncing_audio.pause();
+  //               bouncing_audio.currentTime = 0;
+  //             }, 500);
+  //           }
+
+  //           this.character.bounce();
+  //           this.character.resetsCharacterToY();
+
+  //           setTimeout(() => {
+  //             this.level.enemiesArray.splice(index, 1);
+  //           }, 500);
+  //         } else if (!this.character.isAboveGround()) {
+  //           this.character.hit();
+  //           this.statusBarHealth.setPercentage(this.character.energy);
+  //         }
+  //       } else if (!this.character.isAboveGround() && !enemy.isDead()) {
+  //         this.character.hit();
+  //         this.statusBarHealth.setPercentage(this.character.energy);
+  //       }
+  //     }
+  //   });
+
+  //   // flaschen treffer
+  //   this.character.bottles.forEach((bottle, bottleIndex) => {
+  //     this.level.enemiesArray.forEach((enemy, enemyIndex) => {
+  //       if (bottle.isColliding(enemy) && !enemy.isDead()) {
+  //         console.log('treffer');
+
+  //         // let bounceSound = new Audio('assets/audio/bouncing.mp3');
+  //         // bounceSound.volume = 0.5;
+  //         // bounceSound.play();
+
+
+
+  //         if (enemy instanceof Chicken || enemy instanceof Chick) {
+  //           enemy.energy = 0;
+  //           enemy.isDeadAnimationPlayed = false;
+  //           setTimeout(() => {
+  //             this.level.enemiesArray.splice(enemyIndex, 1);
+  //           }, 500);
+  //         }
+
+  //         // this.character.bottles.splice(bottleIndex, 1);
+  //       }
+  //     });
+  //   });
+  // }
 
   checkCollisions() {
     this.level.enemiesArray.forEach((enemy, index) => {
       if (this.character.isColliding(enemy)) {
 
-        if (this.character.isAboveGround() && this.character.speedY < 0) {
-          if (enemy instanceof Chicken || enemy instanceof Chick && !enemy.isDead()) {
-            enemy.energy = 0;
-            enemy.isDeadAnimationPlayed = false;
+        if (this.character.isAboveGround() && this.character.speedY < 0 && (enemy instanceof Chicken || enemy instanceof Chick) && !enemy.isDead()) {
+          enemy.energy = 0;
+          enemy.isDeadAnimationPlayed = false;
 
-            if (!isMuted) {
-              bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
-              bouncing_audio.volume = 0.5;
-              bouncing_audio.play();
-              setTimeout(() => {
-                this.level.enemiesArray.splice(index, 1);
-                bouncing_audio.pause();
-                bouncing_audio.currentTime = 0;
-              }, 500);
-            }
-
-            this.character.bounce();
-            this.character.resetsCharacterToY();
-
+          if (!isMuted) {
+            let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
+            bouncing_audio.volume = 0.5;
+            bouncing_audio.play();
             setTimeout(() => {
-              this.level.enemiesArray.splice(index, 1);
+              bouncing_audio.pause();
+              bouncing_audio.currentTime = 0;
             }, 500);
-          } else if (!this.character.isAboveGround()) {
-            this.character.hit();
-            this.statusBarHealth.setPercentage(this.character.energy);
           }
-        } else if (!this.character.isAboveGround() && !enemy.isDead()) {
+
+          this.character.bounce();
+          this.character.resetsCharacterToY();
+
+          setTimeout(() => {
+            this.level.enemiesArray.splice(index, 1);
+          }, 500);
+        }
+
+        else if (!enemy.isDead()) {
           this.character.hit();
           this.statusBarHealth.setPercentage(this.character.energy);
         }
       }
     });
 
-    // flaschen treffer
+    //throwing bottle
     this.character.bottles.forEach((bottle, bottleIndex) => {
       this.level.enemiesArray.forEach((enemy, enemyIndex) => {
         if (bottle.isColliding(enemy) && !enemy.isDead()) {
           console.log('treffer');
 
+
           // let bounceSound = new Audio('assets/audio/bouncing.mp3');
           // bounceSound.volume = 0.5;
           // bounceSound.play();
 
-
-
           if (enemy instanceof Chicken || enemy instanceof Chick) {
             enemy.energy = 0;
             enemy.isDeadAnimationPlayed = false;
+            if (!isMuted) {
+              let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
+              chicken_death_audio.volume = 1;
+              chicken_death_audio.play();
+              setTimeout(() => {
+                chicken_death_audio.pause();
+                chicken_death_audio.currentTime = 0;
+              }, 500);
+            }
             setTimeout(() => {
               this.level.enemiesArray.splice(enemyIndex, 1);
             }, 500);
           }
+
 
           // this.character.bottles.splice(bottleIndex, 1);
         }

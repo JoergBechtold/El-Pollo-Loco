@@ -31,7 +31,7 @@
   <body onload="initPlay()" class="body-menu">
     <div class="menu-screen" id="menu_screen">
       <nav class="menu-nav">
-        <button title="Spiel Starten" class="btn-desktop" onclick="goToUrl('play.html')">Spiel Starten</button>
+        <button id="start_game_btn" title="Spiel Starten" class="btn-desktop">Spiel Starten</button>
         <button title="Zum Startbildschirm" class="btn-desktop" onclick="goToUrl('index.html')">Startbildschirm</button>
 
         <div onclick="soundToggle()" class="sound-box" id="sound_box">
@@ -71,5 +71,13 @@
         </div>
       </div>
     </div>
+
+    <script>
+      const startGameButtonRef = document.getElementById('start_game_btn');
+      startGameButtonRef.addEventListener('click', function () {
+        sessionStorage.setItem('gameStartedFromMenu', 'true');
+        window.location.href = 'play.html';
+      });
+    </script>
   </body>
 </html>
