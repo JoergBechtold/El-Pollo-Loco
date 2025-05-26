@@ -31,12 +31,13 @@ class MovableObject extends DrawableObject {
                 this.speedY -= this.acceleration;
             }
 
-            // Stellt sicher, dass der Charakter nicht unter 155px fällt und stoppt die vertikale Bewegung
-            if (!this.isAboveGround() && this.speedY <= 0) {
-                if (this.y > 155) { // Nur anpassen, wenn tatsächlich unter 155 gefallen
-                    this.y = 155;
+            if (this instanceof Character) {
+                if (!this.isAboveGround() && this.speedY <= 0) {
+                    if (this.y > 155) {
+                        this.y = 155;
+                    }
+                    this.speedY = 0;
                 }
-                this.speedY = 0;
             }
         }, 1000 / 35);
     }
@@ -72,6 +73,9 @@ class MovableObject extends DrawableObject {
     }
 
     isDead() {
+        if (this.isImmune) {
+            return;
+        }
         return this.energy == 0;
     }
 
@@ -109,23 +113,16 @@ class MovableObject extends DrawableObject {
 
     bounce(enemy) {
         this.isImmune = true;
-        this.speedY = 22;
+        this.speedY = 17;
 
         this.y = enemy.y - this.height + enemy.offset.top;
-
-
-
 
         setTimeout(() => {
             this.isImmune = false;
         }, 200);
     }
 
-    // bounce() {
-    //     this.isImmune = true;
 
-    //     this.speedY = 22;
-    // }
 
 
 }

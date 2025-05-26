@@ -5,7 +5,7 @@ class Character extends MovableObject {
     speed = 7.5;
     world;
     isInactive = false;
-    throwableBottleArray = [];
+    collectBottlesArray = [];
     collectCoinsArray = [];
     bottles = [];
     lastThrow = 0;
@@ -166,12 +166,21 @@ class Character extends MovableObject {
                 let currentTime = new Date().getTime();
                 let timeSinceLastThrow = currentTime - this.lastThrow;
 
-                if (timeSinceLastThrow >= this.throwInterval) {
+                if (timeSinceLastThrow >= this.throwInterval && this.collectBottlesArray.length > 0) {
                     let bottleX = this.x + (this.otherDirection ? -5 : 80);
+
+
+                    this.collectBottlesArray.splice(0, 1);
+
                     let bottle = new ThrowableObject(bottleX, this.y + 130, this.otherDirection);
                     this.bottles.push(bottle);
+
+
                     this.lastThrow = currentTime;
                     this.lastActivityTime = Date.now();
+                } else if (this.collectBottlesArray.length === 0) {
+
+                    console.log('keine flaschen um zu werfen');
                 }
             }
         }, 50);

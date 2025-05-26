@@ -1,6 +1,6 @@
 class Chick extends MovableObject {
     y = 370;
-    speed = 0.35
+    speed = 0.85
     height = 50;
     width = 70;
     offset = {
@@ -26,7 +26,7 @@ class Chick extends MovableObject {
         this.loadImages(this.IMAGE_DEAD);
         let randomX = 400 + Math.random() * 2000;
         this.x = Math.round(randomX / 150) * 150;
-        this.speed = 0.4 + Math.random() * 0.55;
+        this.speed = 0.85 + Math.random() * 1.1;
         this.animate();
     }
 

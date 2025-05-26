@@ -33,7 +33,7 @@ class World {
   allwaysExecuted() {
     setInterval(() => {
       this.checkCollisions();
-      this.collectObjects(this.level.bottlesArray, this.character.throwableBottleArray, PATH_COLLECT_BOTTLE_AUDIO, collect_bottle_audio_volume, 800);
+      this.collectObjects(this.level.bottlesArray, this.character.collectBottlesArray, PATH_COLLECT_BOTTLE_AUDIO, collect_bottle_audio_volume, 800);
       this.collectObjects(this.level.coinsArray, this.character.collectCoinsArray, PATH_COLLECT_COIN_AUDIO, collect_coin_audio_volume, 500);
       this.updateStatusBars();
     }, 50);
@@ -50,7 +50,7 @@ class World {
     }
 
     if (this.totalBottlesInLevel > 0) {
-      let currentBottles = this.character.throwableBottleArray.length;
+      let currentBottles = this.character.collectBottlesArray.length;
       let percentage = (currentBottles / this.totalBottlesInLevel) * 100;
       this.statusBarBottles.setPercentage(percentage);
     }
@@ -97,8 +97,6 @@ class World {
           }
 
           this.character.bounce(enemy);
-          // this.character.resetsCharacterToY();
-
           setTimeout(() => {
             this.level.enemiesArray.splice(index, 1);
           }, 500);
@@ -153,7 +151,7 @@ class World {
     this.addToMap(this.character);
 
     this.addObjectsToMap(this.level.enemiesArray);
-    // this.addObjectsToMap(this.character.throwableBottleArray);
+    // this.addObjectsToMap(this.character.collectBottlesArray);
     this.addObjectsToMap(this.level.bottlesArray)
     this.addObjectsToMap(this.level.coinsArray)
 
@@ -181,7 +179,7 @@ class World {
     }
 
     movableObject.draw(this.ctx)
-    movableObject.drawBlueFrame(this.ctx)
+    // movableObject.drawBlueFrame(this.ctx)
     movableObject.drawRedFrame(this.ctx)
 
 

@@ -23,15 +23,14 @@ class ThrowableObject extends MovableObject {
     ]
 
 
-
     constructor(x, y, otherDirection) {
         super().loadImage('assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMAGES_BOTTLES);
         this.loadImages(this.IMAGES_BOTTLE_SPLASH);
         this.x = x;
         this.y = y;
-        this.height = 60;
-        this.width = 50;
+        this.height = 70;
+        this.width = 60;
         this.otherDirection = otherDirection;
         this.throw();
         this.splashWidth = 80;
@@ -48,6 +47,11 @@ class ThrowableObject extends MovableObject {
             this.x += throwSpeedX;
             if (this.y >= this.groundLevel) {
                 clearInterval(movementInterval);
+                setTimeout(() => {
+                    world.character.bottles.splice(0, 1);
+
+                }, 400);
+
                 this.playBottleSplash();
                 clearInterval(this.animationInterval);
 
@@ -56,8 +60,10 @@ class ThrowableObject extends MovableObject {
 
         this.animationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLES);
-        }, 1000 / 25);
+        }, 1000 / 10);
     }
+
+
 
     playBottleSplash() {
         bottle_splash.play();
@@ -65,7 +71,9 @@ class ThrowableObject extends MovableObject {
         this.height = this.splashHeight;
         setInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
-        }, 1000 / 25);
+        }, 1000 / 10);
 
     }
+
+
 }
