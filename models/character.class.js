@@ -12,6 +12,8 @@ class Character extends MovableObject {
     throwInterval = 500;
     lastActivityTime = Date.now();
     lengthOfInactivity = 8000;
+    showSpeechBubble = false;
+    speechBubbleTimeout = null;
 
 
     offset = {
@@ -84,6 +86,8 @@ class Character extends MovableObject {
         'assets/img/2_character_pepe/4_hurt/H-43.png'
     ]
 
+    IMAGE_SPEECH_BUBBLE = ['assets/icons/speech-bubble.png'];
+
     constructor() {
         super().loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png')
         this.loadImages(this.IMAGES_WALKING);
@@ -92,6 +96,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
+        this.loadImages(this.IMAGE_SPEECH_BUBBLE);
         this.applyGravity();
         this.animate();
     }
@@ -178,9 +183,24 @@ class Character extends MovableObject {
 
                     this.lastThrow = currentTime;
                     this.lastActivityTime = Date.now();
-                } else if (this.collectBottlesArray.length === 0) {
 
-                    console.log('keine flaschen um zu werfen');
+                    this.showSpeechBubble = false;
+                    if (this.speechBubbleTimeout) clearTimeout(this.speechBubbleTimeout);
+
+
+                } else if (this.collectBottlesArray.length === 0) {
+                    if (!this.showSpeechBubble) {
+                        setTimeout(() => {
+                            this.showSpeechBubble = true;
+
+                            console.log('keine flaschen um zu werfen');
+                            this.speechBubbleTimeout = setTimeout(() => {
+                                this.showSpeechBubble = false;
+                            }, 2000);
+                        }, 500);
+                    }
+
+
                 }
             }
         }, 50);
@@ -203,6 +223,11 @@ class Character extends MovableObject {
             }
         }, 200);
     }
+
+    draw(ctx) {
+        super.draw(ctx);
+    }
+
 }
 
 

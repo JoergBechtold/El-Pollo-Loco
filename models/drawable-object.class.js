@@ -12,16 +12,19 @@ class DrawableObject {
     }
 
 
-    // drawBlueFrame(ctx) {
-    //     if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof ThrowableObject || this instanceof CollectBottle || this instanceof CollectCoins || this instanceof Chick) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = '5';
-    //         ctx.strokeStyle = 'blue';
-    //         ctx.rect(this.x, this.y, this.width, this.height);
-    //         ctx.stroke();
 
-    //     }
-    // }
+
+
+    drawSpeechBubbleImage(ctx, imagePath) {
+        let speechBubbleImg = this.imageCache[imagePath];
+        if (speechBubbleImg) {
+            const bubbleWidth = 200;
+            const bubbleHeight = 175;
+            const bubbleX = this.x + 80;
+            const bubbleY = this.y - 10;
+            ctx.drawImage(speechBubbleImg, bubbleX, bubbleY, bubbleWidth, bubbleHeight);
+        }
+    }
 
     drawRedFrame(ctx) {
         if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof ThrowableObject || this instanceof CollectBottle || this instanceof CollectCoins || this instanceof Chick) {
