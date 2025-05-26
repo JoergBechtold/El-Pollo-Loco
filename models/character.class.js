@@ -192,15 +192,11 @@ class Character extends MovableObject {
                     if (!this.showSpeechBubble) {
                         setTimeout(() => {
                             this.showSpeechBubble = true;
-
-                            console.log('keine flaschen um zu werfen');
                             this.speechBubbleTimeout = setTimeout(() => {
                                 this.showSpeechBubble = false;
                             }, 2000);
-                        }, 500);
+                        }, 200);
                     }
-
-
                 }
             }
         }, 50);

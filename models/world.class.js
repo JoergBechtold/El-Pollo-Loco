@@ -153,7 +153,6 @@ class World {
 
 
     this.addObjectsToMap(this.level.enemiesArray);
-    // this.addObjectsToMap(this.character.collectBottlesArray);
     this.addObjectsToMap(this.level.bottlesArray)
 
     this.addObjectsToMap(this.character.bottles)
@@ -174,44 +173,22 @@ class World {
     });
   }
 
-  // addToMap(movableObject) {
-  //   if (movableObject.otherDirection) {
-  //     this.flipImage(movableObject);
-  //   }
-
-  //   movableObject.draw(this.ctx)
-  //   // movableObject.drawBlueFrame(this.ctx)
-  //   movableObject.drawRedFrame(this.ctx)
-
-
-
-  //   if (movableObject.otherDirection) {
-  //     this.flipImageBack(movableObject);
-  //   }
-  // }
-
   addToMap(movableObject) {
     if (movableObject.otherDirection) {
       this.flipImage(movableObject);
     }
 
-    // Zeichne das bewegliche Objekt (Charakter)
     movableObject.draw(this.ctx);
-
-    // Optional: Rahmen für Debugging
     // movableObject.drawBlueFrame(this.ctx)
     movableObject.drawRedFrame(this.ctx)
-
 
     if (movableObject.otherDirection) {
       this.flipImageBack(movableObject);
     }
 
-    // WICHTIG: Zeichne die Sprechblase HIER, NACHDEM der Canvas-Kontext für den Charakter wiederhergestellt wurde.
+
     if (movableObject instanceof Character && movableObject.showSpeechBubble) {
-      // Die drawSpeechBubbleImage Methode sollte KEIN ctx.save() oder ctx.restore() mehr benötigen,
-      // da der Canvas-Zustand bereits korrekt ist, wenn sie hier aufgerufen wird.
-      movableObject.drawSpeechBubbleImage(this.ctx, movableObject.IMAGE_SPEECH_BUBBLE[0]);
+      movableObject.drawSpeechBubbleImage(this.ctx, movableObject.IMAGE_SPEECH_BUBBLE);
     }
   }
 
