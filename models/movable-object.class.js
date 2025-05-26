@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     groundLevel = 348;
     isDeadAnimationPlayed = false;
+    isImmune = false;
 
     offset = {
         top: 0,
@@ -15,11 +16,27 @@ class MovableObject extends DrawableObject {
         bottom: 0
     };
 
+    // applyGravity() {
+    //     setInterval(() => {
+    //         if (this.isAboveGround() || this.speedY > 0) {
+    //             this.y -= this.speedY;
+    //             this.speedY -= this.acceleration;
+    //         }
+    //     }, 1000 / 35);
+    // }
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+            }
+
+            // Stellt sicher, dass der Charakter nicht unter 155px fällt und stoppt die vertikale Bewegung
+            if (!this.isAboveGround() && this.speedY <= 0) {
+                if (this.y > 155) { // Nur anpassen, wenn tatsächlich unter 155 gefallen
+                    this.y = 155;
+                }
+                this.speedY = 0;
             }
         }, 1000 / 35);
     }
@@ -34,6 +51,11 @@ class MovableObject extends DrawableObject {
 
 
     hit() {
+
+        if (this.isImmune) {
+            return;
+        }
+
         this.energy -= 5;
         if (this.energy < 0) {
             this.energy = 0;
@@ -84,9 +106,26 @@ class MovableObject extends DrawableObject {
 
     }
 
-    bounce() {
+
+    bounce(enemy) {
+        this.isImmune = true;
         this.speedY = 22;
+
+        this.y = enemy.y - this.height + enemy.offset.top;
+
+
+
+
+        setTimeout(() => {
+            this.isImmune = false;
+        }, 200);
     }
+
+    // bounce() {
+    //     this.isImmune = true;
+
+    //     this.speedY = 22;
+    // }
 
 
 }

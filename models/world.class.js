@@ -96,8 +96,8 @@ class World {
             }, 500);
           }
 
-          this.character.bounce();
-          this.character.resetsCharacterToY();
+          this.character.bounce(enemy);
+          // this.character.resetsCharacterToY();
 
           setTimeout(() => {
             this.level.enemiesArray.splice(index, 1);
