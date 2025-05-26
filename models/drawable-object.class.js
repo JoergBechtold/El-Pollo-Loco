@@ -23,8 +23,6 @@ class DrawableObject {
             const bubbleX = this.x + 80;
             const bubbleY = this.y - 10;
             ctx.drawImage(speechBubbleImg, bubbleX, bubbleY, bubbleWidth, bubbleHeight);
-            console.log('bla');
-
         }
     }
 
