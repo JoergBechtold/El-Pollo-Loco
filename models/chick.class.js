@@ -9,6 +9,7 @@ class Chick extends MovableObject {
         right: 10,
         bottom: 5
     };
+    distanceSinceLastJump = 0;
     IMAGES_WALKING = [
         'assets/img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
         'assets/img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
@@ -24,6 +25,8 @@ class Chick extends MovableObject {
 
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGE_DEAD);
+        this.applyGravity();
+
         let randomX = 400 + Math.random() * 2000;
         this.x = Math.round(randomX / 150) * 150;
         this.speed = 0.85 + Math.random() * 1.1;
@@ -34,10 +37,15 @@ class Chick extends MovableObject {
         setInterval(() => {
             if (!this.isDead()) {
                 this.moveLeft();
+                this.distanceSinceLastJump += this.speed; // Distanz aktualisieren
+
+                // Springen, wenn es nicht in der Luft ist UND genug gelaufen ist
+                if (!this.isAboveGround() && this.distanceSinceLastJump >= 100) { // Beispiel: Springt nach 100 Pixeln
+                    this.chickJump();
+                    this.distanceSinceLastJump = 0; // Zähler zurücksetzen
+                }
             }
         }, 1000 / 60);
-
-
 
         setInterval(() => {
             if (this.isDead()) {
@@ -49,8 +57,36 @@ class Chick extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 150);
-
-
     }
+
+    // animate() {
+    //     setInterval(() => {
+    //         if (!this.isDead()) {
+    //             this.moveLeft();
+
+    //             if (!this.isAboveGround()) {
+
+
+    //                 this.chickJump();
+
+    //             }
+    //         }
+    //     }, 1000 / 60);
+
+
+
+    //     setInterval(() => {
+    //         if (this.isDead()) {
+    //             if (!this.isDeadAnimationPlayed) {
+    //                 this.playAnimation(this.IMAGE_DEAD);
+    //                 this.isDeadAnimationPlayed = true;
+    //             }
+    //         } else {
+    //             this.playAnimation(this.IMAGES_WALKING);
+    //         }
+    //     }, 150);
+
+
+    // }
 
 }

@@ -23,7 +23,7 @@ class MovableObject extends DrawableObject {
                 this.speedY -= this.acceleration;
             }
 
-            if (this instanceof Character) {
+            if (this instanceof Character || this instanceof Chick) {
                 if (!this.isAboveGround() && this.speedY <= 0) {
                     if (this.y > 155) {
                         this.y = 155;
@@ -34,8 +34,10 @@ class MovableObject extends DrawableObject {
         }, 1000 / 35);
     }
 
+
+
     isAboveGround() {
-        if (this instanceof ThrowableObject) {
+        if (this instanceof ThrowableObject || this instanceof Chick) {
             return this.y < this.groundLevel;
         } else {
             return this.y < 155;
@@ -79,17 +81,6 @@ class MovableObject extends DrawableObject {
             this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom;
     }
 
-    barrelCollidingX(movableObject) {
-        return this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&
-            this.x + this.offset.left < movableObject.x + movableObject.width - movableObject.offset.right
-    }
-
-    barrelCollidingY(movableObject) {
-        return this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
-            this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom;
-    }
-
-
     moveRight() {
         this.x += this.speed;
     }
@@ -110,6 +101,10 @@ class MovableObject extends DrawableObject {
     jump() {
         this.speedY = 26;
 
+    }
+
+    chickJump() {
+        this.speedY = 5;
     }
 
 

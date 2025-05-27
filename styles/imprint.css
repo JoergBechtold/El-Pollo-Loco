@@ -49,3 +49,7 @@ p {
   width: 100%;
   cursor: url('../assets/icons/pepper-hot-solid.svg'), auto;
 }
+
+a {
+  cursor: url('../assets/icons/pepper-hot-solid.svg'), auto;
+}

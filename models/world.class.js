@@ -8,8 +8,6 @@ class World {
   statusBarHealth = new StatusBar('health');
   statusBarCoins = new StatusBar('coins');
   statusBarBottles = new StatusBar('bottle');
-  characterCanMove = true;
-
   totalCoinsInLevel;
   totalBottlesInLevel;
 
@@ -81,16 +79,50 @@ class World {
   }
 
   checkCollisionsBarrel() {
-    this.level.barrelArray.forEach((barrel) => {
-      if (this.character.barrelCollidingX(barrel)) {
-        this.characterCanMove = false;
+    this.character.canMoveLeft = true;
+    this.character.canMoveRight = true;
+    this.character.barrelLeft = false;
+    this.character.barrelRight = false;
 
-        console.log('barrel berührt');
+
+
+
+    this.level.barrelArray.forEach((barrel) => {
+
+      if (this.character.isColliding(barrel)) {
+
+        if (this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.offset.left &&
+          this.character.x + this.character.offset.left < barrel.x + barrel.offset.left) {
+          this.character.canMoveRight = false;
+          this.character.barrelRight = true;
+
+        }
+
+
+        if (this.character.x + this.character.offset.left < barrel.x + barrel.width - barrel.offset.right &&
+          this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.width - barrel.offset.right) {
+          this.character.canMoveLeft = false;
+          this.character.barrelLeft = true;
+
+        }
+
 
 
       }
     });
   }
+
+
+
+
+
+  isColliding(movableObject) {
+    return this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&
+      this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
+      this.x + this.offset.left < movableObject.x + movableObject.width - movableObject.offset.right &&
+      this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom;
+  }
+
 
   checkCollisions() {
     this.level.enemiesArray.forEach((enemy, index) => {

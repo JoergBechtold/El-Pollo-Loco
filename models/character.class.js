@@ -14,6 +14,11 @@ class Character extends MovableObject {
     lengthOfInactivity = 8000;
     showSpeechBubble = false;
     speechBubbleTimeout = null;
+    barrelRight = false;
+    barrelLeft = false;
+    canMoveRight = true;
+    canMoveLeft = true;
+
 
 
     offset = {
@@ -121,7 +126,7 @@ class Character extends MovableObject {
                 this.lastActivityTime = Date.now();
             }
 
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && this.world.characterCanMove) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && this.canMoveRight) {
                 this.moveRight();
                 if (!this.isAboveGround()) {
                     walkin_sound.play();
@@ -132,7 +137,7 @@ class Character extends MovableObject {
                 this.otherDirection = false;
             }
 
-            if (this.world.keyboard.LEFT && this.x > 0 && this.world.characterCanMove) {
+            if (this.world.keyboard.LEFT && this.x > 0 && this.canMoveLeft) {
                 this.moveLeft();
                 if (!this.isAboveGround()) {
                     walkin_sound.play();
