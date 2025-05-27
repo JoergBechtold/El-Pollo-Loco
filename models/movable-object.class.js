@@ -41,25 +41,12 @@ class MovableObject extends DrawableObject {
                 this.speedY = 0; // Stoppe vertikale Bewegung
             }
 
-            // if (this instanceof Character || this instanceof Chick) {
-            //     if (!this.isAboveGround() && this.speedY <= 0) {
-            //         if (this.y > 155) {
-            //             this.y = 155;
-            //         }
-            //         this.speedY = 0;
-            //     }
-            // }
         }, 1000 / 35);
     }
 
 
 
     isAboveGround() {
-        // if (this instanceof ThrowableObject || this instanceof Chick) {
-        //     return this.y < this.groundLevel;
-        // } else {
-        //     return this.y < 155;
-        // }
         return this.y < this.groundLevel;
     }
 
@@ -136,6 +123,32 @@ class MovableObject extends DrawableObject {
         setTimeout(() => {
             this.isImmune = false;
         }, 200);
+    }
+
+    enemyWalkAnimation() {
+        setInterval(() => {
+            if (!this.isDead()) {
+                // Prüfe, ob eine Charakter-Referenz vorhanden ist
+                if (this.character) {
+                    // Wenn der Charakter rechts vom Huhn ist
+                    if (this.character.x > this.x + 10) { // Kleiner Puffer, um ständiges Flackern zu vermeiden
+                        this.moveRight();
+                        this.otherDirection = true; // Huhn schaut nach rechts (nicht gespiegelt)
+                    }
+                    // Wenn der Charakter links vom Huhn ist
+                    else if (this.character.x < this.x - 10) { // Kleiner Puffer
+                        this.moveLeft();
+                        this.otherDirection = false; // Huhn schaut nach links (gespiegelt)
+                    }
+                    // Wenn der Charakter sehr nah ist, kann das Huhn stehen bleiben oder eine Standardbewegung ausführen
+                    // Hier bleibt es stehen, wenn es nicht nach links oder rechts zum Charakter muss
+                } else {
+                    // Standardbewegung, wenn keine Charakter-Referenz vorhanden ist oder außerhalb des Bereichs
+                    this.moveLeft();
+                    this.otherDirection = false; // Standardmäßig nach links schauen
+                }
+            }
+        }, 1000 / 60); // 60 FPS für Bewegung
     }
 
 
