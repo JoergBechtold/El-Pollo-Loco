@@ -125,30 +125,29 @@ class MovableObject extends DrawableObject {
         }, 200);
     }
 
-    enemyWalkAnimation() {
+    enemyFollowCharacterAnimation() {
         setInterval(() => {
             if (!this.isDead()) {
-                // Prüfe, ob eine Charakter-Referenz vorhanden ist
+
                 if (this.character) {
-                    // Wenn der Charakter rechts vom Huhn ist
-                    if (this.character.x > this.x + 10) { // Kleiner Puffer, um ständiges Flackern zu vermeiden
+
+                    if (this.character.x > this.x + 10) {
                         this.moveRight();
-                        this.otherDirection = true; // Huhn schaut nach rechts (nicht gespiegelt)
+                        this.otherDirection = true;
                     }
-                    // Wenn der Charakter links vom Huhn ist
-                    else if (this.character.x < this.x - 10) { // Kleiner Puffer
+
+                    else if (this.character.x < this.x - 10) {
                         this.moveLeft();
-                        this.otherDirection = false; // Huhn schaut nach links (gespiegelt)
+                        this.otherDirection = false;
                     }
-                    // Wenn der Charakter sehr nah ist, kann das Huhn stehen bleiben oder eine Standardbewegung ausführen
-                    // Hier bleibt es stehen, wenn es nicht nach links oder rechts zum Charakter muss
+
                 } else {
-                    // Standardbewegung, wenn keine Charakter-Referenz vorhanden ist oder außerhalb des Bereichs
+
                     this.moveLeft();
-                    this.otherDirection = false; // Standardmäßig nach links schauen
+                    this.otherDirection = false;
                 }
             }
-        }, 1000 / 60); // 60 FPS für Bewegung
+        }, 1000 / 60);
     }
 
 

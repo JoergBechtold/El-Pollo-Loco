@@ -34,7 +34,7 @@ class Chicken extends MovableObject {
 
     animate() {
 
-        this.enemyWalkAnimation()
+        this.enemyFollowCharacterAnimation()
 
         // setInterval(() => {
         //     if (!this.isDead()) {
