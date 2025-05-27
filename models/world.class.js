@@ -8,6 +8,7 @@ class World {
   statusBarHealth = new StatusBar('health');
   statusBarCoins = new StatusBar('coins');
   statusBarBottles = new StatusBar('bottle');
+  characterCanMove = true;
 
   totalCoinsInLevel;
   totalBottlesInLevel;
@@ -33,14 +34,15 @@ class World {
   allwaysExecuted() {
     setInterval(() => {
       this.checkCollisions();
+      this.checkCollisionsBarrel();
       this.collectObjects(this.level.bottlesArray, this.character.collectBottlesArray, PATH_COLLECT_BOTTLE_AUDIO, collect_bottle_audio_volume, 800);
       this.collectObjects(this.level.coinsArray, this.character.collectCoinsArray, PATH_COLLECT_COIN_AUDIO, collect_coin_audio_volume, 500);
       this.updateStatusBars();
     }, 50);
   }
 
+  //hier noch eine allgemeine funktion bauen für beide
   updateStatusBars() {
-
     this.statusBarHealth.setPercentage(this.character.energy);
 
     if (this.totalCoinsInLevel > 0) {
@@ -78,11 +80,23 @@ class World {
     });
   }
 
+  checkCollisionsBarrel() {
+    this.level.barrelArray.forEach((barrel) => {
+      if (this.character.barrelCollidingX(barrel)) {
+        this.characterCanMove = false;
+
+        console.log('barrel berührt');
+
+
+      }
+    });
+  }
+
   checkCollisions() {
     this.level.enemiesArray.forEach((enemy, index) => {
       if (this.character.isColliding(enemy)) {
 
-        if (this.character.isAboveGround() && this.character.speedY < 0 && (enemy instanceof Chicken || enemy instanceof Chick) && !enemy.isDead()) {
+        if (this.character.isAboveGround() && this.character.speedY < 0 && (enemy instanceof Chicken || enemy instanceof Chick || enemy instanceof Endboss) && !enemy.isDead()) {
           enemy.energy = 0;
           enemy.isDeadAnimationPlayed = false;
 
@@ -108,7 +122,7 @@ class World {
     });
 
     //throwing bottle
-    this.character.bottles.forEach((bottle, bottleIndex) => {
+    this.character.bottles.forEach((bottle) => {
       this.level.enemiesArray.forEach((enemy, enemyIndex) => {
         if (bottle.isColliding(enemy) && !enemy.isDead()) {
 
@@ -148,15 +162,15 @@ class World {
     this.addToMap(this.statusBarBottles);
     this.ctx.translate(this.camera_x, 0);
 
-    this.addObjectsToMap(this.level.coinsArray)
+    this.addObjectsToMap(this.level.coinsArray);
+    this.addObjectsToMap(this.level.barrelArray);
     this.addToMap(this.character);
 
 
     this.addObjectsToMap(this.level.enemiesArray);
-    this.addObjectsToMap(this.level.bottlesArray)
+    this.addObjectsToMap(this.level.bottlesArray);
 
-    this.addObjectsToMap(this.character.bottles)
-    // this.addObjectsToMap(this.level.barrel)
+    this.addObjectsToMap(this.character.bottles);
 
 
     this.ctx.translate(-this.camera_x, 0);

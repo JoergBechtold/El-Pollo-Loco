@@ -16,25 +16,39 @@ class CollectCoins extends MovableObject {
         bottom: 47
     };
 
+    IMAGES_COINS = [
+        'assets/img/8_coin/coin_1.png',
+        'assets/img/8_coin/coin_2.png'
+    ]
 
 
-    constructor(path) {
-        super().loadImage(path);
+
+    constructor() {
+        super().loadImage('assets/img/8_coin/coin_1.png');
+        this.loadImages(this.IMAGES_COINS);
+
 
         let randomX = 300 + Math.random() * 2000;
-        this.x = Math.round(randomX / 20) * 20;
+        this.x = Math.round(randomX / 40) * 40;
 
         let randomY = 110 + Math.random() * 210;
         this.y = Math.round(randomY / 20) * 20;
 
         this.initialY = this.y;
-        this.animateFloating();
 
+        this.animateFloating();
     }
 
 
     animateFloating() {
+
         setInterval(() => {
+            this.playAnimation(this.IMAGES_COINS)
+
+        }, 400);
+
+        setInterval(() => {
+
             if (this.animationDirection === 1) {
                 this.y -= this.animationSpeedY;
                 if (this.y <= this.initialY - this.animationRangeY) {

@@ -63,23 +63,30 @@ function initLevel() {
       new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-left.png'),
       new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
       new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
-      // new CollectBottle('assets/img/6_salsa_bottle/salsa-bottle-right.png'),
     ],
 
     [
-      new CollectCoins('assets/img/8_coin/coin_1.png'),
-      new CollectCoins('assets/img/8_coin/coin_2.png'),
-      new CollectCoins('assets/img/8_coin/coin_1.png'),
-      new CollectCoins('assets/img/8_coin/coin_2.png'),
-      new CollectCoins('assets/img/8_coin/coin_1.png'),
-      // new CollectCoins('assets/img/8_coin/coin_2.png'),
-    ]
+      new CollectCoins(),
+      new CollectCoins(),
+      new CollectCoins(),
+      new CollectCoins(),
+      new CollectCoins(),
+    ],
 
     // [
-    //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 50),
-    //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 150),
-    //   new Barrel('assets/img/wooden_barrel_final_cleaned.png', 100)
-    // ]
+    //   new CollectCoins('assets/img/8_coin/coin_1.png'),
+    //   new CollectCoins('assets/img/8_coin/coin_2.png'),
+    //   new CollectCoins('assets/img/8_coin/coin_1.png'),
+    //   new CollectCoins('assets/img/8_coin/coin_2.png'),
+    //   new CollectCoins('assets/img/8_coin/coin_1.png'),
+    // ],
+
+    [
+      new Barrel('assets/img/wooden_barrel_final_cleaned-1.png'),
+      new Barrel('assets/img/wooden_barrel_final_cleaned-1.png'),
+      new Barrel('assets/img/wooden_barrel_final_cleaned-1.png'),
+      new Barrel('assets/img/wooden_barrel_final_cleaned-1.png'),
+    ]
   );
 
 }

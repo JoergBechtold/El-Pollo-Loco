@@ -121,7 +121,7 @@ class Character extends MovableObject {
                 this.lastActivityTime = Date.now();
             }
 
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && this.world.characterCanMove) {
                 this.moveRight();
                 if (!this.isAboveGround()) {
                     walkin_sound.play();
@@ -132,7 +132,7 @@ class Character extends MovableObject {
                 this.otherDirection = false;
             }
 
-            if (this.world.keyboard.LEFT && this.x > 0) {
+            if (this.world.keyboard.LEFT && this.x > 0 && this.world.characterCanMove) {
                 this.moveLeft();
                 if (!this.isAboveGround()) {
                     walkin_sound.play();

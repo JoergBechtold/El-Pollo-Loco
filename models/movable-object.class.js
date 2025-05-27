@@ -16,14 +16,6 @@ class MovableObject extends DrawableObject {
         bottom: 0
     };
 
-    // applyGravity() {
-    //     setInterval(() => {
-    //         if (this.isAboveGround() || this.speedY > 0) {
-    //             this.y -= this.speedY;
-    //             this.speedY -= this.acceleration;
-    //         }
-    //     }, 1000 / 35);
-    // }
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -84,6 +76,16 @@ class MovableObject extends DrawableObject {
         return this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&
             this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
             this.x + this.offset.left < movableObject.x + movableObject.width - movableObject.offset.right &&
+            this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom;
+    }
+
+    barrelCollidingX(movableObject) {
+        return this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&
+            this.x + this.offset.left < movableObject.x + movableObject.width - movableObject.offset.right
+    }
+
+    barrelCollidingY(movableObject) {
+        return this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
             this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom;
     }
 
