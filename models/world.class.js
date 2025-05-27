@@ -154,6 +154,7 @@ class World {
     });
 
     //throwing bottle
+
     this.character.bottles.forEach((bottle) => {
       this.level.enemiesArray.forEach((enemy, enemyIndex) => {
         if (bottle.isColliding(enemy) && !enemy.isDead()) {
@@ -174,6 +175,18 @@ class World {
               this.level.enemiesArray.splice(enemyIndex, 1);
             }, 500);
           }
+
+        }
+      });
+    });
+
+    // check bottles and barrel collision
+    this.character.bottles.forEach((bottle) => {
+      this.level.barrelArray.forEach((barrel) => {
+        if (bottle.isColliding(barrel)) {
+
+          console.log('treffer am fass');
+
 
         }
       });

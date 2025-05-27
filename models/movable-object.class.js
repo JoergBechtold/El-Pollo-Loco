@@ -5,7 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 2;
     energy = 100;
     lastHit = 0;
-    groundLevel = 348;
+    groundLevel;
     isDeadAnimationPlayed = false;
     isImmune = false;
 
@@ -16,6 +16,19 @@ class MovableObject extends DrawableObject {
         bottom: 0
     };
 
+    constructor() {
+        super();
+        if (this instanceof Character) {
+            this.groundLevel = 155; // Spezifischer Bodenlevel für den Charakter
+        } else if (this instanceof Chick) {
+            this.groundLevel = 370; // Spezifischer Bodenlevel für das Küken
+        } else if (this instanceof ThrowableObject) {
+            this.groundLevel = 350; // Spezifischer Bodenlevel für die Flasche
+        } else {
+            this.groundLevel = 348; // Standard-Bodenlevel, falls nicht spezifisch
+        }
+    }
+
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -23,25 +36,31 @@ class MovableObject extends DrawableObject {
                 this.speedY -= this.acceleration;
             }
 
-            if (this instanceof Character || this instanceof Chick) {
-                if (!this.isAboveGround() && this.speedY <= 0) {
-                    if (this.y > 155) {
-                        this.y = 155;
-                    }
-                    this.speedY = 0;
-                }
+            if (this.y >= this.groundLevel && this.speedY <= 0) {
+                this.y = this.groundLevel; // Setze exakt auf den Boden
+                this.speedY = 0; // Stoppe vertikale Bewegung
             }
+
+            // if (this instanceof Character || this instanceof Chick) {
+            //     if (!this.isAboveGround() && this.speedY <= 0) {
+            //         if (this.y > 155) {
+            //             this.y = 155;
+            //         }
+            //         this.speedY = 0;
+            //     }
+            // }
         }, 1000 / 35);
     }
 
 
 
     isAboveGround() {
-        if (this instanceof ThrowableObject || this instanceof Chick) {
-            return this.y < this.groundLevel;
-        } else {
-            return this.y < 155;
-        }
+        // if (this instanceof ThrowableObject || this instanceof Chick) {
+        //     return this.y < this.groundLevel;
+        // } else {
+        //     return this.y < 155;
+        // }
+        return this.y < this.groundLevel;
     }
 
 
@@ -104,7 +123,7 @@ class MovableObject extends DrawableObject {
     }
 
     chickJump() {
-        this.speedY = 5;
+        this.speedY = 10 + Math.random() * 20;
     }
 
 

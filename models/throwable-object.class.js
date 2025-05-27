@@ -5,6 +5,8 @@ class ThrowableObject extends MovableObject {
         right: 15,
         bottom: 8
     };
+    isSplashing = false;
+    world;
 
     IMAGES_BOTTLES = [
         'assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -52,8 +54,11 @@ class ThrowableObject extends MovableObject {
 
                 }, 400);
 
-                this.playBottleSplash();
-                clearInterval(this.animationInterval);
+                if (this.y >= this.groundLevel || this.isColliding()) {
+                    this.playBottleSplash();
+                    clearInterval(this.animationInterval);
+                }
+
 
             }
         }, 25);
