@@ -18,6 +18,8 @@ let jump_sound = new Audio('assets/audio/jump.ogg');
 let hurt_sound = new Audio('assets/audio/hurt.mp3');
 let bottle_splash = new Audio('assets/audio/bottle-break.mp3');
 let endboss_music = new Audio('assets/audio/endboss-music.mp3');
+let endboss_sound = new Audio('assets/audio/endboss-chicken.mp3');
+
 
 
 
@@ -32,7 +34,8 @@ const allAudioArray = [
     hurt_sound,
     bottle_splash,
     snoring_audio,
-    endboss_music
+    endboss_music,
+    endboss_sound
 
 ];
 

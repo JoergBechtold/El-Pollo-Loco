@@ -36,20 +36,9 @@ class World {
 
   playGameMusic() {
     if (!isMuted) {
-
-
       game_music.play();
       game_music.volume = game_music_volume_loude;
-
     }
-
-    // if (this.isEndbossMusicPlaying) {
-    //   game_music.pause();
-    //   game_music.currentTime = 0;
-
-
-    // }
-
   }
 
   setWorld() {
@@ -62,16 +51,6 @@ class World {
     });
   }
 
-
-  // setWorld() {
-  //   this.character.world = this;
-  //   this.level.enemiesArray.forEach(enemy => {
-  //     if (enemy instanceof Chicken || enemy instanceof Chick || enemy instanceof Endboss) {
-  //       enemy.character = this.character;
-  //     }
-  //   });
-  // }
-
   allwaysExecuted() {
     setInterval(() => {
       this.checkCollisions();
@@ -79,7 +58,7 @@ class World {
       this.collectObjects(this.level.bottlesArray, this.character.collectBottlesArray, PATH_COLLECT_BOTTLE_AUDIO, collect_bottle_audio_volume, 800);
       this.collectObjects(this.level.coinsArray, this.character.collectCoinsArray, PATH_COLLECT_COIN_AUDIO, collect_coin_audio_volume, 500);
       this.updateStatusBars();
-    }, 50);
+    }, 20);
   }
 
   //hier noch eine allgemeine funktion bauen für beide

@@ -84,12 +84,17 @@ class Endboss extends MovableObject {
 
                 if (this.character && Math.abs(this.character.x - this.x) < 200) {
                     this.playAnimation(this.IMAGES_ATTACK);
+                    endboss_sound.play()
                 } else {
                     this.playAnimation(this.IMAGES_WALKING);
+                    endboss_sound.pause();
+                    endboss_sound.currentTime = 0;
                 }
             } else {
 
                 this.playAnimation(this.IMAGES_ALERT);
+                endboss_sound.pause();
+                endboss_sound.currentTime = 0;
             }
         }, 250);
     }
