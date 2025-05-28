@@ -10,6 +10,9 @@ class Endboss extends MovableObject {
         bottom: 0
     };
     character;
+    hadFirstContact = false;
+    endbossMusic = null;
+    isEndbossMusicPlaying = false;
 
 
     IMAGES_WALKING = [
@@ -63,73 +66,81 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
 
         this.x = 2500;
+        this.endbosseMoveAnimation()
         this.animate();
     }
 
     animate() {
-        // this.enemyFollowCharacterAnimation()
-
         setInterval(() => {
-            this.playAnimation(this.IMAGES_ALERT);
-        }, 150);
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+                // Optional: Stoppe die Endboss-Musik, wenn der Boss stirbt
+                if (this.isEndbossMusicPlaying && this.endbossMusic) {
+                    this.endbossMusic.pause();
+                    this.endbossMusic.currentTime = 0;
+                    this.isEndbossMusicPlaying = false;
+                }
+                return;
+            }
+
+            // Wenn der Endboss den ersten Kontakt hatte (aktiv ist)
+            if (this.hadFirstContact) {
+                // Hier kannst du die Animationen für Gehen, Angreifen etc. steuern
+                // Je nachdem, ob er sich bewegt oder angreift
+                if (this.character && Math.abs(this.character.x - this.x) < 200) { // Beispiel: Wenn nah genug für Attack
+                    this.playAnimation(this.IMAGES_ATTACK);
+                } else {
+                    this.playAnimation(this.IMAGES_WALKING); // Gehe-Animation, wenn er sich bewegt
+                }
+            } else {
+                // Solange kein erster Kontakt, zeige die Alert-Animation
+                this.playAnimation(this.IMAGES_ALERT);
+            }
+        }, 150); // Animationsgeschwindigkeit
     }
 
     endbosseMoveAnimation() {
         setInterval(() => {
             if (this.isDead()) {
-                return; // Wenn der Boss tot ist, stoppe alle weiteren Bewegungen/Logik
+                return; // Boss ist tot, keine Bewegung mehr
             }
 
-            // Sicherstellen, dass die World- und Character-Referenzen vorhanden sind
-            if (this.world && this.world.character) {
-                // Logik für die AKTIVIERUNG des Bosses:
-                // Diese Bedingung wird nur einmal wahr, wenn der Charakter den Bereich betritt
-                // UND der Boss noch nicht aktiviert wurde (dank !this.hadFirstContact).
-                if (this.world.character.x > 1500 && !this.hadFirstContact) {
-                    this.hadFirstContact = true; // Setze die Flagge, damit diese Logik nur einmal läuft
-
-                    // Spielt die Endboss-Musik nur einmal ab
-
-                    if (!isMuted) { // <-- NEU: Hier wird geprüft, ob der Ton stummgeschaltet ist
-                        let endbossMusic = new Audio(PATH_ENDBOSS_MUSIC); // <-- NEU: Hier wird ein NEUES Audio-Objekt erstellt
-                        this.endbossMusicStarted = true; // <-- Diese Variable wird gesetzt, aber nicht wirklich verwendet, um die Musik abzuspielen
-
-                        // endbossMusic.volume = endboss_music_volume; // <-- Auskommentiert
-                        endbossMusic.play(); // <-- Hier wird die Musik abgespielt
-
-                        setTimeout(() => { // <-- Problem: Nach 0.5 Sekunden wird die Musik wieder pausiert!
-                            endbossMusic.pause();
-                            endbossMusic.currentTime = 0;
-                        }, 500);
-                    }
-
-
-
-
-
-
-                    this.playAnimation(this.IMAGES_ALERT);
-                    console.log('Endboss erreicht und aktiviert!');
-                }
-
-
-                if (this.hadFirstContact) {
-                    // this.speed = 5; // Beispiel: Boss wird schneller (kann hier angepasst werden)
-
-                    if (this.world.character.x < this.x - 50) {
-                        this.moveLeft();
-                        this.otherDirection = false;
-                    } else if (this.world.character.x > this.x + 50) {
-                        this.moveRight();
-                        this.otherDirection = true;
-                    }
-
-                    else {
-
-                    }
-                }
+            // Prüfe, ob der Charakter den Schwellenwert überschritten hat, um den Boss zu aktivieren
+            if (this.world && this.world.character && this.world.character.x > 1500 && !this.hadFirstContact) {
+                this.hadFirstContact = true; // Boss wurde aktiviert
+                this.startEndbossMusic(); // Starte die Boss-Musik
+                console.log('Endboss erreicht und aktiviert!');
+                // Hier könntest du zusätzlich eine kurze 'Brüll'-Animation abspielen lassen,
+                // bevor er anfängt sich zu bewegen.
             }
-        }, 1000 / 60);
+
+            // Wenn der Endboss aktiviert wurde, soll er dem Charakter folgen
+            if (this.hadFirstContact) {
+                if (this.world.character.x < this.x - 50) { // Charakter ist links vom Boss
+                    this.moveLeft();
+                    this.otherDirection = false; // Boss schaut nach links
+                } else if (this.world.character.x > this.x + 50) { // Charakter ist rechts vom Boss
+                    this.moveRight();
+                    this.otherDirection = true; // Boss schaut nach rechts (spiegeln)
+                }
+                // Wenn der Charakter sich in einem "toten Bereich" (hier +/- 50px) befindet,
+                // bleibt der Boss stehen oder führt eine Attacke aus (Animation in animate()).
+            }
+        }, 1000 / 60); // Bewegungslogik, sollte schneller laufen für flüssige Bewegung
+    }
+
+    startEndbossMusic() {
+        if (!isMuted && !this.isEndbossMusicPlaying) {
+            this.endbossMusic = new Audio(PATH_ENDBOSS_MUSIC);
+            this.endbossMusic.loop = true; // Musik loopen lassen
+            this.endbossMusic.volume = 0.5; // Optional: Lautstärke anpassen
+            this.endbossMusic.play();
+            this.isEndbossMusicPlaying = true;
+            console.log('Endboss-Musik gestartet!');
+
+            // Optional: Stoppe hier die normale Hintergrundmusik, wenn vorhanden
+            // world.backgroundMusic.pause(); // Annahme: Du hast eine backgroundMusic in der World-Klasse
+        }
     }
 
 

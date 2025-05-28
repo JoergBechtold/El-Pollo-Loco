@@ -25,15 +25,25 @@ class World {
 
   }
 
-
   setWorld() {
     this.character.world = this;
     this.level.enemiesArray.forEach(enemy => {
+      enemy.world = this;
       if (enemy instanceof Chicken || enemy instanceof Chick || enemy instanceof Endboss) {
         enemy.character = this.character;
       }
     });
   }
+
+
+  // setWorld() {
+  //   this.character.world = this;
+  //   this.level.enemiesArray.forEach(enemy => {
+  //     if (enemy instanceof Chicken || enemy instanceof Chick || enemy instanceof Endboss) {
+  //       enemy.character = this.character;
+  //     }
+  //   });
+  // }
 
   allwaysExecuted() {
     setInterval(() => {
