@@ -1,8 +1,6 @@
 let level1;
 
 function initLevel() {
-
-
   level1 = new Level(
 
     [
@@ -72,14 +70,6 @@ function initLevel() {
       new CollectCoins(),
       new CollectCoins(),
     ],
-
-    // [
-    //   new CollectCoins('assets/img/8_coin/coin_1.png'),
-    //   new CollectCoins('assets/img/8_coin/coin_2.png'),
-    //   new CollectCoins('assets/img/8_coin/coin_1.png'),
-    //   new CollectCoins('assets/img/8_coin/coin_2.png'),
-    //   new CollectCoins('assets/img/8_coin/coin_1.png'),
-    // ],
 
     [
       new Barrel('assets/img/wooden_barrel_final_cleaned-1.png'),

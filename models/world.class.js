@@ -28,7 +28,6 @@ class World {
 
   setWorld() {
     this.character.world = this;
-
     this.level.enemiesArray.forEach(enemy => {
       if (enemy instanceof Chicken || enemy instanceof Chick || enemy instanceof Endboss) {
         enemy.character = this.character;
@@ -115,12 +114,6 @@ class World {
 
       }
     });
-  }
-  isColliding(movableObject) {
-    return this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&
-      this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
-      this.x + this.offset.left < movableObject.x + movableObject.width - movableObject.offset.right &&
-      this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom;
   }
 
   resetBarrelCollisionFlags() {
