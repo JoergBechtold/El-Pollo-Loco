@@ -67,11 +67,69 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-        this.enemyFollowCharacterAnimation()
+        // this.enemyFollowCharacterAnimation()
 
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
+            this.playAnimation(this.IMAGES_ALERT);
         }, 150);
+    }
+
+    endbosseMoveAnimation() {
+        setInterval(() => {
+            if (this.isDead()) {
+                return; // Wenn der Boss tot ist, stoppe alle weiteren Bewegungen/Logik
+            }
+
+            // Sicherstellen, dass die World- und Character-Referenzen vorhanden sind
+            if (this.world && this.world.character) {
+                // Logik für die AKTIVIERUNG des Bosses:
+                // Diese Bedingung wird nur einmal wahr, wenn der Charakter den Bereich betritt
+                // UND der Boss noch nicht aktiviert wurde (dank !this.hadFirstContact).
+                if (this.world.character.x > 1500 && !this.hadFirstContact) {
+                    this.hadFirstContact = true; // Setze die Flagge, damit diese Logik nur einmal läuft
+
+                    // Spielt die Endboss-Musik nur einmal ab
+
+                    if (!isMuted) { // <-- NEU: Hier wird geprüft, ob der Ton stummgeschaltet ist
+                        let endbossMusic = new Audio(PATH_ENDBOSS_MUSIC); // <-- NEU: Hier wird ein NEUES Audio-Objekt erstellt
+                        this.endbossMusicStarted = true; // <-- Diese Variable wird gesetzt, aber nicht wirklich verwendet, um die Musik abzuspielen
+
+                        // endbossMusic.volume = endboss_music_volume; // <-- Auskommentiert
+                        endbossMusic.play(); // <-- Hier wird die Musik abgespielt
+
+                        setTimeout(() => { // <-- Problem: Nach 0.5 Sekunden wird die Musik wieder pausiert!
+                            endbossMusic.pause();
+                            endbossMusic.currentTime = 0;
+                        }, 500);
+                    }
+
+
+
+
+
+
+                    this.playAnimation(this.IMAGES_ALERT);
+                    console.log('Endboss erreicht und aktiviert!');
+                }
+
+
+                if (this.hadFirstContact) {
+                    // this.speed = 5; // Beispiel: Boss wird schneller (kann hier angepasst werden)
+
+                    if (this.world.character.x < this.x - 50) {
+                        this.moveLeft();
+                        this.otherDirection = false;
+                    } else if (this.world.character.x > this.x + 50) {
+                        this.moveRight();
+                        this.otherDirection = true;
+                    }
+
+                    else {
+
+                    }
+                }
+            }
+        }, 1000 / 60);
     }
 
 

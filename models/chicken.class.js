@@ -33,33 +33,7 @@ class Chicken extends MovableObject {
     }
 
     animate() {
-
         this.enemyFollowCharacterAnimation()
-
-        // setInterval(() => {
-        //     if (!this.isDead()) {
-
-        //         if (this.character) {
-
-        //             if (this.character.x > this.x + 10) { 
-        //                 this.moveRight();
-        //                 this.otherDirection = true; 
-        //             }
-
-        //             else if (this.character.x < this.x - 10) { 
-        //                 this.moveLeft();
-        //                 this.otherDirection = false;
-        //             }
-
-        //         } else {
-
-        //             this.moveLeft();
-        //             this.otherDirection = false; 
-        //         }
-        //     }
-        // }, 1000 / 60);
-
-
         setInterval(() => {
             if (this.isDead()) {
                 if (!this.isDeadAnimationPlayed) {
@@ -69,26 +43,6 @@ class Chicken extends MovableObject {
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 150); // 150ms pro Bild für die Animation
+        }, 150);
     }
-
-    // animate() {
-    //     setInterval(() => {
-    //         if (!this.isDead()) {
-    //             this.moveLeft();
-    //         }
-    //     }, 1000 / 60);
-
-    //     setInterval(() => {
-    //         if (this.isDead()) {
-    //             if (!this.isDeadAnimationPlayed) {
-    //                 this.playAnimation(this.IMAGE_DEAD);
-    //                 this.isDeadAnimationPlayed = true;
-    //             }
-    //         } else {
-    //             this.playAnimation(this.IMAGES_WALKING);
-    //         }
-    //     }, 150);
-    // }
-
 }

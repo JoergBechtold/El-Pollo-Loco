@@ -11,6 +11,7 @@ class World {
   totalCoinsInLevel;
   totalBottlesInLevel;
 
+
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
@@ -85,13 +86,7 @@ class World {
   }
 
   checkCollisionsBarrel() {
-    this.character.canMoveLeft = true;
-    this.character.canMoveRight = true;
-    this.character.barrelLeft = false;
-    this.character.barrelRight = false;
-
-
-
+    this.resetBarrelCollisionFlags()
 
     this.level.barrelArray.forEach((barrel) => {
 
@@ -113,20 +108,27 @@ class World {
         }
 
 
+        if (this.character.y + this.character.height - this.character.offset.bottom > barrel.y + barrel.offset.top) {
+          this.character.isOnBarrel = true;
+          console.log('bla');
+        }
 
       }
     });
   }
-
-
-
-
-
   isColliding(movableObject) {
     return this.x + this.width - this.offset.right > movableObject.x + movableObject.offset.left &&
       this.y + this.height - this.offset.bottom > movableObject.y + movableObject.offset.top &&
       this.x + this.offset.left < movableObject.x + movableObject.width - movableObject.offset.right &&
       this.y + this.offset.top < movableObject.y + movableObject.height - movableObject.offset.bottom;
+  }
+
+  resetBarrelCollisionFlags() {
+    this.character.canMoveLeft = true;
+    this.character.canMoveRight = true;
+    this.character.barrelLeft = false;
+    this.character.barrelRight = false;
+    this.character.isOnBarrel = false;
   }
 
 
@@ -166,6 +168,23 @@ class World {
         if (bottle.isColliding(enemy) && !enemy.isDead()) {
 
           if (enemy instanceof Chicken || enemy instanceof Chick) {
+            enemy.energy = 0;
+            enemy.isDeadAnimationPlayed = false;
+            if (!isMuted) {
+              let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
+              chicken_death_audio.volume = chicken_death_audio_volume;
+              chicken_death_audio.play();
+              setTimeout(() => {
+                chicken_death_audio.pause();
+                chicken_death_audio.currentTime = 0;
+              }, 500);
+            }
+            setTimeout(() => {
+              this.level.enemiesArray.splice(enemyIndex, 1);
+            }, 500);
+          }
+
+          if (enemy instanceof Endboss) {
             enemy.energy = 0;
             enemy.isDeadAnimationPlayed = false;
             if (!isMuted) {

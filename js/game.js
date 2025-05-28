@@ -6,6 +6,10 @@ const PATH_COLLECT_BOTTLE_AUDIO = 'assets/audio/collect-bottle.mp3';
 const PATH_COLLECT_COIN_AUDIO = 'assets/audio/collect-coin.mp3';
 const PATH_BOUNCING_AUDIO = 'assets/audio/bouncing.mp3';
 const PATH_CHICKEN_DEATH_AUDIO = 'assets/audio/chicken-dead.mp3';
+const PATH_ENDBOSS_AUDIO = 'assets/audio/endboss-chicken.mp3';
+const PATH_ENDBOSS_MUSIC = 'assets/audio/endboss-music.mp3';
+
+
 
 
 let walkin_sound = new Audio('assets/audio/running.mp3');
@@ -15,6 +19,7 @@ let death_sound = new Audio('assets/audio/death.mp3');
 let jump_sound = new Audio('assets/audio/jump.ogg');
 let hurt_sound = new Audio('assets/audio/hurt.mp3');
 let bottle_splash = new Audio('assets/audio/bottle-break.mp3');
+
 
 
 const allAudioArray = [

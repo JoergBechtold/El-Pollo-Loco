@@ -19,13 +19,13 @@ class MovableObject extends DrawableObject {
     constructor() {
         super();
         if (this instanceof Character) {
-            this.groundLevel = 155; // Spezifischer Bodenlevel für den Charakter
+            this.groundLevel = 155;
         } else if (this instanceof Chick) {
-            this.groundLevel = 370; // Spezifischer Bodenlevel für das Küken
+            this.groundLevel = 370;
         } else if (this instanceof ThrowableObject) {
-            this.groundLevel = 350; // Spezifischer Bodenlevel für die Flasche
+            this.groundLevel = 350;
         } else {
-            this.groundLevel = 348; // Standard-Bodenlevel, falls nicht spezifisch
+            this.groundLevel = 348;
         }
     }
 
@@ -37,12 +37,14 @@ class MovableObject extends DrawableObject {
             }
 
             if (this.y >= this.groundLevel && this.speedY <= 0) {
-                this.y = this.groundLevel; // Setze exakt auf den Boden
-                this.speedY = 0; // Stoppe vertikale Bewegung
+                this.y = this.groundLevel;
+                this.speedY = 0;
             }
 
         }, 1000 / 35);
     }
+
+
 
 
 
