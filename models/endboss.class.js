@@ -10,9 +10,9 @@ class Endboss extends MovableObject {
         bottom: 0
     };
     character;
-    hadFirstContact = false;
+    // hadFirstContact = false;
     endbossMusic = null;
-    isEndbossMusicPlaying = false;
+    // isEndbossMusicPlaying;
 
 
     IMAGES_WALKING = [
@@ -66,15 +66,15 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
 
         this.x = 2500;
-        this.endbosseMoveAnimation()
         this.animate();
+        this.endbosseMoveAnimation()
     }
 
     animate() {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-                // Optional: Stoppe die Endboss-Musik, wenn der Boss stirbt
+
                 if (this.isEndbossMusicPlaying && this.endbossMusic) {
                     this.endbossMusic.pause();
                     this.endbossMusic.currentTime = 0;
@@ -83,63 +83,74 @@ class Endboss extends MovableObject {
                 return;
             }
 
-            // Wenn der Endboss den ersten Kontakt hatte (aktiv ist)
+
             if (this.hadFirstContact) {
-                // Hier kannst du die Animationen für Gehen, Angreifen etc. steuern
-                // Je nachdem, ob er sich bewegt oder angreift
-                if (this.character && Math.abs(this.character.x - this.x) < 200) { // Beispiel: Wenn nah genug für Attack
+
+                if (this.character && Math.abs(this.character.x - this.x) < 200) {
                     this.playAnimation(this.IMAGES_ATTACK);
                 } else {
-                    this.playAnimation(this.IMAGES_WALKING); // Gehe-Animation, wenn er sich bewegt
+                    this.playAnimation(this.IMAGES_WALKING);
                 }
             } else {
-                // Solange kein erster Kontakt, zeige die Alert-Animation
+
                 this.playAnimation(this.IMAGES_ALERT);
             }
-        }, 150); // Animationsgeschwindigkeit
+        }, 250);
     }
 
     endbosseMoveAnimation() {
         setInterval(() => {
             if (this.isDead()) {
-                return; // Boss ist tot, keine Bewegung mehr
+                return;
             }
 
-            // Prüfe, ob der Charakter den Schwellenwert überschritten hat, um den Boss zu aktivieren
-            if (this.world && this.world.character && this.world.character.x > 1500 && !this.hadFirstContact) {
-                this.hadFirstContact = true; // Boss wurde aktiviert
-                this.startEndbossMusic(); // Starte die Boss-Musik
+
+            if (this.world && this.world.character && this.world.character.x > 2200 && !this.hadFirstContact) {
+                this.hadFirstContact = true;
+                this.startEndbossMusic();
                 console.log('Endboss erreicht und aktiviert!');
-                // Hier könntest du zusätzlich eine kurze 'Brüll'-Animation abspielen lassen,
-                // bevor er anfängt sich zu bewegen.
+
             }
 
-            // Wenn der Endboss aktiviert wurde, soll er dem Charakter folgen
+
             if (this.hadFirstContact) {
-                if (this.world.character.x < this.x - 50) { // Charakter ist links vom Boss
+                if (this.world.character.x < this.x - 50) {
                     this.moveLeft();
-                    this.otherDirection = false; // Boss schaut nach links
-                } else if (this.world.character.x > this.x + 50) { // Charakter ist rechts vom Boss
+                    this.otherDirection = false;
+                } else if (this.world.character.x > this.x + 50) {
                     this.moveRight();
-                    this.otherDirection = true; // Boss schaut nach rechts (spiegeln)
+                    this.otherDirection = true;
                 }
                 // Wenn der Charakter sich in einem "toten Bereich" (hier +/- 50px) befindet,
                 // bleibt der Boss stehen oder führt eine Attacke aus (Animation in animate()).
             }
-        }, 1000 / 60); // Bewegungslogik, sollte schneller laufen für flüssige Bewegung
+        }, 1000 / 60);
     }
 
     startEndbossMusic() {
-        if (!isMuted && !this.isEndbossMusicPlaying) {
-            this.endbossMusic = new Audio(PATH_ENDBOSS_MUSIC);
-            this.endbossMusic.loop = true; // Musik loopen lassen
-            this.endbossMusic.volume = 0.5; // Optional: Lautstärke anpassen
-            this.endbossMusic.play();
-            this.isEndbossMusicPlaying = true;
-            console.log('Endboss-Musik gestartet!');
+        if (!isMuted) {
+            // console.log(PATH_ENDBOSS_MUSIC);
+            // this.world.game_music.pause();
+            // this.world.game_music.currentTime = 0;
+            // console.log('game_music pause');
 
-            // Optional: Stoppe hier die normale Hintergrundmusik, wenn vorhanden
-            // world.backgroundMusic.pause(); // Annahme: Du hast eine backgroundMusic in der World-Klasse
+
+            this.world.isEndbossMusicPlaying = true;
+            this.world.playGameMusic()
+
+
+            this.endbossMusic = new Audio(PATH_ENDBOSS_MUSIC);
+            this.endbossMusic.loop = true;
+            this.endbossMusic.volume = 0.5;
+            this.endbossMusic.play();
+            console.log('endboss musik');
+
+
+
+
+
+
+
         }
     }
 

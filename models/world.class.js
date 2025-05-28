@@ -10,18 +10,44 @@ class World {
   statusBarBottles = new StatusBar('bottle');
   totalCoinsInLevel;
   totalBottlesInLevel;
+  isEndbossMusicPlaying = false;
 
 
-  constructor(canvas, keyboard) {
+
+
+
+  constructor(canvas, keyboard,) {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
     this.keyboard = keyboard;
+
+    this.playGameMusic();
     this.draw();
     this.setWorld();
     this.allwaysExecuted();
 
     this.totalCoinsInLevel = this.level.coinsArray.length;
     this.totalBottlesInLevel = this.level.bottlesArray.length;
+
+
+
+  }
+
+  playGameMusic() {
+    if (!isMuted) {
+      setInterval(() => {
+
+        game_music.play();
+        game_music.volume = game_music_volume_loude;
+      }, 1400);
+    }
+
+    if (this.isEndbossMusicPlaying) {
+      game_music.pause();
+      game_music.currentTime = 0;
+
+
+    }
 
   }
 

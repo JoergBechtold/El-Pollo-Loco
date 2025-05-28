@@ -10,8 +10,6 @@ const PATH_ENDBOSS_AUDIO = 'assets/audio/endboss-chicken.mp3';
 const PATH_ENDBOSS_MUSIC = 'assets/audio/endboss-music.mp3';
 
 
-
-
 let walkin_sound = new Audio('assets/audio/running.mp3');
 let game_music = new Audio('assets/audio/game-musik.mp3');
 let snoring_audio = new Audio('assets/audio/snoring.mp3');
@@ -19,6 +17,8 @@ let death_sound = new Audio('assets/audio/death.mp3');
 let jump_sound = new Audio('assets/audio/jump.ogg');
 let hurt_sound = new Audio('assets/audio/hurt.mp3');
 let bottle_splash = new Audio('assets/audio/bottle-break.mp3');
+
+
 
 
 
@@ -30,6 +30,7 @@ const allAudioArray = [
     hurt_sound,
     bottle_splash,
     snoring_audio,
+
 ];
 
 

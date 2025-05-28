@@ -44,13 +44,6 @@ function initPlay() {
 
 function startGame() {
     initPlay();
-
-
-    setInterval(() => {
-        game_music.play();
-    }, 1400);
-
-
     initLevel()
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
