@@ -8,6 +8,8 @@ class MovableObject extends DrawableObject {
     groundLevel;
     isDeadAnimationPlayed = false;
     isImmune = false;
+    isOnBarrel = false;
+
 
     offset = {
         top: 0,
@@ -29,8 +31,38 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    // applyGravity() {
+    //     setInterval(() => {
+    //         if (this.isAboveGround() || this.speedY > 0) {
+    //             this.y -= this.speedY;
+    //             this.speedY -= this.acceleration;
+    //         }
+
+    //         if (this.y >= this.groundLevel && this.speedY <= 0) {
+    //             this.y = this.groundLevel;
+    //             this.speedY = 0;
+    //         }
+
+
+
+    //     }, 1000 / 35);
+    // }
+
     applyGravity() {
         setInterval(() => {
+            // Füge diese neue Bedingung hinzu:
+            if (this instanceof Character && this.isOnBarrel) {
+                this.speedY = 0; // Stoppt die vertikale Bewegung, wenn der Charakter auf einem Fass ist
+                // Setze die Y-Position des Charakters auf die Oberkante des Fasses
+                // Du musst die Y-Position des Fasses hier kennen und die Höhe des Charakters berücksichtigen.
+                // Angenommen, barrel.y ist die obere Kante des Fasses und barrel.offset.top der obere Offset
+                // Diese Zeile müsste aktualisiert werden, wenn du die Barrel-Y-Koordinate hier verfügbar hast.
+                // Wenn der Charakter auf einem Fass ist, sollte seine Y-Position direkt über dem Fass sein.
+                // Der Wert 320 ist der y-Wert deiner Barrel-Klasse, - this.height ist die Höhe des Charakters
+                this.y = 320 - this.height + this.offset.bottom;
+                return; // Beende die Funktion, damit die normale Gravitationslogik nicht greift
+            }
+
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
@@ -40,11 +72,14 @@ class MovableObject extends DrawableObject {
                 this.y = this.groundLevel;
                 this.speedY = 0;
             }
-
-
-
         }, 1000 / 35);
     }
+
+    setGroundLevel(newGround) {
+        this.groundLevel = newGround;
+    }
+
+
 
 
 
@@ -112,6 +147,7 @@ class MovableObject extends DrawableObject {
         this.speedY = 26;
 
     }
+
 
     chickJump() {
         this.speedY = 10 + Math.random() * 20;

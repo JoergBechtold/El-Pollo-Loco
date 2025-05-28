@@ -100,8 +100,45 @@ class World {
     });
   }
 
+  // checkCollisionsBarrel() {
+  //   this.resetBarrelCollisionFlags()
+
+  //   this.level.barrelArray.forEach((barrel) => {
+
+  //     if (this.character.isColliding(barrel)) {
+
+  //       if (this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.offset.left &&
+  //         this.character.x + this.character.offset.left < barrel.x + barrel.offset.left) {
+  //         this.character.canMoveRight = false;
+  //         this.character.barrelRight = true;
+
+  //       }
+
+
+  //       if (this.character.x + this.character.offset.left < barrel.x + barrel.width - barrel.offset.right &&
+  //         this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.width - barrel.offset.right) {
+  //         this.character.canMoveLeft = false;
+  //         this.character.barrelLeft = true;
+
+  //       }
+
+
+  //       if (this.character.y + this.character.height - this.character.offset.bottom >= barrel.y + barrel.offset.top - 10 &&
+  //         this.character.y + this.character.height - this.character.offset.bottom <= barrel.y + barrel.offset.top + 10 &&
+  //         this.character.x + this.character.offset.left < barrel.x + barrel.width - barrel.offset.right &&
+  //         this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.offset.left) {
+  //         this.character.isOnBarrel = true;
+  //         console.log('bla');
+  //       }
+
+  //     }
+  //   });
+  // }
+
   checkCollisionsBarrel() {
     this.resetBarrelCollisionFlags()
+
+    let characterOnBarrel = false;
 
     this.level.barrelArray.forEach((barrel) => {
 
@@ -127,13 +164,33 @@ class World {
           this.character.y + this.character.height - this.character.offset.bottom <= barrel.y + barrel.offset.top + 10 &&
           this.character.x + this.character.offset.left < barrel.x + barrel.width - barrel.offset.right &&
           this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.offset.left) {
+
           this.character.isOnBarrel = true;
-          console.log('bla');
+          characterOnBarrel = true; // Setze das Flag, wenn auf einem Fass
+          // Setze den Ground Level des Charakters auf die Oberkante des Fasses
+          // Hier nimmst du den y-Wert des Fasses minus die Höhe des Charakters plus den unteren Offset des Charakters
+          // Beachte: movableObject.y ist der obere Rand des Bildes. Dein Fass hat y = 320.
+          // Der untere Rand des Charakters soll auf dem oberen Rand des Fasses sein.
+          this.character.groundLevel = barrel.y - (this.character.height - this.character.offset.bottom); // Adjusted calculation
+          console.log('Character is on barrel');
         }
 
       }
     });
+    if (!characterOnBarrel && this.character.isOnBarrel) { // Überprüfe, ob er gerade erst vom Fass gesprungen ist
+      this.character.isOnBarrel = false;
+      // Setze den groundLevel des Charakters auf seinen ursprünglichen Wert zurück
+      // Du musst den ursprünglichen groundLevel des Charakters speichern oder neu berechnen.
+      // Angenommen, dein Standard-groundLevel für den Charakter ist 155, wie in deinem Code definiert.
+      this.character.groundLevel = 155;
+      console.log('Character left barrel, returning to ground level');
+    }
   }
+
+
+
+
+
 
   resetBarrelCollisionFlags() {
     this.character.canMoveLeft = true;
