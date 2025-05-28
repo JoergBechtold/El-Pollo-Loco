@@ -41,6 +41,8 @@ class MovableObject extends DrawableObject {
                 this.speedY = 0;
             }
 
+
+
         }, 1000 / 35);
     }
 

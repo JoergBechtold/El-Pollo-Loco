@@ -11,6 +11,7 @@ class World {
   totalCoinsInLevel;
   totalBottlesInLevel;
   isEndbossMusicPlaying = false;
+  isOnBarrel = false;
 
 
 
@@ -35,19 +36,19 @@ class World {
 
   playGameMusic() {
     if (!isMuted) {
-      setInterval(() => {
 
-        game_music.play();
-        game_music.volume = game_music_volume_loude;
-      }, 1400);
-    }
 
-    if (this.isEndbossMusicPlaying) {
-      game_music.pause();
-      game_music.currentTime = 0;
-
+      game_music.play();
+      game_music.volume = game_music_volume_loude;
 
     }
+
+    // if (this.isEndbossMusicPlaying) {
+    //   game_music.pause();
+    //   game_music.currentTime = 0;
+
+
+    // }
 
   }
 
@@ -143,7 +144,10 @@ class World {
         }
 
 
-        if (this.character.y + this.character.height - this.character.offset.bottom > barrel.y + barrel.offset.top) {
+        if (this.character.y + this.character.height - this.character.offset.bottom >= barrel.y + barrel.offset.top - 10 &&
+          this.character.y + this.character.height - this.character.offset.bottom <= barrel.y + barrel.offset.top + 10 &&
+          this.character.x + this.character.offset.left < barrel.x + barrel.width - barrel.offset.right &&
+          this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.offset.left) {
           this.character.isOnBarrel = true;
           console.log('bla');
         }

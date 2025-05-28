@@ -74,12 +74,8 @@ class Endboss extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+                endboss_music.pause()
 
-                if (this.isEndbossMusicPlaying && this.endbossMusic) {
-                    this.endbossMusic.pause();
-                    this.endbossMusic.currentTime = 0;
-                    this.isEndbossMusicPlaying = false;
-                }
                 return;
             }
 
@@ -129,20 +125,14 @@ class Endboss extends MovableObject {
 
     startEndbossMusic() {
         if (!isMuted) {
-            // console.log(PATH_ENDBOSS_MUSIC);
-            // this.world.game_music.pause();
-            // this.world.game_music.currentTime = 0;
-            // console.log('game_music pause');
+            game_music.pause();
+            game_music.currentTime = 0;
 
+            endboss_music.play();
+            // this.endbossMusic = new Audio(PATH_ENDBOSS_MUSIC);
 
-            this.world.isEndbossMusicPlaying = true;
-            this.world.playGameMusic()
-
-
-            this.endbossMusic = new Audio(PATH_ENDBOSS_MUSIC);
-            this.endbossMusic.loop = true;
-            this.endbossMusic.volume = 0.5;
-            this.endbossMusic.play();
+            // this.endbossMusic.volume = 0.5;
+            // this.endbossMusic.play();
             console.log('endboss musik');
 
 
