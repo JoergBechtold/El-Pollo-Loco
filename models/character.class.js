@@ -108,7 +108,7 @@ class Character extends MovableObject {
     }
 
     resetsCharacterToY() {
-        return this.y = 155;
+        return 155;
     }
 
     isIdle() {
