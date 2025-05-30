@@ -142,7 +142,7 @@ class World {
 
       }
     });
-    if (!characterOnBarrel && this.character.isOnBarrel) {
+    if (!characterOnBarrel) {
       this.character.isOnBarrel = false;
 
       this.character.groundLevel = this.character.resetsCharacterToY();

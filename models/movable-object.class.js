@@ -31,8 +31,6 @@ class MovableObject extends DrawableObject {
         }
     }
 
-
-
     // applyGravity() {
     //     setInterval(() => {
     //         if (this.isAboveGround() || this.speedY > 0) {
@@ -44,20 +42,26 @@ class MovableObject extends DrawableObject {
     //             this.y = this.groundLevel;
     //             this.speedY = 0;
     //         }
-
-
-
     //     }, 1000 / 35);
     // }
 
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
-                this.y -= this.speedY;
-                this.speedY -= this.acceleration;
+
+            if (this.isOnBarrel) {
+
+                if (this.y >= this.groundLevel) {
+                    this.y = this.groundLevel;
+                    this.speedY = 0;
+                }
+
             }
 
-            if (this.y >= this.groundLevel && this.speedY <= 0) {
+            if (this.y < this.groundLevel || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            } else {
+
                 this.y = this.groundLevel;
                 this.speedY = 0;
             }
@@ -71,9 +75,6 @@ class MovableObject extends DrawableObject {
     isAboveGround() {
         return this.y < this.groundLevel;
     }
-
-
-
 
     hit() {
 
