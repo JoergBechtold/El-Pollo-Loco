@@ -8,7 +8,7 @@ class MovableObject extends DrawableObject {
     groundLevel;
     isDeadAnimationPlayed = false;
     isImmune = false;
-    isOnBarrel = false;
+    // isOnBarrel = false;
 
 
     offset = {

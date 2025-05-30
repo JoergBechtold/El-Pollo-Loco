@@ -144,7 +144,8 @@ class World {
     });
     if (!characterOnBarrel && this.character.isOnBarrel) {
       this.character.isOnBarrel = false;
-      this.character.groundLevel = this.character.y;
+
+      this.character.groundLevel = this.character.resetsCharacterToY();
       console.log('fass verlassen');
     }
   }
@@ -159,7 +160,7 @@ class World {
     this.character.canMoveRight = true;
     this.character.barrelLeft = false;
     this.character.barrelRight = false;
-    this.character.isOnBarrel = false;
+    // this.character.isOnBarrel = false;
   }
 
 

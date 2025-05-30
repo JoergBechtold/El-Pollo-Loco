@@ -12,6 +12,7 @@ function initLevel() {
       new Chicken(),
       new Chick(),
       new Chick(),
+      new Chick(),
       new Endboss()
     ],
 
