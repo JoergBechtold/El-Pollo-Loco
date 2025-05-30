@@ -159,7 +159,7 @@ class Endboss extends MovableObject {
         if (!isMuted) {
             game_music.pause();
             game_music.currentTime = 0;
-
+            endboss_music.volume = endboss_sound_volume;
             endboss_music.play();
             // this.endbossMusic = new Audio(PATH_ENDBOSS_MUSIC);
 

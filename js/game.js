@@ -45,6 +45,7 @@ let collect_bottle_audio_volume = 1;
 let collect_coin_audio_volume = 1;
 let chicken_death_audio_volume = 1;
 let snoring_audio_volume = 1;
+let endboss_sound_volume = 0.2;
 
 
 
