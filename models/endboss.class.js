@@ -12,6 +12,7 @@ class Endboss extends MovableObject {
     character;
     // hadFirstContact = false;
     endbossMusic = null;
+    endbossHurt = false;
     // isEndbossMusicPlaying;
 
 
@@ -71,33 +72,58 @@ class Endboss extends MovableObject {
     }
 
     animate() {
+        // Erster Interval: Steuerung der Haupt-Endboss-Animationen (Attacke, Laufen, Alert)
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-                endboss_music.pause()
-
-                return;
+                endboss_music.pause();
+                setTimeout(() => {
+                    goToUrl('you-won.html');
+                }, 1500);
+                return; // Beende diesen Interval-Durchlauf, wenn tot
             }
 
-
             if (this.hadFirstContact) {
-
+                // Wenn der Charakter nah genug ist, um anzugreifen
                 if (this.character && Math.abs(this.character.x - this.x) < 200) {
                     this.playAnimation(this.IMAGES_ATTACK);
-                    endboss_sound.play()
+                    endboss_sound.play(); // Spiele den Angriffssound
                 } else {
+                    // Sonst laufen (oder stehen bleiben, wenn er im "toten Bereich" ist)
                     this.playAnimation(this.IMAGES_WALKING);
-                    endboss_sound.pause();
-                    endboss_sound.currentTime = 0;
+                    endboss_sound.pause(); // Pausiere den Angriffssound, wenn nicht attackiert wird
+                    endboss_sound.currentTime = 0; // Setze den Sound zurück
                 }
             } else {
-
+                // Wenn noch kein erster Kontakt, zeige die Alert-Animation
                 this.playAnimation(this.IMAGES_ALERT);
                 endboss_sound.pause();
                 endboss_sound.currentTime = 0;
             }
-        }, 250);
+        }, 250); // Intervall für die Haupt-Animationen
+
+        // ---
+
+        // Zweiter Interval: Steuerung der spezifischen Zustände (Tot, Verletzt)
+        // Dieser sollte in einem separaten Interval laufen, da er eine andere Update-Frequenz haben könnte
+        // und direkt auf isDead() und isHurt() reagiert.
+        setInterval(() => {
+            if (this.isDead()) {
+                // Die Tötungsanimation und Umleitung wird bereits im ersten Interval behandelt.
+                // Hier könnten zusätzliche Effekte oder Sounds abgespielt werden, die nur einmal pro Tod
+                // oder mit einer anderen Frequenz als die allgemeine Animation passieren sollen.
+                // death_sound.play(); // Wenn dieser Sound nur einmal beim Tod spielen soll, ist das hier in Ordnung.
+                // Die goToUrl-Logik sollte idealerweise nur einmal ausgelöst werden.
+                // Wenn goToUrl() im ersten Intervall aufgerufen wird, brauchen wir es hier nicht nochmal.
+            } else if (this.isHurt()) {
+                this.endbossHurt = true;
+                this.playAnimation(this.IMAGES_HURT);
+                endboss_hurt.play();
+                this.lastActivityTime = Date.now();
+            }
+        }, 50); // Intervall für die Zustände "Tot" und "Verletzt"
     }
+
 
     endbosseMoveAnimation() {
         setInterval(() => {
@@ -107,9 +133,10 @@ class Endboss extends MovableObject {
 
 
             if (this.world && this.world.character && this.world.character.x > 2200 && !this.hadFirstContact) {
+                this.world.showEndbossStatusBar = true;
                 this.hadFirstContact = true;
                 this.startEndbossMusic();
-                console.log('Endboss erreicht und aktiviert!');
+
 
             }
 

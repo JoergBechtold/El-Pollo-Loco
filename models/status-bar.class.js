@@ -33,6 +33,15 @@ class StatusBar extends MovableObject {
         'assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png',
     ];
 
+    IMAGES_ENDBOSS = [
+        'assets/img/7_statusbars/2_statusbar_endboss/blue/blue0.png',
+        'assets/img/7_statusbars/2_statusbar_endboss/blue/blue20.png',
+        'assets/img/7_statusbars/2_statusbar_endboss/blue/blue40.png',
+        'assets/img/7_statusbars/2_statusbar_endboss/blue/blue60.png',
+        'assets/img/7_statusbars/2_statusbar_endboss/blue/blue80.png',
+        'assets/img/7_statusbars/2_statusbar_endboss/blue/blue100.png'
+    ]
+
     constructor(statusBarType) {
         super();
         this.statusBarType = statusBarType;
@@ -43,6 +52,8 @@ class StatusBar extends MovableObject {
 
     setHealthBarPercentage() {
         if (this.statusBarType === 'health') {
+            this.setPercentage(100);
+        } else if (this.statusBarType === 'endboss') {
             this.setPercentage(100);
         } else {
             this.setPercentage(0);
@@ -56,6 +67,9 @@ class StatusBar extends MovableObject {
             this.y = 50;
         } else if (this.statusBarType === 'bottle') {
             this.y = 100;
+        } else if (this.statusBarType === 'endboss') {
+            this.y = 8;
+            this.x = 480;
         }
     }
 
@@ -66,6 +80,8 @@ class StatusBar extends MovableObject {
             return this.IMAGES_COINS;
         } else if (this.statusBarType === 'bottle') {
             return this.IMAGES_BOTTLE;
+        } else if (this.statusBarType === 'endboss') {
+            return this.IMAGES_ENDBOSS;
         }
     }
 

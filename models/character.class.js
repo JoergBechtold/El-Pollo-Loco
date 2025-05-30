@@ -18,6 +18,7 @@ class Character extends MovableObject {
     barrelLeft = false;
     canMoveRight = true;
     canMoveLeft = true;
+    isOnBarrel = false;
 
 
 
@@ -161,6 +162,9 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
                 death_sound.play();
+                setTimeout(() => {
+                    goToUrl('you-have-lost.html')
+                }, 1500);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
                 hurt_sound.play();
