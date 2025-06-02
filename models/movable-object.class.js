@@ -3,9 +3,9 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2;
-    energy = 100;
-    characterEnergy = 100;
-    endbossEnergy = 100;
+    // energy = 100;
+    // characterEnergy = 100;
+    // endbossEnergy = 100;
     lastHit = 0;
     groundLevel;
     isDeadAnimationPlayed = false;
@@ -20,13 +20,13 @@ class MovableObject extends DrawableObject {
 
     constructor() {
         super();
-        if (this instanceof Character) {
-            this.groundLevel = 155;
-        } else if (this instanceof Chick) {
-            this.groundLevel = 370;
-        } else if (this instanceof ThrowableObject) {
-            this.groundLevel = 350;
-        }
+        // if (this instanceof Character) {
+        //     this.groundLevel = 155;
+        // } else if (this instanceof Chick) {
+        //     this.groundLevel = 370;
+        // } else if (this instanceof ThrowableObject) {
+        //     this.groundLevel = 350;
+        // }
     }
 
     applyGravity() {
@@ -109,6 +109,8 @@ class MovableObject extends DrawableObject {
 
         if (this instanceof Endboss) {
             this.endbossEnergy -= 2;
+            console.log('getroffen' + this.endbossEnergy);
+
         }
         if (this.endbossEnergy < 0) {
             this.endbossEnergy = 0;

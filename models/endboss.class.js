@@ -2,6 +2,9 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 55;
+    endbossEnergy = 100;
+
+    // groundLevel = 55;
     speed = 2;
     offset = {
         top: 70,

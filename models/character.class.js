@@ -1,6 +1,9 @@
 class Character extends MovableObject {
     height = 280;
     width = 150;
+    groundLevel = 155
+    characterEnergy = 100;
+
     // y = 155;
     speed = 7.5;
     world;
@@ -116,10 +119,6 @@ class Character extends MovableObject {
         let timePassed = Date.now() - this.lastActivityTime;
         return timePassed > this.lengthOfInactivity;
     }
-
-    // isFalling() {
-    //     return this.isAboveGround() && this.speedY > 0;
-    // }
 
     animate() {
         setInterval(() => {

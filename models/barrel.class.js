@@ -3,6 +3,7 @@ class Barrel extends DrawableObject {
     heigt = 100
 
     y = 320
+    // groundLevel = 320
 
     offset = {
         top: 7,
@@ -13,7 +14,6 @@ class Barrel extends DrawableObject {
 
     constructor(path) {
         super().loadImage(path)
-        // this.x = 200 + Math.random() * 2400;
         let randomX = 800 + Math.random() * 2400;
         this.x = Math.round(randomX / 150) * 150;
 
