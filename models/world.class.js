@@ -11,7 +11,6 @@ class World {
   totalCoinsInLevel;
   totalBottlesInLevel;
   isEndbossMusicPlaying = false;
-  isOnBarrel = false;
   showEndbossStatusBar = false;
 
 
@@ -103,50 +102,51 @@ class World {
   }
 
 
-  checkCollisionsBarrel() {
-    this.resetBarrelCollisionFlags()
 
-    let characterOnBarrel = false;
+
+  checkCollisionsBarrel() {
+    this.resetBarrelCollisionFlags();
+    let characterIsCurrentlyOnABarrel = false;
 
     this.level.barrelArray.forEach((barrel) => {
 
       if (this.character.isColliding(barrel)) {
-
         if (this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.offset.left &&
           this.character.x + this.character.offset.left < barrel.x + barrel.offset.left) {
           this.character.canMoveRight = false;
           this.character.barrelRight = true;
-
         }
-
 
         if (this.character.x + this.character.offset.left < barrel.x + barrel.width - barrel.offset.right &&
           this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.width - barrel.offset.right) {
           this.character.canMoveLeft = false;
           this.character.barrelLeft = true;
-
         }
+      }
 
 
-        if (this.character.y + this.character.height - this.character.offset.bottom >= barrel.y + barrel.offset.top - 10 &&
-          this.character.y + this.character.height - this.character.offset.bottom <= barrel.y + barrel.offset.top + 10 &&
-          this.character.x + this.character.offset.left < barrel.x + barrel.width - barrel.offset.right &&
-          this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.offset.left) {
 
-          this.character.isOnBarrel = true;
-          characterOnBarrel = true;
-          this.character.groundLevel = barrel.y - (this.character.height - this.character.offset.bottom);
-          console.log('landung auf fass');
+      const charBottom = this.character.y + this.character.height - this.character.offset.bottom;
+      const barrelTop = barrel.y + barrel.offset.top;
 
-        }
+      if (
 
+        charBottom >= barrelTop - 10 && charBottom <= barrelTop + 10 &&
+
+        this.character.x + this.character.offset.left < barrel.x + barrel.width - barrel.offset.right &&
+        this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.offset.left
+      ) {
+        this.character.isOnBarrel = true;
+        characterIsCurrentlyOnABarrel = true;
+        this.character.groundLevel = barrelTop - (this.character.height - this.character.offset.bottom);
+        // console.log('landung auf fass, groundLevel:', this.character.groundLevel);
       }
     });
-    if (!characterOnBarrel) {
-      this.character.isOnBarrel = false;
 
+    if (!characterIsCurrentlyOnABarrel) {
+      this.character.isOnBarrel = false;
       this.character.groundLevel = this.character.resetsCharacterToY();
-      console.log('fass verlassen');
+      // console.log('fass verlassen, groundLevel:', this.character.groundLevel);
     }
   }
 
@@ -160,7 +160,7 @@ class World {
     this.character.canMoveRight = true;
     this.character.barrelLeft = false;
     this.character.barrelRight = false;
-    // this.character.isOnBarrel = false;
+
   }
 
 
@@ -217,7 +217,7 @@ class World {
           }
 
           if (enemy instanceof Endboss) {
-            enemy.energy = 0;
+            enemy.hit()
             enemy.isDeadAnimationPlayed = false;
             if (!isMuted) {
               let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
@@ -228,9 +228,9 @@ class World {
                 chicken_death_audio.currentTime = 0;
               }, 500);
             }
-            setTimeout(() => {
-              this.level.enemiesArray.splice(enemyIndex, 1);
-            }, 500);
+            // setTimeout(() => {
+            //   this.level.enemiesArray.splice(enemyIndex, 1);
+            // }, 500);
           }
 
         }

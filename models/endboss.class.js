@@ -10,6 +10,8 @@ class Endboss extends MovableObject {
         bottom: 0
     };
     character;
+    // characterEnergy = 100;
+    // endbossEnergy = 100;
     // hadFirstContact = false;
     endbossMusic = null;
     endbossHurt = false;

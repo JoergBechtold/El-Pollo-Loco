@@ -22,6 +22,7 @@ class Character extends MovableObject {
 
 
 
+
     offset = {
         top: 120,
         left: 30,
@@ -116,9 +117,9 @@ class Character extends MovableObject {
         return timePassed > this.lengthOfInactivity;
     }
 
-    isFalling() {
-        return this.isAboveGround() && this.speedY > 0;
-    }
+    // isFalling() {
+    //     return this.isAboveGround() && this.speedY > 0;
+    // }
 
     animate() {
         setInterval(() => {

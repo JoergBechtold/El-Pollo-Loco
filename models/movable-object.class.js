@@ -4,12 +4,12 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2;
     energy = 100;
+    characterEnergy = 100;
+    endbossEnergy = 100;
     lastHit = 0;
     groundLevel;
     isDeadAnimationPlayed = false;
     isImmune = false;
-    // isOnBarrel = false;
-
 
     offset = {
         top: 0,
@@ -26,55 +26,66 @@ class MovableObject extends DrawableObject {
             this.groundLevel = 370;
         } else if (this instanceof ThrowableObject) {
             this.groundLevel = 350;
-        } else {
-            this.groundLevel = 348;
         }
     }
-
-    // applyGravity() {
-    //     setInterval(() => {
-    //         if (this.isAboveGround() || this.speedY > 0) {
-    //             this.y -= this.speedY;
-    //             this.speedY -= this.acceleration;
-    //         }
-
-    //         if (this.y >= this.groundLevel && this.speedY <= 0) {
-    //             this.y = this.groundLevel;
-    //             this.speedY = 0;
-    //         }
-    //     }, 1000 / 35);
-    // }
 
     applyGravity() {
         setInterval(() => {
 
-            if (this.isOnBarrel) {
+            if (this instanceof Character && this.isOnBarrel) {
 
-                if (this.y >= this.groundLevel) {
+                if (this.y >= this.groundLevel && this.speedY <= 0) {
+                    this.y = this.groundLevel;
+                    this.speedY = 0;
+                } else {
+                    this.y -= this.speedY;
+                    this.speedY -= this.acceleration;
+                }
+            } else {
+
+                if (this.y < this.groundLevel || this.speedY > 0) {
+                    this.y -= this.speedY;
+                    this.speedY -= this.acceleration;
+                } else {
                     this.y = this.groundLevel;
                     this.speedY = 0;
                 }
-
-            }
-
-            if (this.y < this.groundLevel || this.speedY > 0) {
-                this.y -= this.speedY;
-                this.speedY -= this.acceleration;
-            } else {
-
-                this.y = this.groundLevel;
-                this.speedY = 0;
             }
         }, 1000 / 35);
     }
 
-    setGroundLevel(newGround) {
-        this.groundLevel = newGround;
-    }
+
 
     isAboveGround() {
+
         return this.y < this.groundLevel;
+
     }
+
+
+
+    // hit() {
+
+    //     if (this.isImmune) {
+    //         return;
+    //     }
+
+    //     if (this instanceof Character)
+    //         this.characterEnergy -= 5;
+    //     if (this.characterEnergy < 0) {
+    //         this.characterEnergy = 0;
+    //     } else {
+    //         this.lastHit = new Date().getTime();
+    //     }
+
+    //     if (this instanceof Endboss)
+    //         this.endbossEnergy -= 2;
+    //     if (this.endbossEnergy < 0) {
+    //         this.endbossEnergy = 0;
+    //     } else {
+    //         this.lastHit = new Date().getTime();
+    //     }
+    // }
 
     hit() {
 
@@ -82,9 +93,25 @@ class MovableObject extends DrawableObject {
             return;
         }
 
-        this.energy -= 5;
-        if (this.energy < 0) {
-            this.energy = 0;
+
+        if (this instanceof Character) {
+            this.characterEnergy -= 5;
+        }
+
+
+        if (this.characterEnergy < 0) {
+            this.characterEnergy = 0;
+        } else {
+
+            this.lastHit = new Date().getTime();
+        }
+
+
+        if (this instanceof Endboss) {
+            this.endbossEnergy -= 2;
+        }
+        if (this.endbossEnergy < 0) {
+            this.endbossEnergy = 0;
         } else {
             this.lastHit = new Date().getTime();
         }
