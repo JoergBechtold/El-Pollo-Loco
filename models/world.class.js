@@ -62,8 +62,8 @@ class World {
 
   //hier noch eine allgemeine funktion bauen für beide
   updateStatusBars() {
-    this.statusBarHealth.setPercentage(this.character.energy);
-    this.statusBarHealth.setPercentage(this.character.energy);
+    this.statusBarHealth.setPercentage(this.character.characterEnergy);
+    this.statusBarEndboss.setPercentage(this.endboss.endbossEnergy);
 
     if (this.totalCoinsInLevel > 0) {
       let collectedCoins = this.character.collectCoinsArray.length;
@@ -160,10 +160,6 @@ class World {
 
     this.updateCharacterGroundLevel(characterIsCurrentlyOnABarrel);
   }
-
-  // ---
-  // Helper Functions
-  // ---
 
   handleLateralBarrelCollisions(barrel) {
     if (this.character.isColliding(barrel)) {
@@ -289,9 +285,9 @@ class World {
                 chicken_death_audio.currentTime = 0;
               }, 500);
             }
-            // setTimeout(() => {
-            //   this.level.enemiesArray.splice(enemyIndex, 1);
-            // }, 500);
+            setTimeout(() => {
+              this.level.enemiesArray.splice(enemyIndex, 1);
+            }, 500);
           }
 
         }

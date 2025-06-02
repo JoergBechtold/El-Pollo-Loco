@@ -11,7 +11,7 @@ const PATH_CHICKEN_DEATH_AUDIO = 'assets/audio/chicken-dead.mp3';
 
 
 let walkin_sound = new Audio('assets/audio/running.mp3');
-let game_music = new Audio('assets/audio/game-musik.mp3');
+let game_music = new Audio('assets/audio/game-music1.mp3');
 let snoring_audio = new Audio('assets/audio/snoring.mp3');
 let death_sound = new Audio('assets/audio/death.mp3');
 let jump_sound = new Audio('assets/audio/jump.ogg');
