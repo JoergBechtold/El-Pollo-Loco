@@ -20,6 +20,7 @@ let bottle_splash = new Audio('assets/audio/bottle-break.mp3');
 let endboss_music = new Audio('assets/audio/endboss-music.mp3');
 let endboss_sound = new Audio('assets/audio/endboss-chicken.mp3');
 let endboss_hurt = new Audio('assets/audio/hurt-endboss.mp3');
+let endboss_death = new Audio('assets/audio/endboss-death.mp3');
 
 
 const allAudioArray = [
@@ -32,8 +33,8 @@ const allAudioArray = [
     snoring_audio,
     endboss_music,
     endboss_sound,
-    endboss_hurt
-
+    endboss_hurt,
+    endboss_death
 ];
 
 
@@ -42,10 +43,11 @@ let game_music_volume_silence = 0.03;
 let game_music_volume_loude = 0.1;
 let bouncing_audio_volume = 0.5;
 let collect_bottle_audio_volume = 1;
-let collect_coin_audio_volume = 1;
+let collect_coin_audio_volume = 0.7;
 let chicken_death_audio_volume = 1;
 let snoring_audio_volume = 1;
 let endboss_sound_volume = 0.2;
+let death_sound_volume = 0.3;
 
 
 

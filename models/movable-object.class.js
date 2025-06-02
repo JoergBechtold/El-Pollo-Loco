@@ -88,36 +88,63 @@ class MovableObject extends DrawableObject {
     // }
 
     hit() {
-
         if (this.isImmune) {
-            return;
+            return; // Wenn immun, passiert nichts
         }
-
 
         if (this instanceof Character) {
-            this.characterEnergy -= 5;
+            this.characterEnergy -= 5; // Charakter verliert 5 Energiepunkte
+            if (this.characterEnergy < 0) {
+                this.characterEnergy = 0; // Energie nicht unter 0 fallen lassen
+            }
+        } else if (this instanceof Endboss) {
+            this.endbossEnergy -= 2; // Endboss verliert 2 Energiepunkte
+            console.log('Endboss getroffen! Energie: ' + this.endbossEnergy);
+            if (this.endbossEnergy < 0) {
+                this.endbossEnergy = 0; // Energie nicht unter 0 fallen lassen
+            }
+        } else if (this instanceof Chicken) {
+            this.endbossEnergy -= 5; // Endboss verliert 2 Energiepunkte
+            if (this.endbossEnergy < 0) {
+                this.endbossEnergy = 0; // Energie nicht unter 0 fallen lassen
+            }
         }
 
-
-        if (this.characterEnergy < 0) {
-            this.characterEnergy = 0;
-        } else {
-
-            this.lastHit = new Date().getTime();
-        }
-
-
-        if (this instanceof Endboss) {
-            this.endbossEnergy -= 2;
-            console.log('getroffen' + this.endbossEnergy);
-
-        }
-        if (this.endbossEnergy < 0) {
-            this.endbossEnergy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
-        }
+        // Unabhängig davon, wer getroffen wurde, setze die 'lastHit'-Zeit
+        this.lastHit = new Date().getTime();
     }
+
+    // hit() {
+
+    //     if (this.isImmune) {
+    //         return;
+    //     }
+
+
+    //     if (this instanceof Character) {
+    //         this.characterEnergy -= 5;
+    //     }
+
+
+    //     if (this.characterEnergy < 0) {
+    //         this.characterEnergy = 0;
+    //     } else {
+
+    //         this.lastHit = new Date().getTime();
+    //     }
+
+
+    //     if (this instanceof Endboss) {
+    //         this.endbossEnergy -= 2;
+    //         console.log('getroffen' + this.endbossEnergy);
+
+    //     }
+    //     if (this.endbossEnergy < 0) {
+    //         this.endbossEnergy = 0;
+    //     } else {
+    //         this.lastHit = new Date().getTime();
+    //     }
+    // }
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
@@ -127,9 +154,10 @@ class MovableObject extends DrawableObject {
     }
 
     isDead() {
-        if (this.isImmune) {
-            return;
-        }
+        if (this.isImmune) return
+        if (this instanceof Endboss) return this.endbossEnergy == 0
+        if (this instanceof Character) return this.characterEnergy == 0
+
         return this.energy == 0;
     }
 
