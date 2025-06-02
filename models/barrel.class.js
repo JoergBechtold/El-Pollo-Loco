@@ -7,8 +7,8 @@ class Barrel extends DrawableObject {
 
     offset = {
         top: 7,
-        left: 15,
-        right: 0,
+        left: 38,
+        right: 8,
         bottom: 50
     };
 
