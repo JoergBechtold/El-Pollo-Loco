@@ -2,7 +2,6 @@ class CollectBottle extends MovableObject {
     x = 300;
     y = 310;
 
-
     offset = {
         top: 30,
         left: 30,
@@ -15,6 +14,4 @@ class CollectBottle extends MovableObject {
         let randomX = 300 + Math.random() * 2400;
         this.x = Math.round(randomX / 150) * 150;
     }
-
-
 }

@@ -11,10 +11,6 @@ class DrawableObject {
 
     }
 
-
-
-
-
     drawSpeechBubbleImage(ctx, imagePath) {
         let speechBubbleImg = this.imageCache[imagePath];
         if (speechBubbleImg) {
@@ -52,11 +48,4 @@ class DrawableObject {
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
-
-
-
-
-
-
-
 }

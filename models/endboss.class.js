@@ -12,11 +12,6 @@ class Endboss extends MovableObject {
     };
     character;
     endbossMusic = null;
-    // endbossHurt = false;
-
-
-
-
 
     IMAGES_WALKING = [
         'assets/img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -143,7 +138,7 @@ class Endboss extends MovableObject {
                     this.isCurrentlyAttackingSoundPlaying = false;
                 }
             }
-        }, 100); // Oder 1000 / 30 für 30 FPS, je nachdem, was dir besser gefällt.
+        }, 150);
     }
 
     // animate() {
