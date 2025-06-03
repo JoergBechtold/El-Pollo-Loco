@@ -146,49 +146,6 @@ class Endboss extends MovableObject {
         }, 150);
     }
 
-    // animate() {
-
-    //     setInterval(() => {
-    //         if (this.isDead()) {
-    //             this.playAnimation(this.IMAGES_DEAD);
-    //             endboss_death.play()
-    //             endboss_music.pause();
-    //             setTimeout(() => {
-    //                 goToUrl('you-won.html');
-    //             }, 1500);
-    //             return;
-    //         }
-
-    //         if (this.isHurt()) {
-    //             this.playAnimation(this.IMAGES_HURT);
-    //             endboss_hurt.play();
-
-    //         }
-
-
-    //         if (this.hadFirstContact) {
-
-    //             if (this.character && Math.abs(this.character.x - this.x) < 200) {
-    //                 this.playAnimation(this.IMAGES_ATTACK);
-    //                 endboss_sound.play();
-    //             } else {
-
-    //                 this.playAnimation(this.IMAGES_WALKING);
-    //                 endboss_sound.pause();
-    //                 endboss_sound.currentTime = 0;
-    //             }
-    //         } else {
-
-    //             this.playAnimation(this.IMAGES_ALERT);
-    //             endboss_sound.pause();
-    //             endboss_sound.currentTime = 0;
-    //         }
-    //     }, 1000 / 25);
-
-
-
-
-    // }
 
 
     endbosseMoveAnimation() {
