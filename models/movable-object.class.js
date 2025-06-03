@@ -3,9 +3,6 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2;
-    // energy = 100;
-    // characterEnergy = 100;
-    // endbossEnergy = 100;
     lastHit = 0;
     groundLevel;
     isDeadAnimationPlayed = false;
@@ -20,13 +17,6 @@ class MovableObject extends DrawableObject {
 
     constructor() {
         super();
-        // if (this instanceof Character) {
-        //     this.groundLevel = 155;
-        // } else if (this instanceof Chick) {
-        //     this.groundLevel = 370;
-        // } else if (this instanceof ThrowableObject) {
-        //     this.groundLevel = 350;
-        // }
     }
 
     applyGravity() {
@@ -55,96 +45,33 @@ class MovableObject extends DrawableObject {
     }
 
 
-
     isAboveGround() {
-
         return this.y < this.groundLevel;
-
     }
-
-
-
-    // hit() {
-
-    //     if (this.isImmune) {
-    //         return;
-    //     }
-
-    //     if (this instanceof Character)
-    //         this.characterEnergy -= 5;
-    //     if (this.characterEnergy < 0) {
-    //         this.characterEnergy = 0;
-    //     } else {
-    //         this.lastHit = new Date().getTime();
-    //     }
-
-    //     if (this instanceof Endboss)
-    //         this.endbossEnergy -= 2;
-    //     if (this.endbossEnergy < 0) {
-    //         this.endbossEnergy = 0;
-    //     } else {
-    //         this.lastHit = new Date().getTime();
-    //     }
-    // }
 
     hit() {
         if (this.isImmune) {
-            return; // Wenn immun, passiert nichts
+            return;
         }
 
         if (this instanceof Character) {
-            this.characterEnergy -= 5; // Charakter verliert 5 Energiepunkte
+            this.characterEnergy -= 5;
             if (this.characterEnergy < 0) {
-                this.characterEnergy = 0; // Energie nicht unter 0 fallen lassen
+                this.characterEnergy = 0;
             }
         } else if (this instanceof Endboss) {
-            this.endbossEnergy -= 2; // Endboss verliert 2 Energiepunkte
+            this.endbossEnergy -= 4;
             console.log('Endboss getroffen! Energie: ' + this.endbossEnergy);
             if (this.endbossEnergy < 0) {
-                this.endbossEnergy = 0; // Energie nicht unter 0 fallen lassen
-            }
-        } else if (this instanceof Chicken) {
-            this.endbossEnergy -= 5; // Endboss verliert 2 Energiepunkte
-            if (this.endbossEnergy < 0) {
-                this.endbossEnergy = 0; // Energie nicht unter 0 fallen lassen
+                this.endbossEnergy = 0;
             }
         }
 
-        // Unabhängig davon, wer getroffen wurde, setze die 'lastHit'-Zeit
+
         this.lastHit = new Date().getTime();
     }
 
-    // hit() {
 
-    //     if (this.isImmune) {
-    //         return;
-    //     }
-
-
-    //     if (this instanceof Character) {
-    //         this.characterEnergy -= 5;
-    //     }
-
-
-    //     if (this.characterEnergy < 0) {
-    //         this.characterEnergy = 0;
-    //     } else {
-
-    //         this.lastHit = new Date().getTime();
-    //     }
-
-
-    //     if (this instanceof Endboss) {
-    //         this.endbossEnergy -= 2;
-    //         console.log('getroffen' + this.endbossEnergy);
-
-    //     }
-    //     if (this.endbossEnergy < 0) {
-    //         this.endbossEnergy = 0;
-    //     } else {
-    //         this.lastHit = new Date().getTime();
-    //     }
-    // }
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
