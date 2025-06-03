@@ -72,7 +72,9 @@ class Endboss extends MovableObject {
         this.animationInterval = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+                endboss_death.currentTime = 0;
                 endboss_death.play();
+                endboss_death.volume = endboss_death_volume;
                 endboss_music.pause();
                 clearInterval(this.animationInterval);
                 setTimeout(() => {
@@ -89,6 +91,7 @@ class Endboss extends MovableObject {
 
             if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
+                endboss_hurt.currentTime = 0;
                 endboss_hurt.play();
                 // Wenn Endboss verletzt ist, stoppe möglicherweise den Angriffssound
                 if (this.isCurrentlyAttackingSoundPlaying) {
@@ -114,7 +117,7 @@ class Endboss extends MovableObject {
                     if (!this.isCurrentlyAttackingSoundPlaying) {
                         endboss_sound.currentTime = 0; // Wichtig: Sound zuerst zurücksetzen
                         endboss_sound.play();
-                        endboss_sound.volume = 0.5; // Sicherstellen, dass die Lautstärke passt
+                        endboss_sound.volume = endboss_sound_volume; // Sicherstellen, dass die Lautstärke passt
                         this.isCurrentlyAttackingSoundPlaying = true;
                         console.log('Endboss Sound startet!'); // Zum Debuggen
                     }
@@ -133,6 +136,8 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_ALERT);
                 // Sicherstellen, dass der Angriffssound pausiert ist, falls er doch lief
                 if (this.isCurrentlyAttackingSoundPlaying) {
+                    endboss_alert.currentTime = 0;
+                    endboss_alert.play()
                     endboss_sound.pause();
                     endboss_sound.currentTime = 0;
                     this.isCurrentlyAttackingSoundPlaying = false;
