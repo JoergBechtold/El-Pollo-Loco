@@ -1,9 +1,9 @@
 class Endboss extends MovableObject {
     height = 400;
     width = 250;
+    speed = 5;
     y = 55;
     endbossEnergy = 100;
-    speed = 2;
     offset = {
         top: 70,
         left: 0,
@@ -74,65 +74,121 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-        // Erster Interval: Steuerung der Haupt-Endboss-Animationen (Attacke, Laufen, Alert)
-        setInterval(() => {
+        this.animationInterval = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-                endboss_death.play()
+                endboss_death.play();
                 endboss_music.pause();
+                clearInterval(this.animationInterval);
                 setTimeout(() => {
                     goToUrl('you-won.html');
                 }, 1500);
-                return; // Beende diesen Interval-Durchlauf, wenn tot
+                return;
+            }
+
+            if (this.world && this.world.character && this.world.character.x > 2200 && !this.hadFirstContact) {
+                this.world.showEndbossStatusBar = true;
+                this.hadFirstContact = true;
+                this.startEndbossMusic();
             }
 
             if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
                 endboss_hurt.play();
+                // Wenn Endboss verletzt ist, stoppe möglicherweise den Angriffssound
+                if (this.isCurrentlyAttackingSoundPlaying) {
+                    endboss_sound.pause();
+                    endboss_sound.currentTime = 0;
+                    this.isCurrentlyAttackingSoundPlaying = false;
+                }
+            } else if (this.hadFirstContact) {
+                // Endboss-Bewegung
+                if (this.world.character.x < this.x - 50) {
+                    this.moveLeft();
+                    this.otherDirection = false;
+                } else if (this.world.character.x > this.x + 50) {
+                    this.moveRight();
+                    this.otherDirection = true;
+                }
 
-            }
-
-
-            if (this.hadFirstContact) {
-                // Wenn der Charakter nah genug ist, um anzugreifen
+                // Endboss-Animation und Sound basierend auf Nähe zum Charakter
                 if (this.character && Math.abs(this.character.x - this.x) < 200) {
                     this.playAnimation(this.IMAGES_ATTACK);
-                    endboss_sound.play(); // Spiele den Angriffssound
+
+                    // Nur spielen, wenn der Sound nicht schon läuft
+                    if (!this.isCurrentlyAttackingSoundPlaying) {
+                        endboss_sound.currentTime = 0; // Wichtig: Sound zuerst zurücksetzen
+                        endboss_sound.play();
+                        endboss_sound.volume = 0.5; // Sicherstellen, dass die Lautstärke passt
+                        this.isCurrentlyAttackingSoundPlaying = true;
+                        console.log('Endboss Sound startet!'); // Zum Debuggen
+                    }
                 } else {
-                    // Sonst laufen (oder stehen bleiben, wenn er im "toten Bereich" ist)
                     this.playAnimation(this.IMAGES_WALKING);
-                    endboss_sound.pause(); // Pausiere den Angriffssound, wenn nicht attackiert wird
-                    endboss_sound.currentTime = 0; // Setze den Sound zurück
+                    // Nur pausieren/zurücksetzen, wenn der Sound tatsächlich lief
+                    if (this.isCurrentlyAttackingSoundPlaying) {
+                        endboss_sound.pause();
+                        endboss_sound.currentTime = 0;
+                        this.isCurrentlyAttackingSoundPlaying = false;
+                        console.log('Endboss Sound gestoppt!'); // Zum Debuggen
+                    }
                 }
             } else {
                 // Wenn noch kein erster Kontakt, zeige die Alert-Animation
                 this.playAnimation(this.IMAGES_ALERT);
-                endboss_sound.pause();
-                endboss_sound.currentTime = 0;
+                // Sicherstellen, dass der Angriffssound pausiert ist, falls er doch lief
+                if (this.isCurrentlyAttackingSoundPlaying) {
+                    endboss_sound.pause();
+                    endboss_sound.currentTime = 0;
+                    this.isCurrentlyAttackingSoundPlaying = false;
+                }
             }
-        }, 50); // Intervall für die Haupt-Animationen
-
-        // ---
-
-        // Zweiter Interval: Steuerung der spezifischen Zustände (Tot, Verletzt)
-        // Dieser sollte in einem separaten Interval laufen, da er eine andere Update-Frequenz haben könnte
-        // und direkt auf isDead() und isHurt() reagiert.
-        // setInterval(() => {
-        //     if (this.isDead()) {
-        //         // Die Tötungsanimation und Umleitung wird bereits im ersten Interval behandelt.
-        //         // Hier könnten zusätzliche Effekte oder Sounds abgespielt werden, die nur einmal pro Tod
-        //         // oder mit einer anderen Frequenz als die allgemeine Animation passieren sollen.
-        //         // death_sound.play(); // Wenn dieser Sound nur einmal beim Tod spielen soll, ist das hier in Ordnung.
-        //         // Die goToUrl-Logik sollte idealerweise nur einmal ausgelöst werden.
-        //         // Wenn goToUrl() im ersten Intervall aufgerufen wird, brauchen wir es hier nicht nochmal.
-        //     } else if (this.isHurt()) {
-        //         // this.endbossHurt = true;
-        //         this.playAnimation(this.IMAGES_HURT);
-        //         endboss_hurt.play();
-
-        //     }
-        // }, 50); // Intervall für die Zustände "Tot" und "Verletzt"
+        }, 100); // Oder 1000 / 30 für 30 FPS, je nachdem, was dir besser gefällt.
     }
+
+    // animate() {
+
+    //     setInterval(() => {
+    //         if (this.isDead()) {
+    //             this.playAnimation(this.IMAGES_DEAD);
+    //             endboss_death.play()
+    //             endboss_music.pause();
+    //             setTimeout(() => {
+    //                 goToUrl('you-won.html');
+    //             }, 1500);
+    //             return;
+    //         }
+
+    //         if (this.isHurt()) {
+    //             this.playAnimation(this.IMAGES_HURT);
+    //             endboss_hurt.play();
+
+    //         }
+
+
+    //         if (this.hadFirstContact) {
+
+    //             if (this.character && Math.abs(this.character.x - this.x) < 200) {
+    //                 this.playAnimation(this.IMAGES_ATTACK);
+    //                 endboss_sound.play();
+    //             } else {
+
+    //                 this.playAnimation(this.IMAGES_WALKING);
+    //                 endboss_sound.pause();
+    //                 endboss_sound.currentTime = 0;
+    //             }
+    //         } else {
+
+    //             this.playAnimation(this.IMAGES_ALERT);
+    //             endboss_sound.pause();
+    //             endboss_sound.currentTime = 0;
+    //         }
+    //     }, 1000 / 25);
+
+
+
+
+    // }
 
 
     endbosseMoveAnimation() {
@@ -146,8 +202,6 @@ class Endboss extends MovableObject {
                 this.world.showEndbossStatusBar = true;
                 this.hadFirstContact = true;
                 this.startEndbossMusic();
-
-
             }
 
 
@@ -159,10 +213,8 @@ class Endboss extends MovableObject {
                     this.moveRight();
                     this.otherDirection = true;
                 }
-                // Wenn der Charakter sich in einem "toten Bereich" (hier +/- 50px) befindet,
-                // bleibt der Boss stehen oder führt eine Attacke aus (Animation in animate()).
             }
-        }, 1000 / 60);
+        }, 1000 / 25);
     }
 
     startEndbossMusic() {

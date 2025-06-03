@@ -100,55 +100,6 @@ class World {
     });
   }
 
-
-
-
-  // checkCollisionsBarrel() {
-  //   this.resetBarrelCollisionFlags();
-  //   let characterIsCurrentlyOnABarrel = false;
-
-  //   this.level.barrelArray.forEach((barrel) => {
-
-  //     if (this.character.isColliding(barrel)) {
-  //       if (this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.offset.left &&
-  //         this.character.x + this.character.offset.left < barrel.x + barrel.offset.left) {
-  //         this.character.canMoveRight = false;
-  //         this.character.barrelRight = true;
-  //       }
-
-  //       if (this.character.x + this.character.offset.left < barrel.x + barrel.width - barrel.offset.right &&
-  //         this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.width - barrel.offset.right) {
-  //         this.character.canMoveLeft = false;
-  //         this.character.barrelLeft = true;
-  //       }
-  //     }
-
-
-
-  //     const charBottom = this.character.y + this.character.height - this.character.offset.bottom;
-  //     const barrelTop = barrel.y + barrel.offset.top;
-
-  //     if (
-
-  //       charBottom >= barrelTop - 10 && charBottom <= barrelTop + 10 &&
-
-  //       this.character.x + this.character.offset.left < barrel.x + barrel.width - barrel.offset.right &&
-  //       this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.offset.left
-  //     ) {
-  //       this.character.isOnBarrel = true;
-  //       characterIsCurrentlyOnABarrel = true;
-  //       this.character.groundLevel = barrelTop - (this.character.height - this.character.offset.bottom);
-
-  //     }
-  //   });
-
-  //   if (!characterIsCurrentlyOnABarrel) {
-  //     this.character.isOnBarrel = false;
-  //     this.character.groundLevel = this.character.resetsCharacterToY();
-  //     // console.log('fass verlassen, groundLevel:', this.character.groundLevel);
-  //   }
-  // }
-
   checkCollisionsBarrel() {
     this.resetBarrelCollisionFlags();
     let characterIsCurrentlyOnABarrel = false;
@@ -207,11 +158,6 @@ class World {
     }
   }
 
-
-
-
-
-
   resetBarrelCollisionFlags() {
     this.character.canMoveLeft = true;
     this.character.canMoveRight = true;
@@ -219,7 +165,6 @@ class World {
     this.character.barrelRight = false;
 
   }
-
 
   checkCollisions() {
     this.level.enemiesArray.forEach((enemy, index) => {
