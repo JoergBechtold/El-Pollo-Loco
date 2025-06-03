@@ -9,6 +9,7 @@ class ThrowableObject extends MovableObject {
     isSplashing = false;
     world;
 
+
     IMAGES_BOTTLES = [
         'assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'assets/img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -41,6 +42,7 @@ class ThrowableObject extends MovableObject {
 
 
     }
+
 
     throw() {
         this.speedY = 30;
@@ -80,6 +82,8 @@ class ThrowableObject extends MovableObject {
         }, 1000 / 10);
 
     }
+
+
 
 
 }

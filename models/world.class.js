@@ -51,6 +51,7 @@ class World {
 
   allwaysExecuted() {
     setInterval(() => {
+
       this.checkCollisions();
       this.checkCollisionsBarrel();
       this.collectObjects(this.level.bottlesArray, this.character.collectBottlesArray, PATH_COLLECT_BOTTLE_AUDIO, collect_bottle_audio_volume, 800);
@@ -169,36 +170,95 @@ class World {
     this.level.enemiesArray.forEach((enemy, index) => {
       if (this.character.isColliding(enemy)) {
 
-        if (this.character.isAboveGround() && this.character.speedY < 0 && (enemy instanceof Chicken || enemy instanceof Chick || enemy instanceof Endboss) && !enemy.isDead()) {
-          enemy.energy = 0;
-          enemy.isDeadAnimationPlayed = false;
+        if (this.character.isAboveGround() && this.character.speedY < 0 && !enemy.isDead()) { // isDead() prüfen, bevor wir auf den Feind reagieren
+          if (enemy instanceof Chicken || enemy instanceof Chick) {
+            enemy.energy = 0; // Hühner und Küken sterben sofort
+            enemy.isDeadAnimationPlayed = false;
 
-          if (!isMuted) {
-            let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
-            bouncing_audio.volume = bouncing_audio_volume;
-            bouncing_audio.play();
+            if (!isMuted) {
+              let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
+              bouncing_audio.volume = bouncing_audio_volume;
+              bouncing_audio.play();
+              setTimeout(() => {
+                bouncing_audio.pause();
+                bouncing_audio.currentTime = 0;
+              }, 500);
+            }
+
+            this.character.bounce(enemy);
             setTimeout(() => {
-              bouncing_audio.pause();
-              bouncing_audio.currentTime = 0;
+              // Sicherstellen, dass der Index korrekt ist, bevor gespliced wird
+              const currentEnemyIndex = this.level.enemiesArray.indexOf(enemy);
+              if (currentEnemyIndex > -1) {
+                this.level.enemiesArray.splice(currentEnemyIndex, 1);
+              }
             }, 500);
+          } else if (enemy instanceof Endboss) {
+            // Spezielle Behandlung für den Endboss
+            // Sicherstellen, dass der Endboss existiert
+            this.endboss.takeBounceDamage();
+            // this.endbossEnergy -= 10; // Dies sollte in der hit()-Methode des Endbosses passieren
+
+            enemy.isDeadAnimationPlayed = false; // Kann für Endboss-Animation relevant sein
+
+            if (!isMuted) {
+              let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
+              bouncing_audio.volume = bouncing_audio_volume;
+              bouncing_audio.play();
+              setTimeout(() => {
+                bouncing_audio.pause();
+                bouncing_audio.currentTime = 0;
+              }, 500);
+            }
+
+            this.character.bounce(enemy);
+            // Den Endboss nicht sofort aus dem Array entfernen, es sei denn, er ist wirklich tot
+            if (enemy.isDead()) {
+              setTimeout(() => {
+                const currentEnemyIndex = this.level.enemiesArray.indexOf(enemy);
+                if (currentEnemyIndex > -1) {
+                  this.level.enemiesArray.splice(currentEnemyIndex, 1);
+                }
+              }, 500); // Oder eine längere Verzögerung für die Todesanimation des Endbosses
+            }
           }
-
-          this.character.bounce(enemy);
-          setTimeout(() => {
-            this.level.enemiesArray.splice(index, 1);
-          }, 500);
-        } else if (!enemy.isDead()) {
-          this.character.hit();
-
+        } else if (!enemy.isDead()) { // Wenn der Charakter nicht über dem Boden ist oder sich nach oben bewegt
+          this.character.hit(); // Dann erleidet der Charakter Schaden
         }
+
+        // if (this.character.isAboveGround() && this.character.speedY < 0 && (enemy instanceof Chicken || enemy instanceof Chick) && !enemy.isDead()) {
+        //   enemy.energy = 0;
+        //   enemy.isDeadAnimationPlayed = false;
+
+        //   if (!isMuted) {
+        //     let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
+        //     bouncing_audio.volume = bouncing_audio_volume;
+        //     bouncing_audio.play();
+        //     setTimeout(() => {
+        //       bouncing_audio.pause();
+        //       bouncing_audio.currentTime = 0;
+        //     }, 500);
+        //   }
+
+        //   this.character.bounce(enemy);
+        //   setTimeout(() => {
+        //     this.level.enemiesArray.splice(index, 1);
+        //   }, 500);
+        // } else if (!enemy.isDead()) {
+        //   this.character.hit();
+
+        // }
       }
     });
 
-    //throwing bottle
+    // Bottle collisions with enemies and barrels
+    this.character.bottles.forEach((bottle, bottleIndex) => { // Added bottleIndex
+      let bottleHitSomething = false; // Flag to track if bottle hit anything
 
-    this.character.bottles.forEach((bottle) => {
+      // Check collision with enemies
       this.level.enemiesArray.forEach((enemy, enemyIndex) => {
         if (bottle.isColliding(enemy) && !enemy.isDead()) {
+          bottleHitSomething = true; // Bottle hit an enemy
 
           if (enemy instanceof Chicken || enemy instanceof Chick) {
             enemy.energy = 0;
@@ -218,10 +278,10 @@ class World {
           }
 
           if (enemy instanceof Endboss) {
-            this.endboss.hit()
+            this.endboss.hit();
             enemy.isDeadAnimationPlayed = false;
             if (!isMuted) {
-              let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
+              let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO); // Consider a different sound for Endboss hit
               chicken_death_audio.volume = chicken_death_audio_volume;
               chicken_death_audio.play();
               setTimeout(() => {
@@ -229,14 +289,83 @@ class World {
                 chicken_death_audio.currentTime = 0;
               }, 500);
             }
-            setTimeout(() => {
-              this.level.enemiesArray.splice(enemyIndex, 1);
-            }, 500);
+            // For endboss, you might not want to splice it out immediately if it has more health
+            // If it's dead, then splice
+            if (this.endboss.isDead()) {
+              setTimeout(() => {
+                this.level.enemiesArray.splice(enemyIndex, 1);
+              }, 500);
+            }
           }
-
         }
       });
+
+      // Check collision with barrels
+      this.level.barrelArray.forEach((barrel) => {
+        if (bottle.isColliding(barrel)) {
+          bottleHitSomething = true; // Bottle hit a barrel
+          // You can add a sound effect for bottle breaking on a barrel here if desired
+          if (!isMuted) {
+            let bottle_break_audio = new Audio('./path/to/bottle_break_audio.mp3'); // **Replace with actual path to your bottle break audio**
+            bottle_break_audio.volume = 0.5; // Adjust volume as needed
+            bottle_break_audio.play();
+            setTimeout(() => {
+              bottle_break_audio.pause();
+              bottle_break_audio.currentTime = 0;
+            }, 300);
+          }
+        }
+      });
+
+      // If the bottle hit an enemy or a barrel, remove it
+      if (bottleHitSomething) {
+        this.character.bottles.splice(bottleIndex, 1);
+      }
     });
+
+    //throwing bottle
+
+    // this.character.bottles.forEach((bottle) => {
+    //   this.level.enemiesArray.forEach((enemy, enemyIndex) => {
+    //     if (bottle.isColliding(enemy) && !enemy.isDead()) {
+
+    //       if (enemy instanceof Chicken || enemy instanceof Chick) {
+    //         enemy.energy = 0;
+    //         enemy.isDeadAnimationPlayed = false;
+    //         if (!isMuted) {
+    //           let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
+    //           chicken_death_audio.volume = chicken_death_audio_volume;
+    //           chicken_death_audio.play();
+    //           setTimeout(() => {
+    //             chicken_death_audio.pause();
+    //             chicken_death_audio.currentTime = 0;
+    //           }, 500);
+    //         }
+    //         setTimeout(() => {
+    //           this.level.enemiesArray.splice(enemyIndex, 1);
+    //         }, 500);
+    //       }
+
+    //       if (enemy instanceof Endboss) {
+    //         this.endboss.hit()
+    //         enemy.isDeadAnimationPlayed = false;
+    //         if (!isMuted) {
+    //           let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
+    //           chicken_death_audio.volume = chicken_death_audio_volume;
+    //           chicken_death_audio.play();
+    //           setTimeout(() => {
+    //             chicken_death_audio.pause();
+    //             chicken_death_audio.currentTime = 0;
+    //           }, 500);
+    //         }
+    //         setTimeout(() => {
+    //           this.level.enemiesArray.splice(enemyIndex, 1);
+    //         }, 500);
+    //       }
+
+    //     }
+    //   });
+    // });
 
     // check bottles and barrel collision
     // this.character.bottles.forEach((bottle) => {

@@ -60,7 +60,7 @@ class MovableObject extends DrawableObject {
                 this.characterEnergy = 0;
             }
         } else if (this instanceof Endboss) {
-            this.endbossEnergy -= 4;
+            this.endbossEnergy -= 25;
             console.log('Endboss getroffen! Energie: ' + this.endbossEnergy);
             if (this.endbossEnergy < 0) {
                 this.endbossEnergy = 0;
@@ -69,6 +69,19 @@ class MovableObject extends DrawableObject {
 
 
         this.lastHit = new Date().getTime();
+    }
+
+    takeBounceDamage() {
+        // Diese Methode wird speziell für Treffer durch den Character-Bounce verwendet
+        if (this.isImmune) {
+            return;
+        }
+        this.endbossEnergy -= 15; // Nur 15 Schaden bei Bounce
+        console.log('Endboss durch Bounce getroffen! Energie: ' + this.endbossEnergy);
+        if (this.endbossEnergy < 0) {
+            this.endbossEnergy = 0;
+        }
+        this.lastHit = new Date().getTime(); // Auch hier den letzten Treffer aktualisieren
     }
 
 

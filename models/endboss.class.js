@@ -93,14 +93,14 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT);
                 endboss_hurt.currentTime = 0;
                 endboss_hurt.play();
-                // Wenn Endboss verletzt ist, stoppe möglicherweise den Angriffssound
+
                 if (this.isCurrentlyAttackingSoundPlaying) {
                     endboss_sound.pause();
                     endboss_sound.currentTime = 0;
                     this.isCurrentlyAttackingSoundPlaying = false;
                 }
             } else if (this.hadFirstContact) {
-                // Endboss-Bewegung
+
                 if (this.world.character.x < this.x - 50) {
                     this.moveLeft();
                     this.otherDirection = false;
@@ -109,32 +109,32 @@ class Endboss extends MovableObject {
                     this.otherDirection = true;
                 }
 
-                // Endboss-Animation und Sound basierend auf Nähe zum Charakter
+
                 if (this.character && Math.abs(this.character.x - this.x) < 200) {
                     this.playAnimation(this.IMAGES_ATTACK);
 
-                    // Nur spielen, wenn der Sound nicht schon läuft
+
                     if (!this.isCurrentlyAttackingSoundPlaying) {
-                        endboss_sound.currentTime = 0; // Wichtig: Sound zuerst zurücksetzen
+                        endboss_sound.currentTime = 0;
                         endboss_sound.play();
-                        endboss_sound.volume = endboss_sound_volume; // Sicherstellen, dass die Lautstärke passt
+                        endboss_sound.volume = endboss_sound_volume;
                         this.isCurrentlyAttackingSoundPlaying = true;
-                        console.log('Endboss Sound startet!'); // Zum Debuggen
+                        console.log('Endboss Sound startet!');
                     }
                 } else {
                     this.playAnimation(this.IMAGES_WALKING);
-                    // Nur pausieren/zurücksetzen, wenn der Sound tatsächlich lief
+
                     if (this.isCurrentlyAttackingSoundPlaying) {
                         endboss_sound.pause();
                         endboss_sound.currentTime = 0;
                         this.isCurrentlyAttackingSoundPlaying = false;
-                        console.log('Endboss Sound gestoppt!'); // Zum Debuggen
+                        console.log('Endboss Sound gestoppt!');
                     }
                 }
             } else {
-                // Wenn noch kein erster Kontakt, zeige die Alert-Animation
+
                 this.playAnimation(this.IMAGES_ALERT);
-                // Sicherstellen, dass der Angriffssound pausiert ist, falls er doch lief
+
                 if (this.isCurrentlyAttackingSoundPlaying) {
                     endboss_alert.currentTime = 0;
                     endboss_alert.play()
