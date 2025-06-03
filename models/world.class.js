@@ -292,6 +292,8 @@ class World {
             // For endboss, you might not want to splice it out immediately if it has more health
             // If it's dead, then splice
             if (this.endboss.isDead()) {
+              // this.playAnimation(this.IMAGES_DEAD);
+
               setTimeout(() => {
                 this.level.enemiesArray.splice(enemyIndex, 1);
               }, 500);
@@ -317,67 +319,12 @@ class World {
         }
       });
 
-      // If the bottle hit an enemy or a barrel, remove it
+
+
       if (bottleHitSomething) {
         this.character.bottles.splice(bottleIndex, 1);
       }
     });
-
-    //throwing bottle
-
-    // this.character.bottles.forEach((bottle) => {
-    //   this.level.enemiesArray.forEach((enemy, enemyIndex) => {
-    //     if (bottle.isColliding(enemy) && !enemy.isDead()) {
-
-    //       if (enemy instanceof Chicken || enemy instanceof Chick) {
-    //         enemy.energy = 0;
-    //         enemy.isDeadAnimationPlayed = false;
-    //         if (!isMuted) {
-    //           let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
-    //           chicken_death_audio.volume = chicken_death_audio_volume;
-    //           chicken_death_audio.play();
-    //           setTimeout(() => {
-    //             chicken_death_audio.pause();
-    //             chicken_death_audio.currentTime = 0;
-    //           }, 500);
-    //         }
-    //         setTimeout(() => {
-    //           this.level.enemiesArray.splice(enemyIndex, 1);
-    //         }, 500);
-    //       }
-
-    //       if (enemy instanceof Endboss) {
-    //         this.endboss.hit()
-    //         enemy.isDeadAnimationPlayed = false;
-    //         if (!isMuted) {
-    //           let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
-    //           chicken_death_audio.volume = chicken_death_audio_volume;
-    //           chicken_death_audio.play();
-    //           setTimeout(() => {
-    //             chicken_death_audio.pause();
-    //             chicken_death_audio.currentTime = 0;
-    //           }, 500);
-    //         }
-    //         setTimeout(() => {
-    //           this.level.enemiesArray.splice(enemyIndex, 1);
-    //         }, 500);
-    //       }
-
-    //     }
-    //   });
-    // });
-
-    // check bottles and barrel collision
-    // this.character.bottles.forEach((bottle) => {
-    //   this.level.barrelArray.forEach((barrel) => {
-    //     if (bottle.isColliding(barrel)) {
-
-    //       console.log('treffer am fass');
-
-
-    //     }
-    //   });
-    // });
   }
 
   draw() {
