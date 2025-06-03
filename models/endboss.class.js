@@ -180,21 +180,7 @@ class Endboss extends MovableObject {
             game_music.currentTime = 0;
             endboss_music.volume = endboss_sound_volume;
             endboss_music.play();
-            // this.endbossMusic = new Audio(PATH_ENDBOSS_MUSIC);
-
-            // this.endbossMusic.volume = 0.5;
-            // this.endbossMusic.play();
             console.log('endboss musik');
-
-
-
-
-
-
-
         }
     }
-
-
-
 }

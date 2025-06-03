@@ -13,7 +13,6 @@ class World {
 
   totalCoinsInLevel;
   totalBottlesInLevel;
-  isEndbossMusicPlaying = false;
   showEndbossStatusBar = false;
 
 
