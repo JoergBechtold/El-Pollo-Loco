@@ -4,7 +4,7 @@
 }
 
 body {
-  cursor: url('assets/icons/pepperini-green.svg'), auto;
+  cursor: url('../assets/icons/pepperini-green.svg'), auto;
 }
 
 .body-index {
@@ -14,7 +14,7 @@ body {
 }
 
 button {
-  cursor: url('assets/icons/pepper-hot-solid.svg'), auto;
+  cursor: url('../assets/icons/pepper-hot-solid.svg'), auto;
 }
 
 canvas {
@@ -35,22 +35,17 @@ h2 {
   font-size: 38px;
 }
 
-/* :root {
-} */
-
-/* .main-background {
-  display: block;
-  height: 100dvh;
-  width: 100%;
-  object-fit: contain;
-} */
+:root {
+  --font-size-18-48: clamp(18px, 12px + 1.875vw, 48px);
+}
 
 .start-screen {
+  position: relative;
   display: flex;
-  background-image: url('assets/img/body_background/1.jpg');
+  /* background-image: url('assets/img/body_background/1.jpg');
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: cover; */
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -58,42 +53,53 @@ h2 {
   width: 100%;
 }
 
-/* .start-screen {
-  height: 100dvh;
+.start-screen img {
   width: 100%;
-  background-image: url('assets/img/9_intro_outro_screens/start/startscreen_1.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  position: absolute;
-  top: 0;
-} */
+  height: 100%;
+  object-fit: cover;
+}
 
 .start-container {
-  /* padding: 8px; */
+  position: absolute;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  background-image: url('assets/img/9_intro_outro_screens/start/startscreen_1.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  overflow: hidden;
+  background-image: linear-gradient(
+    to bottom,
+    #029cc7 0%,
+    #029cc7 10%,
+    #029cc7 20%,
+    #029cc7 30%,
+    #029cc7 40%,
+    #994409 60%,
+    #994409 70%,
+    #994409 80%,
+    #994409 90%,
+    #994409 100%
+  );
+  background-repeat: no-repeat; /* Not strictly necessary for a gradient, but good practice */
+  background-position: center; /* Centers the gradient */
   background-size: cover;
-  background-position-x: -73px;
-  /* background-color: #c48b54; */
-  width: 720px;
+  max-width: 720px;
+  max-height: 480px;
+  width: clamp(320px, 240px + 25vw, 720px);
   height: 480px;
   border-radius: 16px;
   box-shadow: 4px 0 4px rgba(0, 0, 0, 0.5), -4px 0 4px rgba(0, 0, 0, 0.5), 0 4px 4px rgba(0, 0, 0, 0.5), 0 -4px 4px rgba(0, 0, 0, 0.5);
 }
 
+.start-container img {
+  width: 100%;
+  object-fit: contain;
+}
+
 .start-nav {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 60px;
+  padding-top: 25px;
   height: 80px;
   width: 100%;
   gap: 30px;
@@ -110,11 +116,11 @@ h2 {
 } */
 
 .btn-desktop {
-  font-size: 48px;
+  font-size: var(--font-size-18-48);
   padding: 10px;
   border-radius: 8px;
   border: unset;
-  height: 100%;
+  /* height: 100%; */
   background-color: #ffcc18;
   box-shadow: 4px 4px 0 rgb(145, 54, 22);
 }

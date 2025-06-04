@@ -59,7 +59,7 @@ class ThrowableObject extends MovableObject {
 
                 }, 400);
 
-                if (this.y >= this.groundLevel || this.isColliding()) {
+                if (this.y >= this.groundLevel || world.bottleHitSomething) {
                     this.playBottleSplash();
                     clearInterval(this.animationInterval);
                 }
