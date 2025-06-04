@@ -225,29 +225,6 @@ class World {
         } else if (!enemy.isDead()) { // Wenn der Charakter nicht über dem Boden ist oder sich nach oben bewegt
           this.character.hit(); // Dann erleidet der Charakter Schaden
         }
-
-        // if (this.character.isAboveGround() && this.character.speedY < 0 && (enemy instanceof Chicken || enemy instanceof Chick) && !enemy.isDead()) {
-        //   enemy.energy = 0;
-        //   enemy.isDeadAnimationPlayed = false;
-
-        //   if (!isMuted) {
-        //     let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
-        //     bouncing_audio.volume = bouncing_audio_volume;
-        //     bouncing_audio.play();
-        //     setTimeout(() => {
-        //       bouncing_audio.pause();
-        //       bouncing_audio.currentTime = 0;
-        //     }, 500);
-        //   }
-
-        //   this.character.bounce(enemy);
-        //   setTimeout(() => {
-        //     this.level.enemiesArray.splice(index, 1);
-        //   }, 500);
-        // } else if (!enemy.isDead()) {
-        //   this.character.hit();
-
-        // }
       }
     });
 
