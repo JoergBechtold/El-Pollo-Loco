@@ -37,10 +37,11 @@ h2 {
 
 :root {
   /* font sizes */
-  --font-size-18-48: clamp(18px, 12px + 1.875vw, 48px);
-  --font-size-18-28: clamp(18px, 16px + 0.625vw, 28px);
+  --font-size-32-48: clamp(32px, 28.8px + 1vw, 48px);
+  --font-size-22-28: clamp(22px, 20.8px + 0.375vw, 28px);
   --font-size-44-54: clamp(44px, 42px + 0.625vw, 54px);
-  --arrow-back-size: clamp(45px, 38px + 2.1875vw, 80px);
+
+  --arrow-back-size: clamp(64px, 60.8px + 1vw, 80px);
 }
 
 .start-screen {
@@ -106,7 +107,9 @@ h2 {
 }
 
 .btn-desktop {
-  font-size: var(--font-size-18-48);
+  display: grid;
+  place-items: center;
+  font-size: var(--font-size-32-48);
   padding: 10px;
   border-radius: 8px;
   border: unset;
