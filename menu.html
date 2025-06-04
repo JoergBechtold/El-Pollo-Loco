@@ -30,44 +30,75 @@
   </head>
   <body onload="initPlay()" class="body-menu">
     <div class="menu-screen" id="menu_screen">
-      <nav class="menu-nav">
-        <button id="start_game_btn" title="Spiel Starten" class="btn-desktop">Spiel Starten</button>
-        <button title="Zum Startbildschirm" class="btn-desktop" onclick="goToUrl('index.html')">Startbildschirm</button>
-
-        <div onclick="soundToggle()" class="sound-box" id="sound_box">
-          <img id="sound_box_img" title="Spiel Audio an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
-          <span id="sound_box_span">Spiel Audio an</span>
-        </div>
-      </nav>
+      <img class="menu-screen-bg" src="assets/img/body_background/1.jpg" alt="Hintergrundbild" />
 
       <div class="menu-container">
-        <h2>Steuerung</h2>
-        <div class="controls-box">
-          <div class="control-left">
-            <img src="assets/icons/arrow-left.png" alt="Pfeil Links" />
-            <p>Nach links Laufen</p>
-          </div>
-          <div class="control-right">
-            <img src="assets/icons/arrow-right.png" alt="Pfeil Rechts" />
-            <p>Nach rechts Laufen</p>
-          </div>
-          <div class="control-jump">
-            <img src="assets/icons/button-space.png" alt="Leertaste" />
-            <p>Springen</p>
-          </div>
-          <div class="control-throw">
-            <img src="assets/icons/button-d.png" alt="Taste D" />
-            <p>Flasche Werfen</p>
-          </div>
-        </div>
+        <nav class="menu-nav">
+          <button id="start_game_btn" title="Spiel Starten" class="btn-desktop">Spiel Starten</button>
+          <button title="Zum Startbildschirm" class="btn-desktop" onclick="goToUrl('index.html')">Startbildschirm</button>
 
-        <h2>Spielmechanik</h2>
-        <div class="game-mechanics">
-          <p>
-            <b>Gegner besiegen:</b> Springe auf einen Gegner, um ihn zu besiegen. Du kannst Gegner auch mit Flaschen bewerfen, aber spare diese für
-            den Endboss auf!
-          </p>
-          <p><b>Endboss besiegen:</b> Um den Endboss zu besiegen, musst du ihn mit Flaschen bewerfen.</p>
+          <!-- <div onclick="soundToggle()" class="sound-box" id="sound_box">
+            <img id="sound_box_img" title="Spiel Audio an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
+            <span id="sound_box_span">Spiel Audio an</span>
+          </div> -->
+        </nav>
+
+        <div class="menu-main">
+          <div class="content-desktop">
+            <h2>Steuerung</h2>
+            <div class="controls-box">
+              <div class="control-left">
+                <img src="assets/icons/arrow-left.png" alt="Pfeil Links-Icon" />
+                <p>Nach links Laufen</p>
+              </div>
+              <div class="control-right">
+                <img src="assets/icons/arrow-right.png" alt="Pfeil Rechts-Icon" />
+                <p>Nach rechts Laufen</p>
+              </div>
+              <div class="control-jump">
+                <img src="assets/icons/button-space.png" alt="Leertaste-Icon" />
+                <p>Springen</p>
+              </div>
+              <div class="control-throw">
+                <img src="assets/icons/button-d.png" alt="Taste D-Icon" />
+                <p>Flasche Werfen</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-mobile">
+            <h2>Steuerung</h2>
+            <div class="controls-box">
+              <div class="control-left-mobile">
+                <img src="assets/icons/arrow-left.png" alt="Pfeil Links-Icon" />
+                <p>Nach links Laufen</p>
+              </div>
+              <div class="control-right-mobile">
+                <img src="assets/icons/arrow-right.png" alt="Pfeil Rechts-Icon" />
+                <p>Nach rechts Laufen</p>
+              </div>
+              <div class="control-jump-mobile">
+                <img src="assets/icons/jump-icon-mobile.png" alt="Springen-Icon" />
+                <p>Springen</p>
+              </div>
+              <div class="control-throw-mobile">
+                <img src="assets/icons/throw-icon-mobile.png" alt="Werfen-Icon" />
+                <p>Flasche Werfen</p>
+              </div>
+            </div>
+          </div>
+
+          <h2>Spielmechanik</h2>
+          <div class="game-mechanics">
+            <p>
+              <b> Gegner besiegen:</b> Springe auf einen Gegner, um ihn zu besiegen. Du kannst Gegner auch mit Flaschen bewerfen, aber spare diese für
+              den Endboss auf!
+            </p>
+            <p>
+              <b> Endboss besiegen:</b>Den Endboss besiegst du, indem du ihn mit Flaschen bewirfst. Alternativ kannst du versuchen, auf ihn zu
+              springen; dabei helfen dir die Fässer..
+            </p>
+          </div>
         </div>
       </div>
     </div>

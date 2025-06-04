@@ -32,7 +32,7 @@ h1 {
 
 h2 {
   padding-top: 10px;
-  font-size: 38px;
+  font-size: var(--font-size-34-38);
 }
 
 :root {
@@ -40,8 +40,14 @@ h2 {
   --font-size-32-48: clamp(32px, 28.8px + 1vw, 48px);
   --font-size-22-28: clamp(22px, 20.8px + 0.375vw, 28px);
   --font-size-44-54: clamp(44px, 42px + 0.625vw, 54px);
+  --font-size-18-24: clamp(18px, 16.8px + 0.375vw, 24px);
+  --font-size-34-38: clamp(34px, 33.2px + 0.25vw, 38px);
+
+  --primary-bg-color: #ffcc18;
 
   --arrow-back-size: clamp(64px, 60.8px + 1vw, 80px);
+
+  --padding-top-nav: 25px;
 }
 
 .start-screen {
@@ -60,12 +66,22 @@ h2 {
   object-fit: cover;
 }
 
-.start-container {
+.start-container,
+.menu-container {
   position: absolute;
+  overflow: hidden;
+  max-width: 720px;
+  max-height: 480px;
+  width: clamp(320px, 240px + 25vw, 720px);
+  height: 480px;
+  border-radius: 16px;
+  box-shadow: 4px 0 4px rgba(0, 0, 0, 0.5), -4px 0 4px rgba(0, 0, 0, 0.5), 0 4px 4px rgba(0, 0, 0, 0.5), 0 -4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.start-container {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  overflow: hidden;
   background-image: linear-gradient(
     to bottom,
     #029cc7 0%,
@@ -79,15 +95,9 @@ h2 {
     #994409 90%,
     #994409 100%
   );
-  background-repeat: no-repeat; /* Not strictly necessary for a gradient, but good practice */
-  background-position: center; /* Centers the gradient */
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: cover;
-  max-width: 720px;
-  max-height: 480px;
-  width: clamp(320px, 240px + 25vw, 720px);
-  height: 480px;
-  border-radius: 16px;
-  box-shadow: 4px 0 4px rgba(0, 0, 0, 0.5), -4px 0 4px rgba(0, 0, 0, 0.5), 0 4px 4px rgba(0, 0, 0, 0.5), 0 -4px 4px rgba(0, 0, 0, 0.5);
 }
 
 .start-container img {
@@ -95,25 +105,29 @@ h2 {
   object-fit: contain;
 }
 
-.start-nav {
-  position: absolute;
+.start-nav,
+.menu-nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 25px;
-  height: 80px;
   width: 100%;
   gap: 30px;
 }
 
+.start-nav {
+  position: absolute;
+  padding-top: var(--padding-top-nav);
+}
+
 .btn-desktop {
+  white-space: nowrap;
   display: grid;
   place-items: center;
   font-size: var(--font-size-32-48);
   padding: 10px;
   border-radius: 8px;
   border: unset;
-  background-color: #ffcc18;
+  background-color: var(--primary-bg-color);
   box-shadow: 4px 4px 0 rgb(145, 54, 22);
 }
 
@@ -142,6 +156,31 @@ h2 {
 
 .d-flex {
   display: flex;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  cursor: url('../assets/icons/pepper-hot-solid.svg'), auto;
+}
+
+::-webkit-scrollbar-thumb:active {
+  cursor: url('../assets/icons/pepper-hot-solid.svg'), auto;
 }
 
 /* maiden-orange-regular - latin */
