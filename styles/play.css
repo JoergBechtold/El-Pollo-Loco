@@ -5,14 +5,9 @@
 }
 
 .canvas {
+  z-index: 2;
   position: absolute;
-
   max-width: 720px;
-
-  /* margin-inline: 15px; */
-
-  /* width: clamp(320px, 240px + 25vw, 720px);
-  height: clamp(213.33px, 159.996px + 16.6669vw, 480px); */
   height: 480px;
 }
 
@@ -24,14 +19,36 @@
   justify-content: center;
   height: 100dvh;
   width: 100%;
+  overflow: hidden;
+}
+
+.play-screen-bg {
+  z-index: 1;
 }
 
 .play-nav {
+  position: absolute; /* Ermöglicht genaue Positionierung über dem Canvas */
+  top: 50%; /* Oben im play-screen platziert */
+  left: 50%; /* Startpunkt in der Mitte */
+  transform: translateX(-50%);
+  transform: translateY(-50%); /* Zentriert die Nav horizontal */
+  /* Zentriert die Nav horizontal */
+  z-index: 5; /* Wichtig: Sorgt dafür, dass die Nav über dem Canvas liegt */
+  width: 100%; /* Oder max-width, um den Inhalt zu steuern */
+  max-width: 720px; /* Optional: Passend zur Canvas-Breite */
+  display: flex;
+  justify-content: space-between; /* Elemente auseinander ziehen */
+  align-items: center;
+  padding: 10px 20px; /* Innenabstand */
+  box-sizing: border-box; /* Padding in die Breite einbeziehen */
+}
+
+/* .play-nav {
   position: absolute;
   top: 0;
   z-index: 5;
-  /* padding-bottom: 60px; */
-}
+ 
+} */
 
 @media screen and (orientation: portrait) {
 }

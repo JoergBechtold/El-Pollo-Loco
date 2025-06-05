@@ -61,7 +61,7 @@ function soundToggle() {
 function updateSoundToggleDisplay() {
     const { soundBoxImgStartRef, soundBoxSpanStartRef, soundBoxImgMenuRef, soundBoxSpanMenuRef } = getIdRefs();
 
-    const img = isMuted ? 'assets/icons/Audio-mute.png' : 'assets/icons/Audio-on.png';
+    const img = isMuted ? 'assets/icons/audio-off-1.png' : 'assets/icons/audio-on-1.png';
     const audioStatus = isMuted ? 'Spiel Audio aus' : 'Spiel Audio an';
     const alt = isMuted ? 'Icon audio aus' : 'Icon audio an';
     const text = isMuted ? 'Spiel Audio aus' : 'Spiel Audio an';
