@@ -28,9 +28,8 @@
 
 .play-nav {
   position: absolute;
-  top: 50%;
-  transform: translateX(250px);
-  transform: translateY(-230px);
+  top: 26%;
+  /* transform: translateY(250px); */
   z-index: 5;
   width: 100%;
   display: flex;

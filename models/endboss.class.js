@@ -83,10 +83,14 @@ class Endboss extends MovableObject {
                 return;
             }
 
+            if (this.world && this.world.character && this.world.character.x > 1800) {
+                this.startEndbossMusic();
+            }
+
             if (this.world && this.world.character && this.world.character.x > 2200 && !this.hadFirstContact) {
                 this.world.showEndbossStatusBar = true;
                 this.hadFirstContact = true;
-                this.startEndbossMusic();
+                // this.startEndbossMusic();
             }
 
             if (this.isHurt()) {

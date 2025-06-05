@@ -34,10 +34,9 @@ class World {
   }
 
   playGameMusic() {
-    if (!isMuted) {
-      game_music.play();
-      game_music.volume = game_music_volume_loude;
-    }
+    game_music.play();
+    game_music.volume = game_music_volume_loude;
+
   }
 
   setWorld() {
