@@ -1,7 +1,7 @@
 class Barrel extends DrawableObject {
     width = 100
     heigt = 100
-    y = 320
+    y = 315
 
     offset = {
         top: 7,

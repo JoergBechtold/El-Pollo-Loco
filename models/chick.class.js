@@ -1,5 +1,5 @@
 class Chick extends MovableObject {
-    groundLevel = 370
+    groundLevel = 365
     speed = 0.85
     height = 50;
     width = 70;

@@ -1,6 +1,6 @@
 class CollectBottle extends MovableObject {
     x = 300;
-    y = 310;
+    y = 306;
 
     offset = {
         top: 30,
