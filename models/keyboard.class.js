@@ -15,6 +15,46 @@ class Keyboard {
 
 
     bindBtsPressEvents() {
+        document.getElementById('btn_left').addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            this.LEFT = true;
+
+        });
+        document.getElementById('btn_left').addEventListener('touchend', (event) => {
+            event.preventDefault();
+            this.LEFT = false;
+        });
+
+        document.getElementById('btn_right').addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            this.RIGHT = true;
+
+        })
+        document.getElementById('btn_right').addEventListener('touchend', (event) => {
+            event.preventDefault();
+            this.RIGHT = false;
+        })
+
+        document.getElementById('btn_jump').addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            this.SPACE = true;
+
+        })
+        document.getElementById('btn_jump').addEventListener('touchend', (event) => {
+            event.preventDefault();
+            this.SPACE = false;
+        })
+
+        document.getElementById('btn_throw').addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            this.D = true;
+
+        })
+        document.getElementById('btn_throw').addEventListener('touchend', (event) => {
+            event.preventDefault();
+            this.D = false;
+        })
+
 
     }
 

@@ -9,26 +9,6 @@
     <link rel="stylesheet" href="styles/play.css" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="assets/icons/favicon.ico" type="image/x-icon" />
-
-    <script src="models/drawable-object.class.js"></script>
-    <script src="models/movable-object.class.js"></script>
-    <script src="models/cloud.class.js"></script>
-    <script src="models/character.class.js"></script>
-    <script src="models/throwable-object.class.js"></script>
-    <script src="models/endboss.class.js"></script>
-    <script src="models/chicken.class.js"></script>
-    <script src="models/chick.class.js"></script>
-    <script src="models/status-bar.class.js"></script>
-    <script src="models/keyboard.class.js"></script>
-    <script src="models/background-object.class.js"></script>
-    <script src="models/collect-coins.class.js"></script>
-    <script src="models/collect-bottle.class.js"></script>
-    <script src="models/barrel.class.js"></script>
-    <script src="js/game_music.js"></script>
-    <script src="models/level.class.js"></script>
-    <script src="levels/level1.js"></script>
-    <script src="script.js"></script>
-    <script src="models/world.class.js"></script>
   </head>
   <body onload="startGame()" class="body-play">
     <div class="overlay-rotate-device" id="overlay_rotate_device">
@@ -50,20 +30,20 @@
 
       <nav class="mobile-nav">
         <div class="images-mobile-nav-box-left">
-          <div class="image-box-mobile">
+          <div id="btn_left" class="image-box-mobile">
             <img src="assets/icons/arrow-left-black.png" alt="Pfeil links-Icon" />
           </div>
-          <div class="image-box-mobile">
+          <div id="btn_right" class="image-box-mobile">
             <img src="assets/icons/arrow-right-black.png" alt="Pfeil rechts-Icon" />
           </div>
         </div>
 
         <div class="images-mobile-nav-box-right">
-          <div class="image-box-mobile">
+          <div id="btn_jump" class="image-box-mobile">
             <img src="assets/icons/jump-icon-mobile -black.png" alt="Hüpfen-Icon" />
           </div>
 
-          <div class="image-box-mobile">
+          <div id="btn_throw" class="image-box-mobile">
             <img src="assets/icons/throw-icon-mobile-black.png" alt="Werfen-Icon" />
           </div>
         </div>
@@ -79,5 +59,24 @@
         sessionStorage.removeItem('gameStartedFromMenu');
       }
     </script>
+    <script src="models/drawable-object.class.js"></script>
+    <script src="models/movable-object.class.js"></script>
+    <script src="models/cloud.class.js"></script>
+    <script src="models/character.class.js"></script>
+    <script src="models/throwable-object.class.js"></script>
+    <script src="models/endboss.class.js"></script>
+    <script src="models/chicken.class.js"></script>
+    <script src="models/chick.class.js"></script>
+    <script src="models/status-bar.class.js"></script>
+    <script src="models/keyboard.class.js"></script>
+    <script src="models/background-object.class.js"></script>
+    <script src="models/collect-coins.class.js"></script>
+    <script src="models/collect-bottle.class.js"></script>
+    <script src="models/barrel.class.js"></script>
+    <script src="js/game_music.js"></script>
+    <script src="models/level.class.js"></script>
+    <script src="levels/level1.js"></script>
+    <script src="script.js"></script>
+    <script src="models/world.class.js"></script>
   </body>
 </html>
