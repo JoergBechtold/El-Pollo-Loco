@@ -35,7 +35,9 @@ function goToUrl(url) {
     window.location.href = url;
 }
 
-
+function showOverlayRotateDevice() {
+    let overlayDotateDeviceRef = document.getElementById('overlay_rotate_device');
+}
 
 function initPlay() {
     isMuted = localStorage.getItem('isMuted') === 'true';

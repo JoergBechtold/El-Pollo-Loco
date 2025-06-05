@@ -6,8 +6,8 @@
     <meta name="google" content="notranslate" />
     <title>El Pollo Loco</title>
 
-    <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="styles/play.css" />
+    <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="assets/icons/favicon.ico" type="image/x-icon" />
 
     <script src="models/drawable-object.class.js"></script>
@@ -31,17 +31,22 @@
     <script src="models/world.class.js"></script>
   </head>
   <body onload="startGame()" class="body-play">
+    <div class="overlay-rotate-device" id="overlay_rotate_device">
+      <img src="assets/icons/roted-phone-1.png" alt="Telefon Drehen-Icon" />
+    </div>
     <div class="play-screen" id="play_screen">
-      <div class="game-controls-container">
-        <button title="Spiel Beenden" class="btn-desktop" onclick="goToUrl('menu.html')">Spiel Beenden</button>
-        <!-- <button class="btn-desktop" onclick="togglePause()" id="pauseButton">Pause</button> -->
-        <div onclick="soundToggle()" class="sound-box" id="sound_box_menu">
-          <img id="sound_box_img_menu" title="Spiel Audio an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
-          <span id="sound_box_span_menu">Spiel Audio an</span>
-        </div>
-      </div>
+      <img class="play-screen-bg" src="assets/img/body_background/1.jpg" alt="Hintergrundbild" />
 
-      <canvas class="canvas" id="canvas" width="720" height="480"> </canvas>
+      <canvas class="canvas" id="canvas" width="720" height="480">
+        <nav class="play-nav">
+          <button title="Spiel Beenden" class="btn-desktop" onclick="goToUrl('menu.html')">Spiel Beenden</button>
+          <!-- <button class="btn-desktop" onclick="togglePause()" id="pauseButton">Pause</button> -->
+          <div onclick="soundToggle()" class="sound-box" id="sound_box_menu">
+            <img id="sound_box_img_menu" title="Spiel Audio an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
+            <span id="sound_box_span_menu">Spiel Audio an</span>
+          </div>
+        </nav>
+      </canvas>
     </div>
 
     <script>

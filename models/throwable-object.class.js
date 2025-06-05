@@ -53,16 +53,18 @@ class ThrowableObject extends MovableObject {
         let movementInterval = setInterval(() => {
             this.x += throwSpeedX;
             if (this.y >= this.groundLevel) {
-                clearInterval(movementInterval);
-                setTimeout(() => {
-                    world.character.bottles.splice(0, 1);
 
-                }, 400);
 
                 if (this.y >= this.groundLevel || world.bottleHitSomething) {
                     this.playBottleSplash();
                     clearInterval(this.animationInterval);
                 }
+
+                clearInterval(movementInterval);
+                setTimeout(() => {
+                    world.character.bottles.splice(0, 1);
+
+                }, 400);
 
 
             }

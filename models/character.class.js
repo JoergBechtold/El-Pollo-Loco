@@ -297,9 +297,9 @@ class Character extends MovableObject {
             this.playAnimation(this.IMAGES_DEAD);
             death_sound.volume = death_sound_volume;
             death_sound.play();
-            setTimeout(() => {
-                goToUrl('you-have-lost.html');
-            }, 1500);
+            // setTimeout(() => {
+            //     goToUrl('you-have-lost.html');
+            // }, 1500);
             return true;
         }
         return false;
