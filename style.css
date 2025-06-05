@@ -64,7 +64,7 @@ h2 {
 .menu-screen-bg,
 .play-screen-bg {
   width: 100%;
-  height: 100%;
+  height: 100dvh;
   object-fit: cover;
 }
 
