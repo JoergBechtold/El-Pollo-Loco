@@ -40,7 +40,7 @@
   position: absolute;
   bottom: 10px;
   width: 90%;
-  display: flex;
+  display: none;
   justify-content: space-between;
   align-items: center;
 }
@@ -74,8 +74,11 @@
   aspect-ratio: 1 / 1;
 }
 
-/* @media screen and (orientation: portrait) {
-} */
+@media screen and (max-width: 768px) {
+  .mobile-nav {
+    display: flex;
+  }
+}
 
 @media screen and (max-width: 740px) {
   .canvas,
