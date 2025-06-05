@@ -38,13 +38,20 @@
       <img class="play-screen-bg" src="assets/img/body_background/1.jpg" alt="Hintergrundbild" />
 
       <nav class="play-nav">
-        <div class="quit-button"><img src="assets/icons/quit-game-icon.png" alt="Spiel beenden-Icon" /></div>
+        <div onclick="goToUrl('menu.html')" title="Spiel Beenden" class="quit-game-box">
+          <img class="images-play-nav" src="assets/icons/quit-game-icon.png" alt="Spiel beenden-Icon" />
+        </div>
         <!-- <button title="Spiel Beenden" class="btn-desktop" onclick="goToUrl('menu.html')">Spiel Beenden</button> -->
         <!-- <button class="btn-desktop" onclick="togglePause()" id="pauseButton">Pause</button> -->
-        <div onclick="soundToggle()" class="sound-box" id="sound_box_menu">
-          <img id="sound_box_img_menu" title="Spiel Audio an" src="assets/icons/audio-on-1.png" alt="Icon audio an" />
-          <span id="sound_box_span_menu">Spiel Audio an</span>
+        <div onclick="soundToggle()" class="sound-box" id="sound_box_play">
+          <img class="images-play-nav" id="sound_box_img_play" title="Spiel Audio aus" src="assets/icons/audio-off-1.png" alt="Icon audio aus" />
+          <!-- <span id="sound_box_span_menu">Spiel Audio an</span> -->
         </div>
+
+        <!-- <div onclick="soundToggle()" class="sound-box" id="sound_box">
+            <img id="sound_box_img" title="Spiel Audio an" src="assets/icons/Audio-on.png" alt="Icon audio an" />
+            <span id="sound_box_span">Spiel Audio an</span>
+          </div> -->
       </nav>
 
       <canvas class="canvas" id="canvas" width="720" height="480"> </canvas>

@@ -9,10 +9,10 @@ let isMuted;
  */
 function getIdRefs() {
     return {
-        soundBoxImgStartRef: document.getElementById('sound_box_img'),
-        soundBoxSpanStartRef: document.getElementById('sound_box_span'),
-        soundBoxImgMenuRef: document.getElementById('sound_box_img_menu'),
-        soundBoxSpanMenuRef: document.getElementById('sound_box_span_menu')
+        soundBoxImgPlayRef: document.getElementById('sound_box_img_play'),
+
+        // soundBoxImgMenuRef: document.getElementById('sound_box_img_menu'),
+        // soundBoxSpanMenuRef: document.getElementById('sound_box_span_menu')
     };
 }
 
@@ -35,9 +35,6 @@ function goToUrl(url) {
     window.location.href = url;
 }
 
-function showOverlayRotateDevice() {
-    let overlayDotateDeviceRef = document.getElementById('overlay_rotate_device');
-}
 
 function initPlay() {
     isMuted = localStorage.getItem('isMuted') === 'true';
@@ -59,31 +56,35 @@ function soundToggle() {
 }
 
 function updateSoundToggleDisplay() {
-    const { soundBoxImgStartRef, soundBoxSpanStartRef, soundBoxImgMenuRef, soundBoxSpanMenuRef } = getIdRefs();
+    const { soundBoxImgPlayRef } = getIdRefs();
 
     const img = isMuted ? 'assets/icons/audio-off-1.png' : 'assets/icons/audio-on-1.png';
     const audioStatus = isMuted ? 'Spiel Audio aus' : 'Spiel Audio an';
     const alt = isMuted ? 'Icon audio aus' : 'Icon audio an';
-    const text = isMuted ? 'Spiel Audio aus' : 'Spiel Audio an';
+    // const text = isMuted ? 'Spiel Audio aus' : 'Spiel Audio an';
 
     allAudioArray.forEach(sound => {
         sound.muted = isMuted;
     });
 
+    soundBoxImgPlayRef.src = img;
+    soundBoxImgPlayRef.title = audioStatus;
+    soundBoxImgPlayRef.alt = alt;
 
-    if (soundBoxImgStartRef && soundBoxSpanStartRef) {
-        soundBoxImgStartRef.src = img;
-        soundBoxImgStartRef.title = audioStatus;
-        soundBoxImgStartRef.alt = alt;
-        soundBoxSpanStartRef.textContent = text;
-    }
 
-    if (soundBoxImgMenuRef && soundBoxSpanMenuRef) {
-        soundBoxImgMenuRef.src = img;
-        soundBoxImgMenuRef.title = audioStatus;
-        soundBoxImgMenuRef.alt = alt;
-        soundBoxSpanMenuRef.textContent = text;
-    }
+    // if (soundBoxImgStartRef && soundBoxSpanStartRef) {
+    //     soundBoxImgStartRef.src = img;
+    //     soundBoxImgStartRef.title = audioStatus;
+    //     soundBoxImgStartRef.alt = alt;
+    //     // soundBoxSpanStartRef.textContent = text;
+    // }
+
+    // if (soundBoxImgMenuRef && soundBoxSpanMenuRef) {
+    //     soundBoxImgMenuRef.src = img;
+    //     soundBoxImgMenuRef.title = audioStatus;
+    //     soundBoxImgMenuRef.alt = alt;
+    //     // soundBoxSpanMenuRef.textContent = text;
+    // }
 }
 
 

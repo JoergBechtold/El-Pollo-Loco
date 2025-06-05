@@ -152,25 +152,6 @@ h2 {
   box-shadow: 4px 4px 0 rgb(145, 54, 22);
 }
 
-.sound-box {
-  width: 130px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  cursor: url('assets/icons/pepper-hot-solid.svg'), auto;
-}
-
-.sound-box span {
-  font-size: 22px;
-  white-space: nowrap;
-}
-
-.sound-box img {
-  width: 90px;
-  aspect-ratio: 1 / 1;
-}
-
 .d-none {
   display: none;
 }

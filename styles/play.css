@@ -27,20 +27,33 @@
 }
 
 .play-nav {
-  position: absolute; /* Ermöglicht genaue Positionierung über dem Canvas */
-  top: 50%; /* Oben im play-screen platziert */
-  left: 50%; /* Startpunkt in der Mitte */
-  transform: translateX(-50%);
-  transform: translateY(-50%); /* Zentriert die Nav horizontal */
-  /* Zentriert die Nav horizontal */
-  z-index: 5; /* Wichtig: Sorgt dafür, dass die Nav über dem Canvas liegt */
-  width: 100%; /* Oder max-width, um den Inhalt zu steuern */
-  max-width: 720px; /* Optional: Passend zur Canvas-Breite */
+  position: absolute;
+  top: 50%;
+  transform: translateX(250px);
+  transform: translateY(-230px);
+  z-index: 5;
+  width: 100%;
   display: flex;
-  justify-content: space-between; /* Elemente auseinander ziehen */
+  justify-content: center;
   align-items: center;
-  padding: 10px 20px; /* Innenabstand */
-  box-sizing: border-box; /* Padding in die Breite einbeziehen */
+  gap: 25px;
+}
+
+.sound-box,
+.quit-game-box {
+  display: grid;
+  place-items: center;
+  cursor: url('../assets/icons/pepper-hot-solid.svg'), auto;
+}
+
+/* .sound-box span {
+  font-size: 22px;
+  white-space: nowrap;
+} */
+
+.images-play-nav {
+  width: 45px;
+  aspect-ratio: 1 / 1;
 }
 
 /* .play-nav {
