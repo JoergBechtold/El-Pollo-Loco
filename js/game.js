@@ -50,6 +50,7 @@ let snoring_audio_volume = 1;
 let endboss_sound_volume = 0.5;
 let death_sound_volume = 0.3;
 let endboss_death_volume = 0.5;
+let bottle_splash_volume = 0.5;
 
 
 

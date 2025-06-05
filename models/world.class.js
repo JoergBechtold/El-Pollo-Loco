@@ -193,6 +193,7 @@ class World {
                 this.level.enemiesArray.splice(currentEnemyIndex, 1);
               }
             }, 500);
+            // Endboss
           } else if (enemy instanceof Endboss) {
 
             this.endboss.takeBounceDamage();
@@ -284,9 +285,8 @@ class World {
           this.bottleHitSomething = true;
 
           if (!isMuted) {
-            let bottle_break_audio = new Audio('./path/to/bottle_break_audio.mp3');
-            bottle_break_audio.volume = 0.5;
-            bottle_break_audio.play();
+            bottle_splash.play();
+            bottle_splash.volume = bottle_splash_volume;
             setTimeout(() => {
               bottle_break_audio.pause();
               bottle_break_audio.currentTime = 0;
