@@ -211,11 +211,14 @@ h2 {
   }
 }
 
-@media screen and (min-width: 320px) and (max-width: 740px) and (orientation: landscape) {
-  .start-container {
-    height: 100%;
+@media screen and (min-width: 321px) and (max-width: 740px) and (orientation: landscape) {
+  .start-container,
+  .menu-container,
+  .play-screen,
+  .canvas {
+    height: 100dvh;
     width: 100%;
-    border-radius: unset;
+    /* border-radius: unset; */
   }
 }
 

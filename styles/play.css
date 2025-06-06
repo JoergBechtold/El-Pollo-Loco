@@ -39,7 +39,7 @@
 
 .mobile-nav {
   position: absolute;
-  bottom: 10px;
+  bottom: 5px;
   width: 90%;
   display: none;
   justify-content: space-between;

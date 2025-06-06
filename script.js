@@ -177,8 +177,8 @@ function exitFullscreen() {
 
     const { fullscreenRef, canvasRef } = getIdRefs();
     if (canvasRef) {
-        canvasRef.style.width = '780px';
-        canvasRef.style.height = '480px';
+        canvasRef.style.width = '';
+        canvasRef.style.height = '';
         canvasRef.style.borderRadius = '';
         fullscreenRef.style.borderRadius = '';
     }
