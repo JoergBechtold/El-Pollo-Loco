@@ -94,6 +94,11 @@
 }
 
 .spinner {
+  width: 250px;
+  animation: l10 4s infinite linear;
+}
+
+/* .spinner {
   width: clamp(100px, 70px + 9.375vw, 250px);
   aspect-ratio: 1 / 1;
   color: #ffcc18;
@@ -109,10 +114,13 @@
   border-radius: inherit;
   background: inherit;
   transform: rotate(45deg);
-}
+} */
 @keyframes l10 {
+  from {
+    transform: rotate(0deg); /* Start bei 0 Grad */
+  }
   to {
-    transform: rotate(0.5turn);
+    transform: rotate(360deg); /* Drehung um 360 Grad */
   }
 }
 

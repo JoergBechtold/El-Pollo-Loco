@@ -13,7 +13,7 @@ class World {
   totalCoinsInLevel;
   totalBottlesInLevel;
   showEndbossStatusBar = false;
-  bottleHitSomething;
+  bottleHitSomething = false;
 
 
   constructor(canvas, keyboard,) {
@@ -194,7 +194,7 @@ class World {
     this.character.barrelRight = false;
 
   }
-
+  //hier
   checkCollisions() {
     this.level.enemiesArray.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
@@ -259,7 +259,7 @@ class World {
       }, 500);
     }
   }
-
+  //hier
   handleBottleEnemyCollisions(bottle, bottleIndex) {
     this.level.enemiesArray.forEach((enemy, enemyIndex) => {
       if (bottle.isColliding(enemy) && !enemy.isDead()) {
