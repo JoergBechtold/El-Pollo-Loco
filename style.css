@@ -197,13 +197,6 @@ h2 {
   }
 }
 
-@media screen and (max-width: 740px) {
-  .start-container {
-    width: clamp(320px, 15.2381px + 95.2381vw, 720px);
-    height: clamp(213.33px, 10.1529px + 63.4929vw, 480px);
-  }
-}
-
 /* maiden-orange-regular - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */

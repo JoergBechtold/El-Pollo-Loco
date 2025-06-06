@@ -1,7 +1,7 @@
 class Character extends MovableObject {
     height = 280;
     width = 150;
-    groundLevel = 145;
+    groundLevel = 155;
     characterEnergy = 100;
     speed = 7.5;
     world;
@@ -106,7 +106,7 @@ class Character extends MovableObject {
     }
 
     resetsCharacterToY() {
-        return 145;
+        return 155;
     }
 
     isIdle() {

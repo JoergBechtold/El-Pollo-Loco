@@ -5,7 +5,7 @@ class ThrowableObject extends MovableObject {
         right: 15,
         bottom: 8
     };
-    groundLevel = 350
+    groundLevel = 353
     isSplashing = false;
     world;
 
