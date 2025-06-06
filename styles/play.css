@@ -82,12 +82,10 @@
   display: grid;
   place-items: center;
   background-color: rgba(42, 43, 43, 0.99);
-  /* animation: spinner 1.5s infinite; */
 }
 
-/* HTML: <div class="loader"></div> */
 .spinner {
-  width: 250px;
+  width: clamp(100px, 70px + 9.375vw, 250px);
   aspect-ratio: 1 / 1;
   color: #ffcc18;
   border-radius: 50%;
@@ -108,10 +106,6 @@
     transform: rotate(0.5turn);
   }
 }
-
-/* @keyframes spinner {
-  from{}
-} */
 
 @media screen and (max-width: 768px) {
   .mobile-nav {
