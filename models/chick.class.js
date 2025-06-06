@@ -36,11 +36,9 @@ class Chick extends MovableObject {
     }
 
     animate() {
-
         setInterval(() => {
             if (!this.isDead()) {
                 this.moveLeft();
-
 
                 if (!this.isAboveGround()) {
                     this.distanceSinceLastJump += this.speed;
@@ -49,14 +47,12 @@ class Chick extends MovableObject {
                     this.distanceSinceLastJump = 0;
                 }
 
-
                 if (!this.isAboveGround() && this.speedY === 0 && this.distanceSinceLastJump > this.runToJump) {
                     this.chickJump();
                     this.distanceSinceLastJump = 0;
                 }
             }
         }, 1000 / 60);
-
 
         setInterval(() => {
             if (this.isDead()) {

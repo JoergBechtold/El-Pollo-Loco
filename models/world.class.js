@@ -10,13 +10,10 @@ class World {
   statusBarCoins = new StatusBar('coins');
   statusBarBottles = new StatusBar('bottle');
   statusBarEndboss = new StatusBar('endboss');
-
   totalCoinsInLevel;
   totalBottlesInLevel;
   showEndbossStatusBar = false;
   bottleHitSomething;
-
-
 
 
   constructor(canvas, keyboard,) {
@@ -60,23 +57,58 @@ class World {
     }, 20);
   }
 
-  //hier noch eine allgemeine funktion bauen für beide
   updateStatusBars() {
     this.statusBarHealth.setPercentage(this.character.characterEnergy);
     this.statusBarEndboss.setPercentage(this.endboss.endbossEnergy);
 
-    if (this.totalCoinsInLevel > 0) {
-      let collectedCoins = this.character.collectCoinsArray.length;
-      let percentage = (collectedCoins / this.totalCoinsInLevel) * 100;
-      this.statusBarCoins.setPercentage(percentage);
-    }
+    this.helpFunctionUpdateStatusBar(
+      this.totalCoinsInLevel,
+      this.character.collectCoinsArray,
+      this.statusBarCoins
+    );
 
-    if (this.totalBottlesInLevel > 0) {
-      let currentBottles = this.character.collectBottlesArray.length;
-      let percentage = (currentBottles / this.totalBottlesInLevel) * 100;
-      this.statusBarBottles.setPercentage(percentage);
+    this.helpFunctionUpdateStatusBar(
+      this.totalBottlesInLevel,
+      this.character.collectBottlesArray,
+      this.statusBarBottles
+    );
+  }
+
+
+  helpFunctionUpdateStatusBar(totalItems, collectedItemsArray, statusBar) {
+    if (totalItems > 0) {
+      let percentage = (collectedItemsArray.length / totalItems) * 100;
+      statusBar.setPercentage(percentage);
     }
   }
+
+  // //hier noch eine allgemeine funktion bauen für beide
+  // updateStatusBars() {
+  //   this.statusBarHealth.setPercentage(this.character.characterEnergy);
+  //   this.statusBarEndboss.setPercentage(this.endboss.endbossEnergy);
+
+  //   if (this.totalCoinsInLevel > 0) {
+  //     helpFunctionUpdateStatusBar()
+
+  //     let collectedCoins = this.character.collectCoinsArray.length;
+  //     let percentage = (collectedCoins / this.totalCoinsInLevel) * 100;
+  //     this.statusBarCoins.setPercentage(percentage);
+  //   }
+
+  //   if (this.totalBottlesInLevel > 0) {
+  //     helpFunctionUpdateStatusBar()
+
+  //     let currentBottles = this.character.collectBottlesArray.length;
+  //     let percentage = (currentBottles / this.totalBottlesInLevel) * 100;
+  //     this.statusBarBottles.setPercentage(percentage);
+  //   }
+  // }
+
+  // helpFunctionUpdateStatusBar( array, items) {
+  //   let itemsArray = array;
+  //   let percentage = (collectedCoins / this.totalCoinsInLevel) * 100;
+  //   this.statusBarCoins.setPercentage(percentage);
+  // }
 
 
 
@@ -169,147 +201,289 @@ class World {
   checkCollisions() {
     this.level.enemiesArray.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
-
-        if (this.character.isAboveGround() && this.character.speedY < 0 && !enemy.isDead()) {
-          if (enemy instanceof Chicken || enemy instanceof Chick) {
-            enemy.energy = 0;
-            enemy.isDeadAnimationPlayed = false;
-
-            if (!isMuted) {
-              let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
-              bouncing_audio.volume = bouncing_audio_volume;
-              bouncing_audio.play();
-              setTimeout(() => {
-                bouncing_audio.pause();
-                bouncing_audio.currentTime = 0;
-              }, 500);
-            }
-
-            this.character.bounce(enemy);
-            setTimeout(() => {
-
-              const currentEnemyIndex = this.level.enemiesArray.indexOf(enemy);
-              if (currentEnemyIndex > -1) {
-                this.level.enemiesArray.splice(currentEnemyIndex, 1);
-              }
-            }, 500);
-            // Endboss
-          } else if (enemy instanceof Endboss) {
-
-            this.endboss.takeBounceDamage();
-
-
-            enemy.isDeadAnimationPlayed = false;
-
-            if (!isMuted) {
-              let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
-              bouncing_audio.volume = bouncing_audio_volume;
-              bouncing_audio.play();
-              setTimeout(() => {
-                bouncing_audio.pause();
-                bouncing_audio.currentTime = 0;
-              }, 500);
-            }
-
-            this.character.bounce(enemy);
-
-            if (enemy.isDead()) {
-              setTimeout(() => {
-                const currentEnemyIndex = this.level.enemiesArray.indexOf(enemy);
-                if (currentEnemyIndex > -1) {
-                  this.level.enemiesArray.splice(currentEnemyIndex, 1);
-                }
-              }, 500);
-            }
-          }
-        } else if (!enemy.isDead()) {
-          this.character.hit();
-        }
+        this.handleCharacterEnemyCollision(enemy);
       }
     });
 
-    // Bottle collisions with enemies and barrels
     this.character.bottles.forEach((bottle, bottleIndex) => {
-      this.bottleHitSomething = false;
+      this.bottleHitSomething = false; // Reset for each bottle
 
-      // Check collision with enemies
-      this.level.enemiesArray.forEach((enemy, enemyIndex) => {
-        if (bottle.isColliding(enemy) && !enemy.isDead()) {
-          this.bottleHitSomething = true;
-
-          if (enemy instanceof Chicken || enemy instanceof Chick) {
-            enemy.energy = 0;
-            enemy.isDeadAnimationPlayed = false;
-            if (!isMuted) {
-              let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
-              chicken_death_audio.volume = chicken_death_audio_volume;
-              chicken_death_audio.play();
-              setTimeout(() => {
-                chicken_death_audio.pause();
-                chicken_death_audio.currentTime = 0;
-              }, 500);
-            }
-            setTimeout(() => {
-              this.level.enemiesArray.splice(enemyIndex, 1);
-            }, 500);
-          }
-
-          if (enemy instanceof Endboss) {
-            this.endboss.hit();
-            enemy.isDeadAnimationPlayed = false;
-            if (!isMuted) {
-              let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
-              chicken_death_audio.volume = chicken_death_audio_volume;
-              chicken_death_audio.play();
-              setTimeout(() => {
-                chicken_death_audio.pause();
-                chicken_death_audio.currentTime = 0;
-              }, 500);
-            }
-
-
-            if (this.endboss.isDead()) {
-              this.playAnimation(this.IMAGES_DEAD);
-
-              setTimeout(() => {
-                this.level.enemiesArray.splice(enemyIndex, 1);
-              }, 500);
-            }
-          }
-        }
-      });
-
-      // Check collision with barrels
-      this.level.barrelArray.forEach((barrel) => {
-        if (bottle.isColliding(barrel)) {
-          this.bottleHitSomething = true;
-
-          if (!isMuted) {
-            bottle_splash.play();
-            bottle_splash.volume = bottle_splash_volume;
-            setTimeout(() => {
-              bottle_break_audio.pause();
-              bottle_break_audio.currentTime = 0;
-            }, 300);
-          }
-        }
-      });
-
-
+      this.handleBottleEnemyCollisions(bottle, bottleIndex);
+      this.handleBottleBarrelCollisions(bottle);
 
       if (this.bottleHitSomething) {
-        this.character.bottles.splice(bottleIndex, 1);
+        this.removeBottle(bottleIndex);
       }
     });
   }
 
+  handleCharacterEnemyCollision(enemy) {
+    if (this.character.isAboveGround() && this.character.speedY < 0 && !enemy.isDead()) {
+      this.handleCharacterJumpAttack(enemy);
+    } else if (!enemy.isDead()) {
+      this.character.hit();
+    }
+  }
+
+  handleCharacterJumpAttack(enemy) {
+    if (enemy instanceof Chicken || enemy instanceof Chick) {
+      this.handleChickenJumpDeath(enemy);
+    } else if (enemy instanceof Endboss) {
+      this.handleEndbossJumpDamage(enemy);
+    }
+  }
+
+  handleChickenJumpDeath(chicken) {
+    chicken.energy = 0;
+    chicken.isDeadAnimationPlayed = false;
+    this.playBouncingSound();
+    this.character.bounce(chicken);
+    this.removeEnemyAfterDelay(chicken, 500);
+  }
+
+  handleEndbossJumpDamage(endboss) {
+    this.endboss.takeBounceDamage();
+    endboss.isDeadAnimationPlayed = false;
+    this.playBouncingSound();
+    this.character.bounce(endboss);
+    if (endboss.isDead()) {
+      this.removeEnemyAfterDelay(endboss, 500);
+    }
+  }
+
+  playBouncingSound() {
+    if (!isMuted) {
+      let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
+      bouncing_audio.volume = bouncing_audio_volume;
+      bouncing_audio.play();
+      setTimeout(() => {
+        bouncing_audio.pause();
+        bouncing_audio.currentTime = 0;
+      }, 500);
+    }
+  }
+
+  handleBottleEnemyCollisions(bottle, bottleIndex) {
+    this.level.enemiesArray.forEach((enemy, enemyIndex) => {
+      if (bottle.isColliding(enemy) && !enemy.isDead()) {
+        this.bottleHitSomething = true;
+        this.handleBottleHitEnemy(enemy, enemyIndex);
+      }
+    });
+  }
+
+  handleBottleHitEnemy(enemy, enemyIndex) {
+    if (enemy instanceof Chicken || enemy instanceof Chick) {
+      this.handleBottleHitChicken(enemy, enemyIndex);
+    } else if (enemy instanceof Endboss) {
+      this.handleBottleHitEndboss(enemy, enemyIndex);
+    }
+  }
+
+  handleBottleHitChicken(chicken, enemyIndex) {
+    chicken.energy = 0;
+    chicken.isDeadAnimationPlayed = false;
+    this.playChickenDeathSound();
+    this.removeEnemyAfterDelay(chicken, 500, enemyIndex);
+  }
+
+  handleBottleHitEndboss(endboss, enemyIndex) {
+    this.endboss.hit();
+    endboss.isDeadAnimationPlayed = false;
+    this.playChickenDeathSound();
+    if (this.endboss.isDead()) {
+      this.playAnimation(this.IMAGES_DEAD);
+      this.removeEnemyAfterDelay(endboss, 500, enemyIndex);
+    }
+  }
+
+  playChickenDeathSound() {
+    if (!isMuted) {
+      let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
+      chicken_death_audio.volume = chicken_death_audio_volume;
+      chicken_death_audio.play();
+      setTimeout(() => {
+        chicken_death_audio.pause();
+        chicken_death_audio.currentTime = 0;
+      }, 500);
+    }
+  }
+
+  handleBottleBarrelCollisions(bottle) {
+    this.level.barrelArray.forEach((barrel) => {
+      if (bottle.isColliding(barrel)) {
+        this.bottleHitSomething = true;
+        this.playBottleBreakSound();
+      }
+    });
+  }
+
+  playBottleBreakSound() {
+    if (!isMuted) {
+      bottle_splash.play();
+      bottle_splash.volume = bottle_splash_volume;
+      setTimeout(() => {
+        bottle_break_audio.pause();
+        bottle_break_audio.currentTime = 0;
+      }, 300);
+    }
+  }
+
+  removeEnemyAfterDelay(enemyToRemove, delay, indexToRemove = -1) {
+    setTimeout(() => {
+      const currentEnemyIndex = indexToRemove !== -1 ? indexToRemove : this.level.enemiesArray.indexOf(enemyToRemove);
+      if (currentEnemyIndex > -1) {
+        this.level.enemiesArray.splice(currentEnemyIndex, 1);
+      }
+    }, delay);
+  }
+
+  removeBottle(bottleIndex) {
+    this.character.bottles.splice(bottleIndex, 1);
+  }
+
+  // checkCollisions() {
+  //   this.level.enemiesArray.forEach((enemy) => {
+  //     if (this.character.isColliding(enemy)) {
+
+  //       if (this.character.isAboveGround() && this.character.speedY < 0 && !enemy.isDead()) {
+  //         if (enemy instanceof Chicken || enemy instanceof Chick) {
+  //           enemy.energy = 0;
+  //           enemy.isDeadAnimationPlayed = false;
+
+  //           if (!isMuted) {
+  //             let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
+  //             bouncing_audio.volume = bouncing_audio_volume;
+  //             bouncing_audio.play();
+  //             setTimeout(() => {
+  //               bouncing_audio.pause();
+  //               bouncing_audio.currentTime = 0;
+  //             }, 500);
+  //           }
+
+  //           this.character.bounce(enemy);
+  //           setTimeout(() => {
+
+  //             const currentEnemyIndex = this.level.enemiesArray.indexOf(enemy);
+  //             if (currentEnemyIndex > -1) {
+  //               this.level.enemiesArray.splice(currentEnemyIndex, 1);
+  //             }
+  //           }, 500);
+  //           // Endboss
+  //         } else if (enemy instanceof Endboss) {
+
+  //           this.endboss.takeBounceDamage();
+
+
+  //           enemy.isDeadAnimationPlayed = false;
+
+  //           if (!isMuted) {
+  //             let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
+  //             bouncing_audio.volume = bouncing_audio_volume;
+  //             bouncing_audio.play();
+  //             setTimeout(() => {
+  //               bouncing_audio.pause();
+  //               bouncing_audio.currentTime = 0;
+  //             }, 500);
+  //           }
+
+  //           this.character.bounce(enemy);
+
+  //           if (enemy.isDead()) {
+  //             setTimeout(() => {
+  //               const currentEnemyIndex = this.level.enemiesArray.indexOf(enemy);
+  //               if (currentEnemyIndex > -1) {
+  //                 this.level.enemiesArray.splice(currentEnemyIndex, 1);
+  //               }
+  //             }, 500);
+  //           }
+  //         }
+  //       } else if (!enemy.isDead()) {
+  //         this.character.hit();
+  //       }
+  //     }
+  //   });
+
+  //   // Bottle collisions with enemies and barrels
+  //   this.character.bottles.forEach((bottle, bottleIndex) => {
+  //     this.bottleHitSomething = false;
+
+  //     // Check collision with enemies
+  //     this.level.enemiesArray.forEach((enemy, enemyIndex) => {
+  //       if (bottle.isColliding(enemy) && !enemy.isDead()) {
+  //         this.bottleHitSomething = true;
+
+  //         if (enemy instanceof Chicken || enemy instanceof Chick) {
+  //           enemy.energy = 0;
+  //           enemy.isDeadAnimationPlayed = false;
+  //           if (!isMuted) {
+  //             let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
+  //             chicken_death_audio.volume = chicken_death_audio_volume;
+  //             chicken_death_audio.play();
+  //             setTimeout(() => {
+  //               chicken_death_audio.pause();
+  //               chicken_death_audio.currentTime = 0;
+  //             }, 500);
+  //           }
+  //           setTimeout(() => {
+  //             this.level.enemiesArray.splice(enemyIndex, 1);
+  //           }, 500);
+  //         }
+
+  //         if (enemy instanceof Endboss) {
+  //           this.endboss.hit();
+  //           enemy.isDeadAnimationPlayed = false;
+  //           if (!isMuted) {
+  //             let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
+  //             chicken_death_audio.volume = chicken_death_audio_volume;
+  //             chicken_death_audio.play();
+  //             setTimeout(() => {
+  //               chicken_death_audio.pause();
+  //               chicken_death_audio.currentTime = 0;
+  //             }, 500);
+  //           }
+
+
+  //           if (this.endboss.isDead()) {
+  //             this.playAnimation(this.IMAGES_DEAD);
+
+  //             setTimeout(() => {
+  //               this.level.enemiesArray.splice(enemyIndex, 1);
+  //             }, 500);
+  //           }
+  //         }
+  //       }
+  //     });
+
+  //     // Check collision with barrels
+  //     this.level.barrelArray.forEach((barrel) => {
+  //       if (bottle.isColliding(barrel)) {
+  //         this.bottleHitSomething = true;
+
+  //         if (!isMuted) {
+  //           bottle_splash.play();
+  //           bottle_splash.volume = bottle_splash_volume;
+  //           setTimeout(() => {
+  //             bottle_break_audio.pause();
+  //             bottle_break_audio.currentTime = 0;
+  //           }, 300);
+  //         }
+  //       }
+  //     });
+
+  //     if (this.bottleHitSomething) {
+  //       this.character.bottles.splice(bottleIndex, 1);
+  //     }
+  //   });
+  // }
+
+
+
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObjectsArray);
     this.addObjectsToMap(this.level.cloudsArray);
-
     this.ctx.translate(-this.camera_x, 0);
     // ------------Space for fixed objects-----------
     this.addToMap(this.statusBarHealth);
@@ -320,18 +494,12 @@ class World {
     }
 
     this.ctx.translate(this.camera_x, 0);
-
     this.addObjectsToMap(this.level.coinsArray);
     this.addObjectsToMap(this.level.barrelArray);
     this.addToMap(this.character);
-
-
     this.addObjectsToMap(this.level.enemiesArray);
     this.addObjectsToMap(this.level.bottlesArray);
-
     this.addObjectsToMap(this.character.bottles);
-
-
     this.ctx.translate(-this.camera_x, 0);
 
     let self = this;
@@ -350,16 +518,11 @@ class World {
     if (movableObject.otherDirection) {
       this.flipImage(movableObject);
     }
-
     movableObject.draw(this.ctx);
-    // movableObject.drawBlueFrame(this.ctx)
     movableObject.drawRedFrame(this.ctx)
-
     if (movableObject.otherDirection) {
       this.flipImageBack(movableObject);
     }
-
-
     if (movableObject instanceof Character && movableObject.showSpeechBubble) {
       movableObject.drawSpeechBubbleImage(this.ctx, movableObject.IMAGE_SPEECH_BUBBLE);
     }
@@ -376,6 +539,4 @@ class World {
     movableObject.x = movableObject.x * -1;
     this.ctx.restore();
   }
-
-
 }
