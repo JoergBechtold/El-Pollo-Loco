@@ -41,7 +41,8 @@ function initPlay() {
     updateSoundToggleDisplay();
 }
 
-function startGame() {
+
+async function startGame() {
     const loadingSpinnerRef = document.getElementById('loading_spinner_overlay');
 
     if (loadingSpinnerRef) {
@@ -49,18 +50,49 @@ function startGame() {
     }
     try {
         initPlay();
-        initLevel();
+        await initLevel();
         canvas = document.getElementById('canvas');
-        world = new World(canvas, keyboard);
-    } catch (error) {
-        console.error("Fehler beim Starten des Spiels", error);
-    } finally {
+        if (!canvas) {
+            throw new Error("Canvas-Element mit ID 'canvas' wurde nicht gefunden.");
+        }
 
+        world = new World(canvas, keyboard);
+
+        if (!world) {
+            throw new Error("Die Spielwelt konnte nicht initialisiert werden.");
+        }
+
+    } catch (error) {
+        console.error("Fehler beim Starten des Spiels:", error);
+
+    } finally {
         if (loadingSpinnerRef) {
             loadingSpinnerRef.classList.add('d-none');
         }
     }
 }
+
+
+// function startGame() {
+//     const loadingSpinnerRef = document.getElementById('loading_spinner_overlay');
+
+//     if (loadingSpinnerRef) {
+//         loadingSpinnerRef.classList.remove('d-none');
+//     }
+//     try {
+//         initPlay();
+//         initLevel();
+//         canvas = document.getElementById('canvas');
+//         world = new World(canvas, keyboard);
+//     } catch (error) {
+//         console.error("Fehler beim Starten des Spiels", error);
+//     } finally {
+
+//         if (loadingSpinnerRef) {
+//             loadingSpinnerRef.classList.add('d-none');
+//         }
+//     }
+// }
 
 // function startGame() {
 //     initPlay();
@@ -68,7 +100,7 @@ function startGame() {
 //     canvas = document.getElementById('canvas');
 //     world = new World(canvas, keyboard);
 // }
-
+// document.addEventListener('DOMContentLoaded', initPlay);
 
 function soundToggle() {
     isMuted = !isMuted;
