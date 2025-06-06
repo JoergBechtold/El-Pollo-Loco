@@ -145,7 +145,6 @@ h2 {
   display: grid;
   place-items: center;
   font-size: 48px;
-  /* font-size: var(--font-size-32-48); */
   padding: 10px;
   border-radius: 8px;
   border: unset;
@@ -219,7 +218,6 @@ h2 {
   .canvas {
     height: 100dvh;
     width: 100%;
-    /* border-radius: unset; */
   }
 }
 

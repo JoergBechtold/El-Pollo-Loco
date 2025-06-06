@@ -39,12 +39,7 @@ class ThrowableObject extends MovableObject {
         this.throw();
         this.splashWidth = 80;
         this.splashHeight = 80;
-
-
     }
-
-
-
 
     throw() {
         this.speedY = 30;
@@ -56,15 +51,12 @@ class ThrowableObject extends MovableObject {
                 clearInterval(movementInterval);
                 setTimeout(() => {
                     world.character.bottles.splice(0, 1);
-
                 }, 400);
 
                 if (this.y >= this.groundLevel || world.bottleHitSomething) {
                     this.playBottleSplash();
                     clearInterval(this.animationInterval);
                 }
-
-
             }
         }, 25);
 

@@ -284,6 +284,28 @@ class World {
     this.removeEnemyAfterDelay(chicken, 500, enemyIndex);
   }
 
+  handleBottleBarrelCollisions(bottle) {
+    this.level.barrelArray.forEach((barrel) => {
+      if (bottle.isColliding(barrel)) {
+        this.bottleHitSomething = true;
+        this.playBottleBreakSound();
+      }
+    });
+  }
+
+  removeEnemyAfterDelay(enemyToRemove, delay, indexToRemove = -1) {
+    setTimeout(() => {
+      const currentEnemyIndex = indexToRemove !== -1 ? indexToRemove : this.level.enemiesArray.indexOf(enemyToRemove);
+      if (currentEnemyIndex > -1) {
+        this.level.enemiesArray.splice(currentEnemyIndex, 1);
+      }
+    }, delay);
+  }
+
+  removeBottle(bottleIndex) {
+    this.character.bottles.splice(bottleIndex, 1);
+  }
+
   handleBottleHitEndboss(endboss, enemyIndex) {
     this.endboss.hit();
     endboss.isDeadAnimationPlayed = false;
@@ -291,6 +313,17 @@ class World {
     if (this.endboss.isDead()) {
       this.playAnimation(this.IMAGES_DEAD);
       this.removeEnemyAfterDelay(endboss, 500, enemyIndex);
+    }
+  }
+
+  playBottleBreakSound() {
+    if (!isMuted) {
+      bottle_splash.play();
+      bottle_splash.volume = bottle_splash_volume;
+      setTimeout(() => {
+        bottle_break_audio.pause();
+        bottle_break_audio.currentTime = 0;
+      }, 300);
     }
   }
 
@@ -306,38 +339,8 @@ class World {
     }
   }
 
-  handleBottleBarrelCollisions(bottle) {
-    this.level.barrelArray.forEach((barrel) => {
-      if (bottle.isColliding(barrel)) {
-        this.bottleHitSomething = true;
-        this.playBottleBreakSound();
-      }
-    });
-  }
 
-  playBottleBreakSound() {
-    if (!isMuted) {
-      bottle_splash.play();
-      bottle_splash.volume = bottle_splash_volume;
-      setTimeout(() => {
-        bottle_break_audio.pause();
-        bottle_break_audio.currentTime = 0;
-      }, 300);
-    }
-  }
 
-  removeEnemyAfterDelay(enemyToRemove, delay, indexToRemove = -1) {
-    setTimeout(() => {
-      const currentEnemyIndex = indexToRemove !== -1 ? indexToRemove : this.level.enemiesArray.indexOf(enemyToRemove);
-      if (currentEnemyIndex > -1) {
-        this.level.enemiesArray.splice(currentEnemyIndex, 1);
-      }
-    }, delay);
-  }
-
-  removeBottle(bottleIndex) {
-    this.character.bottles.splice(bottleIndex, 1);
-  }
 
   // checkCollisions() {
   //   this.level.enemiesArray.forEach((enemy) => {
