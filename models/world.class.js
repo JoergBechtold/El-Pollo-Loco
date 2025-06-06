@@ -74,7 +74,6 @@ class World {
     );
   }
 
-
   helpFunctionUpdateStatusBar(totalItems, collectedItemsArray, statusBar) {
     if (totalItems > 0) {
       let percentage = (collectedItemsArray.length / totalItems) * 100;
@@ -111,25 +110,26 @@ class World {
   // }
 
 
-
-
   collectObjects(levelArray, characterItemArrays, audioPath, volume, timeoutMs) {
     levelArray.forEach((singleObject, index) => {
       if (this.character.isColliding(singleObject)) {
         characterItemArrays.push(singleObject);
         levelArray.splice(index, 1);
-
-        if (!isMuted) {
-          let audio = new Audio(audioPath);
-          audio.play();
-          audio.volume = volume
-          setTimeout(() => {
-            audio.pause();
-            audio.currentTime = 0;
-          }, timeoutMs);
-        }
+        this.playCollectibleSound(audioPath, volume, timeoutMs);
       }
     });
+  }
+
+  playCollectibleSound(audioPath, volume, timeoutMs) {
+    if (!isMuted) {
+      let audio = new Audio(audioPath);
+      audio.play();
+      audio.volume = volume;
+      setTimeout(() => {
+        audio.pause();
+        audio.currentTime = 0;
+      }, timeoutMs);
+    }
   }
 
   checkCollisionsBarrel() {
