@@ -42,11 +42,32 @@ function initPlay() {
 }
 
 function startGame() {
-    initPlay();
-    initLevel()
-    canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
+    const loadingSpinnerRef = document.getElementById('loading_spinner_overlay');
+
+    if (loadingSpinnerRef) {
+        loadingSpinnerRef.classList.remove('d-none');
+    }
+    try {
+        initPlay();
+        initLevel();
+        canvas = document.getElementById('canvas');
+        world = new World(canvas, keyboard);
+    } catch (error) {
+        console.error("Fehler beim Starten des Spiels", error);
+    } finally {
+
+        if (loadingSpinnerRef) {
+            loadingSpinnerRef.classList.add('d-none');
+        }
+    }
 }
+
+// function startGame() {
+//     initPlay();
+//     initLevel()
+//     canvas = document.getElementById('canvas');
+//     world = new World(canvas, keyboard);
+// }
 
 
 function soundToggle() {

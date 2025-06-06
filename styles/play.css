@@ -74,6 +74,45 @@
   aspect-ratio: 1 / 1;
 }
 
+.loading-spinner-overlay {
+  z-index: 999;
+  position: absolute;
+  height: 100dvh;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background-color: rgba(42, 43, 43, 0.99);
+  /* animation: spinner 1.5s infinite; */
+}
+
+/* HTML: <div class="loader"></div> */
+.spinner {
+  width: 250px;
+  aspect-ratio: 1 / 1;
+  color: #ffcc18;
+  border-radius: 50%;
+  display: grid;
+  background: conic-gradient(from 90deg at 4px 4px, #0000 90deg, currentColor 0) -4px -4px / calc(50% + 2px) calc(50% + 2px),
+    radial-gradient(farthest-side, currentColor 6px, #0000 7px calc(100% - 6px), currentColor calc(100% - 5px)) no-repeat;
+  animation: l10 2s infinite linear;
+  position: relative;
+}
+.spinner:before {
+  content: '';
+  border-radius: inherit;
+  background: inherit;
+  transform: rotate(45deg);
+}
+@keyframes l10 {
+  to {
+    transform: rotate(0.5turn);
+  }
+}
+
+/* @keyframes spinner {
+  from{}
+} */
+
 @media screen and (max-width: 768px) {
   .mobile-nav {
     display: flex;

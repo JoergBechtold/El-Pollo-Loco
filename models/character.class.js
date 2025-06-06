@@ -27,6 +27,10 @@ class Character extends MovableObject {
         bottom: 15
     };
 
+    characterMovementInterval;
+    characterAnimationInterval;
+    characterIdleAnimationInterval;
+
     IMAGES_WALKING = [
         'assets/img/2_character_pepe/2_walk/W-21.png',
         'assets/img/2_character_pepe/2_walk/W-22.png',
@@ -122,7 +126,7 @@ class Character extends MovableObject {
     }
 
     setupMovementInterval() {
-        setInterval(() => {
+        this.characterMovementInterval = setInterval(() => {
             this.updateLastActivityTime();
             this.handleMovement();
             this.world.camera_x = -this.x + 100;
@@ -174,7 +178,7 @@ class Character extends MovableObject {
     }
 
     setupAnimationInterval() {
-        setInterval(() => {
+        this.characterAnimationInterval = setInterval(() => {
             if (this.checkAndHandleDeath()) return;
             if (this.checkAndHandleHurt()) return;
             if (this.checkAndHandleJumpAnimation()) return;
@@ -261,7 +265,7 @@ class Character extends MovableObject {
     }
 
     setupIdleAnimationInterval() {
-        setInterval(() => {
+        this.characterIdleAnimationInterval = setInterval(() => {
             const isCharacterMoving = this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE || this.world.keyboard.D;
             if (!this.isDead() && !this.isHurt() && !this.isAboveGround() && !isCharacterMoving) {
                 this.handleIdleAnimations();
@@ -281,6 +285,22 @@ class Character extends MovableObject {
             snoring_audio.currentTime = 0;
             game_music.volume = game_music_volume_loude;
         }
+    }
+
+    stopAllIntervals() {
+        if (this.characterMovementInterval) {
+            clearInterval(this.characterMovementInterval);
+            this.characterMovementInterval = null; // Optional: Setze es auf null, um anzuzeigen, dass es gestoppt ist
+        }
+        if (this.characterAnimationInterval) {
+            clearInterval(this.characterAnimationInterval);
+            this.characterAnimationInterval = null;
+        }
+        if (this.characterIdleAnimationInterval) {
+            clearInterval(this.characterIdleAnimationInterval);
+            this.characterIdleAnimationInterval = null;
+        }
+
     }
 
     draw(ctx) {

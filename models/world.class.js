@@ -376,4 +376,6 @@ class World {
     movableObject.x = movableObject.x * -1;
     this.ctx.restore();
   }
+
+
 }

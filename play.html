@@ -15,6 +15,10 @@
       <img src="assets/icons/roted-phone-1.png" alt="Telefon Drehen-Icon" />
     </div>
 
+    <div id="loading_spinner_overlay" class="loading-spinner-overlay">
+      <div class="spinner"></div>
+    </div>
+
     <img class="play-screen-bg" src="assets/img/body_background/1.jpg" alt="Hintergrundbild" />
 
     <div class="play-screen" id="play_screen">
@@ -22,6 +26,9 @@
         <div onclick="goToUrl('menu.html')" title="Spiel Beenden" class="quit-game-box">
           <img class="images-play-nav" src="assets/icons/quit-game-icon.png" alt="Spiel beenden-Icon" />
         </div>
+
+        <!-- diesen button noch fertig erstellen mit allesn intervalen -->
+        <!-- <button onclick="toggleGamePause()">Pause</button> -->
 
         <div onclick="soundToggle()" class="sound-box" id="sound_box_play">
           <img class="images-play-nav" id="sound_box_img_play" title="Spiel Audio aus" src="assets/icons/audio-off-1.png" alt="Icon audio aus" />
@@ -73,7 +80,7 @@
     <script src="models/collect-coins.class.js"></script>
     <script src="models/collect-bottle.class.js"></script>
     <script src="models/barrel.class.js"></script>
-    <script src="js/game_audio.js"></script>
+    <script src="js/game.js"></script>
     <script src="models/level.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="script.js"></script>

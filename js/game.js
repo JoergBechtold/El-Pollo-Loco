@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let isGamePaused = false;
 
 const PATH_COLLECT_BOTTLE_AUDIO = 'assets/audio/collect-bottle.mp3';
 const PATH_COLLECT_COIN_AUDIO = 'assets/audio/collect-coin.mp3';
@@ -51,6 +52,62 @@ let endboss_sound_volume = 0.5;
 let death_sound_volume = 0.3;
 let endboss_death_volume = 0.5;
 let bottle_splash_volume = 0.5;
+
+function toggleGamePause() {
+    if (!world) {
+        console.warn('World-Instanz ist nicht verfügbar.');
+        return;
+    }
+
+    isGamePaused = !isGamePaused; // Zustand umkehren (true wird false, false wird true)
+    updatePauseButtonText(); // Button-Text aktualisieren
+
+    if (isGamePaused) {
+        // Spiel pausieren
+        if (world.character) {
+            world.character.stopAllIntervals();
+        }
+        // Alle Sounds pausieren
+        allAudioArray.forEach(audio => {
+            audio.pause();
+        });
+        console.log('Spiel pausiert.');
+    } else {
+        // Spiel fortsetzen
+        if (world.character) {
+            // Um die Intervalle neu zu starten, musst du die animate() Methode erneut aufrufen.
+            // Stelle sicher, dass animate() die Intervalle nur einmal erstellt oder bestehende cleared.
+            // Hier gehen wir davon aus, dass animate() die Intervalle korrekt startet.
+            world.character.animate(); // Startet die Charakter-Intervalle neu
+        }
+
+        // Relevante Sounds fortsetzen (oder neu starten, je nach Logik)
+        // Hier müsstest du überlegen, welche Sounds wieder laufen sollen.
+        // Die Hintergrundmusik sollte wahrscheinlich wieder spielen.
+        game_music.play();
+        game_music.volume = game_music_volume_loude; // Standardlautstärke wiederherstellen
+
+        // Falls andere Objekte eigene Intervalle haben (z.B. Gegner), müssen diese ebenfalls neu gestartet werden.
+        // Das hängt von deiner Implementierung ab. Beispiel:
+        // world.level.enemies.forEach(enemy => enemy.animate());
+
+        console.log('Spiel fortgesetzt.');
+    }
+}
+
+/**
+ * Aktualisiert den Text des Pause-Buttons basierend auf dem isGamePaused-Zustand.
+ */
+function updatePauseButtonText() {
+    const pauseButton = document.querySelector('.play-nav button'); // Selektiert den Button
+    if (pauseButton) {
+        if (isGamePaused) {
+            pauseButton.textContent = 'Fortsetzen';
+        } else {
+            pauseButton.textContent = 'Pause';
+        }
+    }
+}
 
 
 
