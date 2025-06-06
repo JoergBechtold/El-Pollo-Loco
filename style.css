@@ -47,7 +47,8 @@ h2 {
 
   --arrow-back-size: clamp(64px, 60.8px + 1vw, 80px);
 
-  --padding-top-nav: 25px;
+  /* --padding-top-nav: 25px; */
+  --padding-top-nav: clamp(5px, -10.2381px + 4.7619vw, 25px);
 }
 
 .start-screen {
@@ -142,7 +143,8 @@ h2 {
   white-space: nowrap;
   display: grid;
   place-items: center;
-  font-size: var(--font-size-32-48);
+  font-size: 48px;
+  /* font-size: var(--font-size-32-48); */
   padding: 10px;
   border-radius: 8px;
   border: unset;
@@ -195,6 +197,17 @@ h2 {
 @media screen and (max-width: 768px) {
   ::-webkit-scrollbar {
     display: none;
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .start-container {
+    width: clamp(320px, 15.2381px + 95.2381vw, 720px);
+    height: clamp(213.33px, 10.1529px + 63.4929vw, 480px);
+  }
+
+  .btn-desktop {
+    font-size: clamp(26px, 9.2381px + 5.2381vw, 48px);
   }
 }
 
