@@ -1,4 +1,18 @@
 let isMuted;
+let isTouchDeviceGlobal = false;
+
+function isTouchDevice() {
+    return ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const { mobileNavRef } = getIdRefs();
+    isTouchDeviceGlobal = isTouchDevice();
+    if (isTouchDeviceGlobal && mobileNavRef) {
+        mobileNavRef.classList.add('d-flex');
+    }
+});
 
 /**
  * 
@@ -10,6 +24,15 @@ let isMuted;
 function getIdRefs() {
     return {
         soundBoxImgPlayRef: document.getElementById('sound_box_img_play'),
+        fullscreenRef: document.getElementById('fullscreen'),
+        mobileNavRef: document.getElementById('mobile_nav'),
+        loadingSpinnerRef: document.getElementById('loading_spinner_overlay'),
+        canvasRef: document.getElementById('canvas'),
+        fullscreenRef: document.getElementById('fullscreen'),
+
+
+
+
 
         // soundBoxImgMenuRef: document.getElementById('sound_box_img_menu'),
         // soundBoxSpanMenuRef: document.getElementById('sound_box_span_menu')
@@ -43,7 +66,7 @@ function initPlay() {
 
 
 async function startGame() {
-    const loadingSpinnerRef = document.getElementById('loading_spinner_overlay');
+    const { loadingSpinnerRef } = getIdRefs();
 
     if (loadingSpinnerRef) {
         loadingSpinnerRef.classList.remove('d-none');
@@ -51,12 +74,12 @@ async function startGame() {
     try {
         initPlay();
         await initLevel();
-        canvas = document.getElementById('canvas');
-        if (!canvas) {
+        const { canvasRef } = getIdRefs();
+        if (!canvasRef) {
             throw new Error("Canvas-Element mit ID 'canvas' wurde nicht gefunden.");
         }
 
-        world = new World(canvas, keyboard);
+        world = new World(canvasRef, keyboard);
 
         if (!world) {
             throw new Error("Die Spielwelt konnte nicht initialisiert werden.");
@@ -72,35 +95,6 @@ async function startGame() {
     }
 }
 
-
-// function startGame() {
-//     const loadingSpinnerRef = document.getElementById('loading_spinner_overlay');
-
-//     if (loadingSpinnerRef) {
-//         loadingSpinnerRef.classList.remove('d-none');
-//     }
-//     try {
-//         initPlay();
-//         initLevel();
-//         canvas = document.getElementById('canvas');
-//         world = new World(canvas, keyboard);
-//     } catch (error) {
-//         console.error("Fehler beim Starten des Spiels", error);
-//     } finally {
-
-//         if (loadingSpinnerRef) {
-//             loadingSpinnerRef.classList.add('d-none');
-//         }
-//     }
-// }
-
-// function startGame() {
-//     initPlay();
-//     initLevel()
-//     canvas = document.getElementById('canvas');
-//     world = new World(canvas, keyboard);
-// }
-// document.addEventListener('DOMContentLoaded', initPlay);
 
 function soundToggle() {
     isMuted = !isMuted;
@@ -139,5 +133,58 @@ function updateSoundToggleDisplay() {
     //     // soundBoxSpanMenuRef.textContent = text;
     // }
 }
+
+
+function fullscreen() {
+
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+        exitFullscreen();
+    } else {
+        const { fullscreenRef } = getIdRefs();
+        if (fullscreenRef) {
+            enterFullscreen(fullscreenRef);
+        } else {
+            enterFullscreen(document.documentElement);
+        }
+    }
+}
+
+
+function enterFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    }
+    const { fullscreenRef, canvasRef } = getIdRefs();
+    if (canvasRef) {
+        canvasRef.style.width = '100%';
+        canvasRef.style.height = '100%';
+        canvasRef.style.borderRadius = '0px';
+        fullscreenRef.style.borderRadius = '0px';
+    }
+}
+
+
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    }
+
+    const { fullscreenRef, canvasRef } = getIdRefs();
+    if (canvasRef) {
+        canvasRef.style.width = '780px';
+        canvasRef.style.height = '480px';
+        canvasRef.style.borderRadius = '';
+        fullscreenRef.style.borderRadius = '';
+    }
+}
+
+
+
 
 

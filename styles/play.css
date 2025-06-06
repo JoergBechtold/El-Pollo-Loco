@@ -8,11 +8,12 @@
 }
 
 .canvas {
-  max-width: 720px;
+  width: 720px;
   height: 480px;
 }
 
 .play-screen {
+  background-color: var(--primary-bg-color);
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -57,11 +58,18 @@
   place-items: center;
 }
 
+.fullscreen-btn {
+  padding: 10px;
+}
+
 .sound-box,
-.quit-game-box {
+.quit-game-box,
+.fullscreen-box {
   display: grid;
   place-items: center;
   cursor: url('../assets/icons/pepper-hot-solid.svg'), auto;
+  width: clamp(20px, 0.8612px + 5.9809vw, 45px);
+  aspect-ratio: 1 / 1;
 }
 
 .image-box-mobile img {
@@ -70,8 +78,9 @@
 }
 
 .images-play-nav {
-  width: clamp(20px, 0.8612px + 5.9809vw, 45px);
-  aspect-ratio: 1 / 1;
+  width: 100%;
+  /* width: clamp(20px, 0.8612px + 5.9809vw, 45px);
+  aspect-ratio: 1 / 1; */
 }
 
 .loading-spinner-overlay {
@@ -107,11 +116,11 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .mobile-nav {
     display: flex;
   }
-}
+} */
 
 @media screen and (max-width: 740px) {
   .canvas,

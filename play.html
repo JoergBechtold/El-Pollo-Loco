@@ -21,10 +21,14 @@
 
     <img class="play-screen-bg" src="assets/img/body_background/1.jpg" alt="Hintergrundbild" />
 
-    <div class="play-screen" id="play_screen">
+    <div class="play-screen" id="fullscreen">
       <nav class="play-nav">
         <div onclick="goToUrl('menu.html')" title="Spiel Beenden" class="quit-game-box">
           <img class="images-play-nav" src="assets/icons/quit-game-icon.png" alt="Spiel beenden-Icon" />
+        </div>
+
+        <div title="Vollbild" onclick="fullscreen()" class="fullscreen-box">
+          <img class="images-play-nav" src="assets/icons/fullscreen-on.png" alt="Vollbild-Icon" />
         </div>
 
         <!-- diesen button noch fertig erstellen mit allesn intervalen -->
@@ -35,7 +39,7 @@
         </div>
       </nav>
 
-      <nav class="mobile-nav">
+      <nav class="mobile-nav" id="mobile_nav">
         <div class="images-mobile-nav-box-left">
           <div id="btn_left" class="image-box-mobile">
             <img src="assets/icons/arrow-left-black.png" alt="Pfeil links-Icon" />
