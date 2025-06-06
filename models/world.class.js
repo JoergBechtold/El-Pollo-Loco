@@ -20,12 +20,10 @@ class World {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
     this.keyboard = keyboard;
-
     this.playGameMusic();
     this.draw();
     this.setWorld();
     this.allwaysExecuted();
-
     this.totalCoinsInLevel = this.level.coinsArray.length;
     this.totalBottlesInLevel = this.level.bottlesArray.length;
   }
@@ -48,7 +46,6 @@ class World {
 
   allwaysExecuted() {
     setInterval(() => {
-
       this.checkCollisions();
       this.checkCollisionsBarrel();
       this.collectObjects(this.level.bottlesArray, this.character.collectBottlesArray, PATH_COLLECT_BOTTLE_AUDIO, collect_bottle_audio_volume, 800);
@@ -206,7 +203,7 @@ class World {
     });
 
     this.character.bottles.forEach((bottle, bottleIndex) => {
-      this.bottleHitSomething = false; // Reset for each bottle
+      this.bottleHitSomething = false;
 
       this.handleBottleEnemyCollisions(bottle, bottleIndex);
       this.handleBottleBarrelCollisions(bottle);
