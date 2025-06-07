@@ -29,6 +29,8 @@ function getIdRefs() {
         loadingSpinnerRef: document.getElementById('loading_spinner_overlay'),
         canvasRef: document.getElementById('canvas'),
         fullscreenRef: document.getElementById('fullscreen'),
+        fullscreenImgRef: document.getElementById('fullscreen_img'),
+
 
 
 
@@ -158,12 +160,17 @@ function enterFullscreen(element) {
     } else if (element.webkitRequestFullscreen) {
         element.webkitRequestFullscreen();
     }
-    const { fullscreenRef, canvasRef } = getIdRefs();
+    const { fullscreenRef, canvasRef, fullscreenImgRef } = getIdRefs();
     if (canvasRef) {
         canvasRef.style.width = '100%';
         canvasRef.style.height = '100%';
         canvasRef.style.borderRadius = '0px';
         fullscreenRef.style.borderRadius = '0px';
+
+        fullscreenImgRef.src = 'assets/icons/fullscreen-off.png';
+        fullscreenImgRef.alt = 'Vollbild aus-Icon';
+        fullscreenImgRef.title = 'Vollbild aus';
+
     }
 }
 
@@ -175,12 +182,17 @@ function exitFullscreen() {
         document.webkitExitFullscreen();
     }
 
-    const { fullscreenRef, canvasRef } = getIdRefs();
+    const { fullscreenRef, canvasRef, fullscreenImgRef } = getIdRefs();
     if (canvasRef) {
         canvasRef.style.width = '';
         canvasRef.style.height = '';
         canvasRef.style.borderRadius = '';
         fullscreenRef.style.borderRadius = '';
+
+        fullscreenImgRef.src = 'assets/icons/fullscreen-on.png';
+        fullscreenImgRef.alt = 'Volbild an-Icon';
+        fullscreenImgRef.title = 'Vollbild an';
+
     }
 }
 

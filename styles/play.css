@@ -39,23 +39,42 @@
 
 .mobile-nav {
   position: absolute;
-  bottom: 5px;
+  bottom: 3px;
   width: 90%;
   display: none;
   justify-content: space-between;
   align-items: center;
 }
 
-.images-mobile-nav-box-right,
-.images-mobile-nav-box-left {
+.images-mobile-nav-box-right {
   display: flex;
   align-self: center;
   gap: 45px;
 }
 
+.images-mobile-nav-box-left {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  margin-left: 25px;
+}
+
+/* .image-box-mobile {
+  display: grid;
+  place-items: center;
+  background-color: aqu;
+  padding: 5px 8px 5px 8px;
+  border-radius: 25%;
+} */
+
 .image-box-mobile {
   display: grid;
   place-items: center;
+  padding: 0px 11px 0px 11px;
+  border-radius: 25%;
+  background-color: rgba(255, 255, 255, 0.2); /* Adjust the last value (0.2) for transparency */
+  backdrop-filter: blur(5px); /* Adjust the blur amount as needed */
+  -webkit-backdrop-filter: blur(5px); /* For Safari support */
 }
 
 .fullscreen-btn {
@@ -73,7 +92,9 @@
 }
 
 .image-box-mobile img {
-  width: clamp(20px, -6.6667px + 8.3333vw, 55px);
+  width: 55px;
+
+  /* width: clamp(20px, -6.6667px + 8.3333vw, 55px); */
   aspect-ratio: 1 / 1;
 }
 
@@ -95,7 +116,7 @@
 
 .spinner {
   width: 250px;
-  animation: l10 4s infinite linear;
+  animation: spinnerAnimation 4s infinite linear;
 }
 
 /* .spinner {
@@ -115,12 +136,12 @@
   background: inherit;
   transform: rotate(45deg);
 } */
-@keyframes l10 {
+@keyframes spinnerAnimation {
   from {
-    transform: rotate(0deg); /* Start bei 0 Grad */
+    transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg); /* Drehung um 360 Grad */
+    transform: rotate(360deg);
   }
 }
 
@@ -129,11 +150,8 @@
     display: flex;
   }
 } */
-
-@media screen and (max-width: 740px) {
-  .canvas,
-  .play-screen {
-    width: clamp(320px, 15.2381px + 95.2381vw, 720px);
-    height: clamp(213.33px, 10.1529px + 63.4929vw, 480px);
+@media screen and (min-width: 321px) and (max-width: 740px) and (orientation: landscape) {
+  .image-box-mobile img {
+    width: 41px;
   }
 }
