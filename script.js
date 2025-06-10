@@ -5,14 +5,27 @@ function isTouchDevice() {
     return ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
     const { mobileNavRef } = getIdRefs();
-    isTouchDeviceGlobal = isTouchDevice();
-    if (isTouchDeviceGlobal && mobileNavRef) {
-        mobileNavRef.classList.add('d-flex');
-    }
+    updateTouchDeviceStatus(mobileNavRef);
+    const mediaQueryTouch = window.matchMedia('(any-pointer: coarse)');
+    mediaQueryTouch.addEventListener('change', () => {
+        updateTouchDeviceStatus(mobileNavRef);
+    });
 });
+
+
+function updateTouchDeviceStatus(mobileNavElement) {
+    if (mobileNavElement) {
+        if (isTouchDevice()) {
+            mobileNavElement.classList.add('d-flex');
+            mobileNavElement.classList.remove('d-none');
+        } else {
+            mobileNavElement.classList.remove('d-flex');
+            mobileNavElement.classList.add('d-none');
+        }
+    }
+}
 
 /**
  * 
