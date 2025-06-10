@@ -500,7 +500,7 @@ class World {
       this.flipImage(movableObject);
     }
     movableObject.draw(this.ctx);
-    movableObject.drawRedFrame(this.ctx)
+    // movableObject.drawRedFrame(this.ctx)
     if (movableObject.otherDirection) {
       this.flipImageBack(movableObject);
     }

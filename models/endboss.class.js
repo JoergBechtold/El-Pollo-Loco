@@ -91,7 +91,7 @@ class Endboss extends MovableObject {
                 this.startEndbossMusic();
             }
 
-            if (this.world && this.world.character && this.world.character.x > 2600 && !this.hadFirstContact) {
+            if (this.world && this.world.character && this.world.character.x > 2200 && !this.hadFirstContact) {
                 this.world.showEndbossStatusBar = true;
                 this.hadFirstContact = true;
                 this.startEndbossMusic();
@@ -207,9 +207,9 @@ class Endboss extends MovableObject {
     }
 
     stopAllIntervals() {
-        if (this.endbossAnimationInterval) {
-            clearInterval(this.endbossAnimationInterval);
-            this.endbossAnimationIntervalend = null;
+        if (this.endbossAnimationIntervalendbossMoveAniationInterval) {
+            clearInterval(this.endbossAnimationIntervalendbossMoveAniationInterval);
+            this.endbossAnimationIntervalendbossMoveAniationInterval = null;
         }
         if (this.endbossMoveAniationInterval) {
             clearInterval(this.endbossMoveAniationInterval);
