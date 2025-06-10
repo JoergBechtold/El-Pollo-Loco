@@ -151,7 +151,7 @@ class Endboss extends MovableObject {
                     this.isCurrentlyAttackingSoundPlaying = false;
                 }
             }
-        }, 150);
+        }, 50);
     }
 
     handleYouWinScreen() {
