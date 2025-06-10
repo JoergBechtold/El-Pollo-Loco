@@ -19,9 +19,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  /* width: 100%; */
   width: clamp(300px, 270px + 9.375vw, 450px);
-
   overflow-y: auto;
   scrollbar-gutter: stable;
 }
@@ -39,7 +37,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* width: clamp(300px, 270px + 9.375vw, 450px); */
   gap: 4px;
   padding-top: 60px;
   padding-bottom: 50px;

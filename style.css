@@ -188,7 +188,9 @@ h2 {
 @media screen and (orientation: landscape) {
   .play-container,
   .start-container,
-  .menu-container {
+  .menu-container,
+  .canvas,
+  .play-screen {
     width: 100%;
     height: 100dvh;
     /* border-radius: 0px; */
