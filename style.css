@@ -226,7 +226,6 @@ h2 {
     }
   }
   .btn-desktop {
-    /* font-size: clamp(26px, 9.2381px + 5.2381vw, 48px); */
     font-size: 26px;
   }
 }
@@ -235,6 +234,7 @@ h2 {
   .start-container,
   .menu-container,
   .play-screen,
+  .imprint-main,
   .canvas {
     height: 100dvh;
     width: 100%;
