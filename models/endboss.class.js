@@ -81,9 +81,9 @@ class Endboss extends MovableObject {
                 endboss_death.volume = endboss_death_volume;
                 endboss_music.pause();
                 clearInterval(this.endbossAnimationInterval);
-                // setTimeout(() => {
-                //     goToUrl('you-won.html');
-                // }, 1500);
+                setTimeout(() => {
+                    this.handleYouWinScreen()
+                }, 1600);
                 return;
             }
 
@@ -94,7 +94,7 @@ class Endboss extends MovableObject {
             if (this.world && this.world.character && this.world.character.x > 2600 && !this.hadFirstContact) {
                 this.world.showEndbossStatusBar = true;
                 this.hadFirstContact = true;
-                // this.startEndbossMusic();
+                this.startEndbossMusic();
             }
 
             if (this.isHurt()) {
@@ -154,6 +154,20 @@ class Endboss extends MovableObject {
         }, 150);
     }
 
+    handleYouWinScreen() {
+        let overlayYouWinRef = document.getElementById('overlay_you_win');
+        game_win_audio.play();
+        endOfGameAudioArray.forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+        setTimeout(() => {
+            game_win_audio.pause();
+            game_win_audio.currentTime = 0;
+        }, 2000);
+        overlayYouWinRef.classList.add('d-flex')
+    }
+
 
 
     endbosseMoveAnimation() {
@@ -193,9 +207,9 @@ class Endboss extends MovableObject {
     }
 
     stopAllIntervals() {
-        if (this.endbossAnimationIntervalendbossMoveAniationInterval) {
-            clearInterval(this.endbossAnimationIntervalendbossMoveAniationInterval);
-            this.endbossAnimationIntervalendbossMoveAniationInterval = null;
+        if (this.endbossAnimationInterval) {
+            clearInterval(this.endbossAnimationInterval);
+            this.endbossAnimationIntervalend = null;
         }
         if (this.endbossMoveAniationInterval) {
             clearInterval(this.endbossMoveAniationInterval);

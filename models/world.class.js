@@ -1,6 +1,7 @@
 class World {
   character = new Character();
   endboss = new Endboss();
+  movableObject = new MovableObject();
   level = level1;
   canvas;
   ctx;
@@ -77,35 +78,6 @@ class World {
       statusBar.setPercentage(percentage);
     }
   }
-
-  // //hier noch eine allgemeine funktion bauen für beide
-  // updateStatusBars() {
-  //   this.statusBarHealth.setPercentage(this.character.characterEnergy);
-  //   this.statusBarEndboss.setPercentage(this.endboss.endbossEnergy);
-
-  //   if (this.totalCoinsInLevel > 0) {
-  //     helpFunctionUpdateStatusBar()
-
-  //     let collectedCoins = this.character.collectCoinsArray.length;
-  //     let percentage = (collectedCoins / this.totalCoinsInLevel) * 100;
-  //     this.statusBarCoins.setPercentage(percentage);
-  //   }
-
-  //   if (this.totalBottlesInLevel > 0) {
-  //     helpFunctionUpdateStatusBar()
-
-  //     let currentBottles = this.character.collectBottlesArray.length;
-  //     let percentage = (currentBottles / this.totalBottlesInLevel) * 100;
-  //     this.statusBarBottles.setPercentage(percentage);
-  //   }
-  // }
-
-  // helpFunctionUpdateStatusBar( array, items) {
-  //   let itemsArray = array;
-  //   let percentage = (collectedCoins / this.totalCoinsInLevel) * 100;
-  //   this.statusBarCoins.setPercentage(percentage);
-  // }
-
 
   collectObjects(levelArray, characterItemArrays, audioPath, volume, timeoutMs) {
     levelArray.forEach((singleObject, index) => {
@@ -330,8 +302,8 @@ class World {
       bottle_splash.play();
       bottle_splash.volume = bottle_splash_volume;
       setTimeout(() => {
-        bottle_break_audio.pause();
-        bottle_break_audio.currentTime = 0;
+        bottle_splash.pause();
+        bottle_splash.currentTime = 0;
       }, 300);
     }
   }

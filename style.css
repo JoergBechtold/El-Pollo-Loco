@@ -49,6 +49,9 @@ h2 {
 
   /* --padding-top-nav: 25px; */
   --padding-top-nav: clamp(5px, -10.2381px + 4.7619vw, 25px);
+
+  --image-size-loose: clamp(270px, 251px + 5.9375vw, 365px);
+  --image-size-win: clamp(215px, 167px + 15vw, 455px);
 }
 
 .start-screen {
@@ -247,9 +250,10 @@ h2 {
     width: clamp(320px, 15.2381px + 95.2381vw, 720px);
     height: clamp(213.33px, 10.1529px + 63.4929vw, 480px);
   }
-}
-.btn-desktop {
-  font-size: 26px;
+
+  .btn-desktop {
+    font-size: 26px;
+  }
 }
 
 @media screen and (min-width: 321px) and (max-width: 740px) and (orientation: landscape) {
@@ -261,6 +265,10 @@ h2 {
     height: 100dvh;
     width: 100%;
     border-radius: unset;
+  }
+
+  .btn-desktop {
+    font-size: 26px;
   }
 }
 

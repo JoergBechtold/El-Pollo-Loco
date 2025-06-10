@@ -9,6 +9,10 @@ class ThrowableObject extends MovableObject {
     isSplashing = false;
     world;
 
+    // throwMovementInterval;
+    // throwAnimationInterval;
+    // splashAnimationInterval;
+
 
 
     IMAGES_BOTTLES = [
@@ -37,15 +41,17 @@ class ThrowableObject extends MovableObject {
         this.height = 70;
         this.width = 60;
         this.otherDirection = otherDirection;
-        this.throw();
         this.splashWidth = 80;
         this.splashHeight = 80;
+        this.applyGravity();
+        this.throw();
+
     }
 
 
     throw() {
         this.speedY = 30;
-        this.applyGravity();
+        // this.applyGravity();
         let throwSpeedX = this.otherDirection ? -10 : 10;
         let movementInterval = setInterval(() => {
             this.x += throwSpeedX;
@@ -70,10 +76,6 @@ class ThrowableObject extends MovableObject {
         }, 1000 / 10);
     }
 
-
-
-
-
     playBottleSplash() {
         bottle_splash.play();
         this.width = this.splashWidth;
@@ -85,6 +87,5 @@ class ThrowableObject extends MovableObject {
     }
 
 
-
-
 }
+

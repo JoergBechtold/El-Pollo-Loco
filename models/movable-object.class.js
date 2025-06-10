@@ -8,6 +8,7 @@ class MovableObject extends DrawableObject {
     isDeadAnimationPlayed = false;
     isImmune = false;
     enemyFollowCharacterAnimationInterval;
+    applyGravityInterval;
     offset = {
         top: 0,
         left: 0,
@@ -19,8 +20,9 @@ class MovableObject extends DrawableObject {
         super();
     }
 
+
     applyGravity() {
-        setInterval(() => {
+        this.applyGravityInterval = setInterval(() => {
 
             if (this instanceof Character && this.isOnBarrel) {
 
@@ -49,6 +51,9 @@ class MovableObject extends DrawableObject {
         return this.y < this.groundLevel;
     }
 
+
+
+
     hit() {
         if (this.isImmune) {
             return;
@@ -72,16 +77,14 @@ class MovableObject extends DrawableObject {
     }
 
     takeBounceDamage() {
-        // Diese Methode wird speziell für Treffer durch den Character-Bounce verwendet
         if (this.isImmune) {
             return;
         }
-        this.endbossEnergy -= 15; // Nur 15 Schaden bei Bounce
-        console.log('Endboss durch Bounce getroffen! Energie: ' + this.endbossEnergy);
+        this.endbossEnergy -= 15;
         if (this.endbossEnergy < 0) {
             this.endbossEnergy = 0;
         }
-        this.lastHit = new Date().getTime(); // Auch hier den letzten Treffer aktualisieren
+        this.lastHit = new Date().getTime();
     }
 
 
@@ -132,8 +135,6 @@ class MovableObject extends DrawableObject {
     }
 
 
-
-
     chickJump() {
         this.speedY = 10 + Math.random() * 20;
     }
@@ -149,6 +150,7 @@ class MovableObject extends DrawableObject {
             this.isImmune = false;
         }, 200);
     }
+
 
     enemyFollowCharacterAnimation() {
         this.enemyFollowCharacterAnimationInterval = setInterval(() => {
@@ -180,5 +182,14 @@ class MovableObject extends DrawableObject {
             clearInterval(this.enemyFollowCharacterAnimationInterval);
             this.enemyFollowCharacterAnimationInterval = null;
         }
+
+        if (this.applyGravityInterval) {
+            clearInterval(this.applyGravityInterval);
+            this.applyGravityInterval = null;
+        }
     }
+
+
+
+
 }

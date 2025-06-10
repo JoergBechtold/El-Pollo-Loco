@@ -11,6 +11,8 @@ const PATH_CHICKEN_DEATH_AUDIO = 'assets/audio/chicken-dead.mp3';
 
 let walkin_sound = new Audio('assets/audio/running.mp3');
 let game_music = new Audio('assets/audio/game-music1.mp3');
+let game_over_voice = new Audio('assets/audio/game-over.mp3');
+let game_win_audio = new Audio('assets/audio/you-win.mp3');
 let snoring_audio = new Audio('assets/audio/snoring.mp3');
 let death_sound = new Audio('assets/audio/death.mp3');
 let jump_sound = new Audio('assets/audio/jump.ogg');
@@ -36,7 +38,25 @@ const allAudioArray = [
     endboss_sound,
     endboss_hurt,
     endboss_death,
-    endboss_alert
+    endboss_alert,
+    game_over_voice,
+    game_win_audio
+];
+
+const endOfGameAudioArray = [
+    walkin_sound,
+    game_music,
+    death_sound,
+    jump_sound,
+    hurt_sound,
+    bottle_splash,
+    snoring_audio,
+    endboss_music,
+    endboss_sound,
+    endboss_hurt,
+    endboss_death,
+    endboss_alert,
+
 ];
 
 
@@ -123,12 +143,16 @@ function toggleGamePause() {
         return;
     }
 
-    isGamePaused = !isGamePaused; // Zustand umkehren
+    isGamePaused = !isGamePaused;
 
     if (isGamePaused) {
         // Spiel pausieren
         if (world.character) {
             world.character.stopAllIntervals();
+        }
+
+        if (world.endboss) {
+            world.endboss.stopAllIntervals();
         }
 
         //enemies
@@ -158,7 +182,12 @@ function toggleGamePause() {
                 }
             });
         }
-        // Prüfen Sie für world.cloud, falls es ein direktes Objekt ist
+
+        //movable-objects
+        if (world.movableObject) {
+            world.movableObject.stopAllIntervals();
+        }
+
 
 
         // Alle Sounds pausieren
@@ -174,8 +203,15 @@ function toggleGamePause() {
     } else {
         // Spiel fortsetzen
         if (world.character) {
-            world.character.animate(); // Startet die Charakter-Intervalle neu
+            world.character.animate();
         }
+
+        if (world.endboss) {
+            world.endboss.animate();
+            world.endboss.endbosseMoveAnimation();
+
+        }
+
 
         // if(world.)
 
@@ -207,6 +243,13 @@ function toggleGamePause() {
                     cloud.animateClouds();
                 }
             });
+        }
+
+        //movable-objects
+        if (world.movableObject) {
+            world.movableObject.applyGravity();
+            world.movableObject.enemyFollowCharacterAnimation();
+
         }
 
         // Relevante Sounds fortsetzen
