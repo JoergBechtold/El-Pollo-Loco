@@ -7,7 +7,7 @@ class MovableObject extends DrawableObject {
     groundLevel;
     isDeadAnimationPlayed = false;
     isImmune = false;
-
+    enemyFollowCharacterAnimationInterval;
     offset = {
         top: 0,
         left: 0,
@@ -151,7 +151,7 @@ class MovableObject extends DrawableObject {
     }
 
     enemyFollowCharacterAnimation() {
-        setInterval(() => {
+        this.enemyFollowCharacterAnimationInterval = setInterval(() => {
             if (!this.isDead()) {
 
                 if (this.character) {
@@ -175,7 +175,10 @@ class MovableObject extends DrawableObject {
         }, 1000 / 60);
     }
 
-
-
-
+    stopAllIntervals() {
+        if (this.enemyFollowCharacterAnimationInterval) {
+            clearInterval(this.enemyFollowCharacterAnimationInterval);
+            this.enemyFollowCharacterAnimationInterval = null;
+        }
+    }
 }

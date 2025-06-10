@@ -12,7 +12,7 @@ class Barrel extends DrawableObject {
 
     constructor(path) {
         super().loadImage(path)
-        let randomX = 800 + Math.random() * 2400;
+        let randomX = 500 + Math.random() * 1700;
         this.x = Math.round(randomX / 150) * 150;
     }
 }

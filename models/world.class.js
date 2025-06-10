@@ -210,6 +210,8 @@ class World {
 
       if (this.bottleHitSomething) {
         this.removeBottle(bottleIndex);
+        this.playBottleBreakSound();
+
       }
     });
   }
@@ -274,6 +276,9 @@ class World {
       this.handleBottleHitChicken(enemy, enemyIndex);
     } else if (enemy instanceof Endboss) {
       this.handleBottleHitEndboss(enemy, enemyIndex);
+      this.bottleHitSomething = true;
+      this.playBottleBreakSound();
+
     }
   }
 
@@ -282,6 +287,10 @@ class World {
     chicken.isDeadAnimationPlayed = false;
     this.playChickenDeathSound();
     this.removeEnemyAfterDelay(chicken, 500, enemyIndex);
+    this.bottleHitSomething = true;
+    this.playBottleBreakSound();
+
+
   }
 
   handleBottleBarrelCollisions(bottle) {
@@ -539,4 +548,6 @@ class World {
     movableObject.x = movableObject.x * -1;
     this.ctx.restore();
   }
+
+
 }

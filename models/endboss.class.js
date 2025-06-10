@@ -12,6 +12,10 @@ class Endboss extends MovableObject {
     };
     character;
     endbossMusic = null;
+    endbossAnimationInterval;
+    endbossMoveAniationInterval;
+
+
 
     IMAGES_WALKING = [
         'assets/img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -69,14 +73,14 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-        this.animationInterval = setInterval(() => {
+        this.endbossAnimationInterval = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
                 endboss_death.currentTime = 0;
                 endboss_death.play();
                 endboss_death.volume = endboss_death_volume;
                 endboss_music.pause();
-                clearInterval(this.animationInterval);
+                clearInterval(this.endbossAnimationInterval);
                 // setTimeout(() => {
                 //     goToUrl('you-won.html');
                 // }, 1500);
@@ -87,7 +91,7 @@ class Endboss extends MovableObject {
                 this.startEndbossMusic();
             }
 
-            if (this.world && this.world.character && this.world.character.x > 2200 && !this.hadFirstContact) {
+            if (this.world && this.world.character && this.world.character.x > 2600 && !this.hadFirstContact) {
                 this.world.showEndbossStatusBar = true;
                 this.hadFirstContact = true;
                 // this.startEndbossMusic();
@@ -153,7 +157,7 @@ class Endboss extends MovableObject {
 
 
     endbosseMoveAnimation() {
-        setInterval(() => {
+        this.endbossMoveAniationInterval = setInterval(() => {
             if (this.isDead()) {
                 return;
             }
@@ -186,5 +190,17 @@ class Endboss extends MovableObject {
             endboss_music.play();
             console.log('endboss musik');
         }
+    }
+
+    stopAllIntervals() {
+        if (this.endbossAnimationIntervalendbossMoveAniationInterval) {
+            clearInterval(this.endbossAnimationIntervalendbossMoveAniationInterval);
+            this.endbossAnimationIntervalendbossMoveAniationInterval = null;
+        }
+        if (this.endbossMoveAniationInterval) {
+            clearInterval(this.endbossMoveAniationInterval);
+            this.endbossMoveAniationInterval = null;
+        }
+
     }
 }

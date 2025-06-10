@@ -15,6 +15,9 @@ class CollectCoins extends MovableObject {
         bottom: 47
     };
 
+    coinsAnimationInterval;
+    coinsFloatingInterval;
+
     IMAGES_COINS = [
         'assets/img/8_coin/coin_1.png',
         'assets/img/8_coin/coin_2.png'
@@ -33,11 +36,11 @@ class CollectCoins extends MovableObject {
 
 
     animateFloating() {
-        setInterval(() => {
+        this.coinsAnimationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_COINS)
         }, 400);
 
-        setInterval(() => {
+        this.coinsFloatingInterval = setInterval(() => {
 
             if (this.animationDirection === 1) {
                 this.y -= this.animationSpeedY;
@@ -51,6 +54,19 @@ class CollectCoins extends MovableObject {
                 }
             }
         }, 1000 / 60);
+    }
+
+    stopAllIntervals() {
+
+        if (this.coinsAnimationInterval) {
+            clearInterval(this.coinsAnimationInterval);
+            this.coinsAnimationInterval = null;
+        }
+        if (this.coinsFloatingInterval) {
+            clearInterval(this.coinsFloatingInterval);
+            this.coinsFloatingInterval = null;
+        }
+
     }
 
 }

@@ -10,6 +10,7 @@ class ThrowableObject extends MovableObject {
     world;
 
 
+
     IMAGES_BOTTLES = [
         'assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'assets/img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -39,11 +40,7 @@ class ThrowableObject extends MovableObject {
         this.throw();
         this.splashWidth = 80;
         this.splashHeight = 80;
-
-
     }
-
-
 
 
     throw() {
@@ -59,7 +56,7 @@ class ThrowableObject extends MovableObject {
 
                 }, 400);
 
-                if (this.y >= this.groundLevel || world.bottleHitSomething) {
+                if (this.y >= this.groundLevel) {
                     this.playBottleSplash();
                     clearInterval(this.animationInterval);
                 }

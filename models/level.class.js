@@ -5,7 +5,7 @@ class Level {
     bottlesArray;
     coinsArray;
     barrelArray;
-    level_end_x = 2500;
+    level_end_x = 2800;
 
 
     constructor(enemiesArray, cloudsArray, backgroundObjectsArray, bottlesArray, coinsArray, barrelArray) {

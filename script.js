@@ -30,14 +30,8 @@ function getIdRefs() {
         canvasRef: document.getElementById('canvas'),
         fullscreenRef: document.getElementById('fullscreen'),
         fullscreenImgRef: document.getElementById('fullscreen_img'),
+        gamePauseBoxImgPlayRef: document.getElementById('game-pause_box_img_play'),
 
-
-
-
-
-
-        // soundBoxImgMenuRef: document.getElementById('sound_box_img_menu'),
-        // soundBoxSpanMenuRef: document.getElementById('sound_box_span_menu')
     };
 }
 
@@ -110,8 +104,6 @@ function updateSoundToggleDisplay() {
     const img = isMuted ? 'assets/icons/audio-off-1.png' : 'assets/icons/audio-on-1.png';
     const audioStatus = isMuted ? 'Spiel Audio aus' : 'Spiel Audio an';
     const alt = isMuted ? 'Icon audio aus' : 'Icon audio an';
-    // const text = isMuted ? 'Spiel Audio aus' : 'Spiel Audio an';
-
     allAudioArray.forEach(sound => {
         sound.muted = isMuted;
     });
@@ -119,21 +111,6 @@ function updateSoundToggleDisplay() {
     soundBoxImgPlayRef.src = img;
     soundBoxImgPlayRef.title = audioStatus;
     soundBoxImgPlayRef.alt = alt;
-
-
-    // if (soundBoxImgStartRef && soundBoxSpanStartRef) {
-    //     soundBoxImgStartRef.src = img;
-    //     soundBoxImgStartRef.title = audioStatus;
-    //     soundBoxImgStartRef.alt = alt;
-    //     // soundBoxSpanStartRef.textContent = text;
-    // }
-
-    // if (soundBoxImgMenuRef && soundBoxSpanMenuRef) {
-    //     soundBoxImgMenuRef.src = img;
-    //     soundBoxImgMenuRef.title = audioStatus;
-    //     soundBoxImgMenuRef.alt = alt;
-    //     // soundBoxSpanMenuRef.textContent = text;
-    // }
 }
 
 

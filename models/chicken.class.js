@@ -10,6 +10,10 @@ class Chicken extends MovableObject {
         right: 0,
         bottom: 0
     };
+
+    chickenAnimationInterval;
+
+
     IMAGES_WALKING = [
         'assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'assets/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -32,7 +36,7 @@ class Chicken extends MovableObject {
 
     animate() {
         this.enemyFollowCharacterAnimation()
-        setInterval(() => {
+        this.chickenAnimationInterval = setInterval(() => {
             if (this.isDead()) {
                 if (!this.isDeadAnimationPlayed) {
                     this.playAnimation(this.IMAGE_DEAD);
@@ -42,5 +46,12 @@ class Chicken extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 150);
+    }
+
+    stopAllIntervals() {
+        if (this.chickenAnimationInterval) {
+            clearInterval(this.chickenAnimationInterval);
+            this.chickAnimationInterval = null;
+        }
     }
 }

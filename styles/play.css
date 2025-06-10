@@ -37,6 +37,12 @@
   gap: 25px;
 }
 
+.images-mobile-nav-box-aside {
+  position: absolute;
+  left: 3px;
+  top: 40%;
+}
+
 .mobile-nav {
   position: absolute;
   bottom: 3px;
@@ -48,8 +54,13 @@
 
 .images-mobile-nav-box-right {
   display: flex;
-  align-self: center;
+  align-items: center;
   gap: 45px;
+}
+
+.images-mobile-nav-box-middle {
+  display: flex;
+  align-items: center;
 }
 
 .images-mobile-nav-box-left {
@@ -59,22 +70,22 @@
   margin-left: 25px;
 }
 
-/* .image-box-mobile {
-  display: grid;
-  place-items: center;
-  background-color: aqu;
-  padding: 5px 8px 5px 8px;
-  border-radius: 25%;
-} */
-
 .image-box-mobile {
   display: grid;
   place-items: center;
   padding: 0px 11px 0px 11px;
   border-radius: 25%;
-  background-color: rgba(255, 255, 255, 0.2); /* Adjust the last value (0.2) for transparency */
-  backdrop-filter: blur(5px); /* Adjust the blur amount as needed */
-  -webkit-backdrop-filter: blur(5px); /* For Safari support */
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.image-box-asise {
+  padding: 0px 11px 0px 11px;
+  border-radius: 25%;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .fullscreen-btn {
@@ -83,7 +94,9 @@
 
 .sound-box,
 .quit-game-box,
-.fullscreen-box {
+.fullscreen-box,
+.game-pause-box,
+.image-box-asise {
   display: grid;
   place-items: center;
   cursor: url('../assets/icons/pepper-hot-solid.svg'), auto;
