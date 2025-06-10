@@ -1,6 +1,9 @@
 let isMuted;
 let isTouchDeviceGlobal = false;
 
+const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+
 function isTouchDevice() {
     return ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
 }

@@ -89,7 +89,19 @@
   aspect-ratio: 2 / 1;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 321px) and (max-width: 844px) and (orientation: portrait) {
+  .content-desktop {
+    /* Vielleicht auch 'none' im Portrait auf diesen Geräten, wenn du nur mobil willst */
+    display: none;
+  }
+
+  .content-mobile {
+    /* Oder 'flex'/'block' für mobile Inhalte im Portrait */
+    display: flex;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 844px) and (orientation: landscape) {
   .content-desktop {
     display: none;
   }
