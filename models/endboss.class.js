@@ -128,7 +128,7 @@ class Endboss extends MovableObject {
                         endboss_sound.play();
                         endboss_sound.volume = endboss_sound_volume;
                         this.isCurrentlyAttackingSoundPlaying = true;
-                        console.log('Endboss Sound startet!');
+
                     }
                 } else {
                     this.playAnimation(this.IMAGES_WALKING);
@@ -137,7 +137,7 @@ class Endboss extends MovableObject {
                         endboss_sound.pause();
                         endboss_sound.currentTime = 0;
                         this.isCurrentlyAttackingSoundPlaying = false;
-                        console.log('Endboss Sound gestoppt!');
+
                     }
                 }
             } else {
