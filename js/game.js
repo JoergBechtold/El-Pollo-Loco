@@ -73,6 +73,7 @@ let endboss_death_volume = 0.5;
 let bottle_splash_volume = 0.5;
 let game_win_audio_volume = 0.5;
 let game_over_voice_volime = 0.5;
+let enemy_bouncing_dead_audio_volume = 0.5;
 
 // function toggleGamePause() {
 //     const { gamePauseBoxImgPlayRef } = getIdRefs();

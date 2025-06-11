@@ -212,7 +212,8 @@ class World {
   handleChickenJumpDeath(chicken) {
     chicken.energy = 0;
     chicken.isDeadAnimationPlayed = false;
-    this.playBouncingSound();
+    // this.playBouncingSound();
+    this.playEnemyBounceDeadSound();
     this.character.bounce(chicken);
     this.removeEnemyAfterDelay(chicken, 500);
   }
@@ -236,6 +237,18 @@ class World {
         bouncing_audio.pause();
         bouncing_audio.currentTime = 0;
       }, 500);
+    }
+  }
+
+  playEnemyBounceDeadSound() {
+    if (!isMuted && !isGameFinish) {
+      let enemy_bouncing_dead_audio = new Audio(PATH_CHICKEN_DEATH_JUMP_AUDIO);
+      enemy_bouncing_dead_audio.volume = enemy_bouncing_dead_audio_volume;
+      enemy_bouncing_dead_audio.play();
+      setTimeout(() => {
+        enemy_bouncing_dead_audio.pause();
+        enemy_bouncing_dead_audio.currentTime = 0;
+      }, 800);
     }
   }
   //hier
