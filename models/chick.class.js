@@ -70,8 +70,21 @@ class Chick extends MovableObject {
         }, 150);
     }
 
-    stopAllIntervals() {
+    // stopAllIntervals() {
 
+    //     if (this.chickAnimationInterval) {
+    //         clearInterval(this.chickAnimationInterval);
+    //         this.chickAnimationInterval = null;
+    //     }
+    //     if (this.chickDeadAnimationInterval) {
+    //         clearInterval(this.chickDeadAnimationInterval);
+    //         this.chickDeadAnimationInterval = null;
+    //     }
+
+    // }
+
+    stopAllIntervals() {
+        super.stopAllIntervals(); // Stoppt Gravity und enemyFollow
         if (this.chickAnimationInterval) {
             clearInterval(this.chickAnimationInterval);
             this.chickAnimationInterval = null;
@@ -80,6 +93,15 @@ class Chick extends MovableObject {
             clearInterval(this.chickDeadAnimationInterval);
             this.chickDeadAnimationInterval = null;
         }
+    }
 
+    /**
+     * Startet alle Intervalle neu, die direkt in dieser Klasse oder der Basisklasse gestartet werden.
+     */
+    startAllIntervals() {
+        if (!this.isDead()) { // Nur neu starten, wenn das Küken nicht tot ist
+            super.startAllIntervals(); // Startet Gravity und enemyFollow
+            this.animate();
+        }
     }
 }

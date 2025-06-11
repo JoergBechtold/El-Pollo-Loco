@@ -70,6 +70,7 @@ class Endboss extends MovableObject {
         this.x = 2500;
         this.animate();
         this.endbosseMoveAnimation()
+        // this.enemyFollowCharacterAnimation();
     }
 
     animate() {
@@ -111,15 +112,18 @@ class Endboss extends MovableObject {
 
             if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
+                if (!isMuted) {
+                    let endboss_hurt_new = new Audio(PATH_ENDBOSS_HURT_AUDIO);
+                    endboss_hurt_new.volume = bouncing_audio_volume;
+                    endboss_hurt_new.play();
+                    setTimeout(() => {
+                        endboss_hurt_new.pause();
+                        endboss_hurt_new.currentTime = 0;
+                    }, 1000);
+                }
 
-                let endboss_hurt_new = new Audio(PATH_ENDBOSS_HURT_AUDIO);
-                endboss_hurt_new.volume = bouncing_audio_volume;
-                endboss_hurt_new.play();
 
-                setTimeout(() => {
-                    endboss_hurt_new.pause();
-                    endboss_hurt_new.currentTime = 0;
-                }, 1000);
+
             } else if (this.hadFirstContact) {
 
                 if (this.world.character.x < this.x - 50) {
@@ -209,6 +213,36 @@ class Endboss extends MovableObject {
             game_music.currentTime = 0;
             endboss_music.volume = endboss_sound_volume;
             endboss_music.play();
+        }
+    }
+
+    stopAllIntervals() {
+        super.stopAllIntervals(); // Stoppt Gravity und enemyFollow
+        if (this.endbossAnimationInterval) {
+            clearInterval(this.endbossAnimationInterval);
+            this.endbossAnimationInterval = null;
+        }
+        if (this.endbossMoveAniationInterval) {
+            clearInterval(this.endbossMoveAniationInterval);
+            this.endbossMoveAniationInterval = null;
+        }
+        // Zusätzliche Logik beim Tod
+        if (this.isDead()) {
+            endboss_death.pause(); // Musik stoppen, wenn er tot ist
+            endboss_death.currentTime = 0;
+            endboss_music.pause();
+            endboss_music.currentTime = 0;
+        }
+    }
+
+    /**
+     * Startet alle Intervalle neu, die direkt in dieser Klasse oder der Basisklasse gestartet werden.
+     */
+    startAllIntervals() {
+        if (!this.isDead()) { // Nur neu starten, wenn der Endboss nicht tot ist
+            super.startAllIntervals(); // Startet Gravity und enemyFollow
+            this.animate();
+            this.endbosseMoveAnimation();
         }
     }
 

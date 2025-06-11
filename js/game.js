@@ -77,6 +77,52 @@ let game_win_audio_volume = 0.5;
 let game_over_voice_volime = 0.5;
 let enemy_bouncing_dead_audio_volume = 0.5;
 
+function toggleGamePause() {
+    // Stellen Sie sicher, dass Sie ein HTML-Element mit der ID 'gamePauseBoxImgPlay' haben,
+    // das das Icon für Pause/Play anzeigt.
+    const gamePauseBoxImgPlayRef = document.getElementById('gamePauseBoxImgPlay');
+
+    if (!world) {
+        console.warn('World-Instanz ist nicht verfügbar. Spiel nicht initialisiert.');
+        return;
+    }
+
+    // Umschalten des Pausenzustands
+    isGamePaused = !isGamePaused;
+
+    if (isGamePaused) {
+        // Spiel pausieren
+        world.stopAllIntervals(); // Zentraler Aufruf zum Stoppen aller Spielaktivitäten
+
+        // Alle im `allAudioArray` definierten Sounds pausieren
+        allAudioArray.forEach(audio => {
+            if (audio && typeof audio.pause === 'function') {
+                audio.pause();
+            }
+        });
+
+        // Update des Pause/Play-Icons
+        if (gamePauseBoxImgPlayRef) {
+            gamePauseBoxImgPlayRef.src = 'assets/icons/play-icon.png'; // Beispielpfad
+            gamePauseBoxImgPlayRef.alt = 'Spiel fortsetzen-Icon';
+            gamePauseBoxImgPlayRef.title = 'Fortsetzen';
+        }
+        console.log('Spiel pausiert.');
+    } else {
+        // Spiel fortsetzen
+        world.startAllIntervals(); // Zentraler Aufruf zum Neustart aller Spielaktivitäten
+        // Die Musik wird bereits in world.startAllIntervals() gestartet, keine doppelten Aufrufe hier.
+
+        // Update des Pause/Play-Icons
+        if (gamePauseBoxImgPlayRef) {
+            gamePauseBoxImgPlayRef.src = 'assets/icons/pause-icon.png'; // Beispielpfad
+            gamePauseBoxImgPlayRef.alt = 'Spiel pausieren-Icon';
+            gamePauseBoxImgPlayRef.title = 'Pause';
+        }
+        console.log('Spiel fortgesetzt.');
+    }
+}
+
 // function toggleGamePause() {
 //     const { gamePauseBoxImgPlayRef } = getIdRefs();
 

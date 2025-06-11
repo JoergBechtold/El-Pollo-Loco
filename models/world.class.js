@@ -16,6 +16,8 @@ class World {
   showEndbossStatusBar = false;
   bottleHitSomething = false;
 
+  worldInterval;
+
 
   constructor(canvas, keyboard,) {
     this.ctx = canvas.getContext('2d');
@@ -48,7 +50,7 @@ class World {
 
 
   allwaysExecuted() {
-    setInterval(() => {
+    this.worldInterval = setInterval(() => {
       this.checkCollisions();
       this.checkCollisionsBarrel();
       this.collectObjects(this.level.bottlesArray, this.character.collectBottlesArray, PATH_COLLECT_BOTTLE_AUDIO, collect_bottle_audio_volume, 800);
@@ -392,6 +394,171 @@ class World {
   flipImageBack(movableObject) {
     movableObject.x = movableObject.x * -1;
     this.ctx.restore();
+  }
+
+  // stopAllIntervals() {
+  //   // Stoppe das Haupt-Intervall der World-Klasse
+  //   if (this.worldInterval) {
+  //     clearInterval(this.worldInterval);
+  //     this.worldInterval = null;
+  //   }
+
+  //   // Stoppe Intervalle des Charakters
+  //   if (this.character && typeof this.character.stopAllIntervals === 'function') {
+  //     this.character.stopAllIntervals();
+  //   }
+
+  //   // Stoppe Intervalle aller Gegner
+  //   this.level.enemiesArray.forEach(enemy => {
+  //     if (enemy && typeof enemy.stopAllIntervals === 'function') {
+  //       enemy.stopAllIntervals();
+  //     }
+  //   });
+
+  //   // Stoppe Intervalle aller geworfenen Flaschen
+  //   // Es ist wichtig, dass dieser Teil des Arrays geleert wird, da Flaschen sich selbst entfernen
+  //   // aber wenn die Flasche noch existiert und nicht explodiert ist, sollten ihre Intervalle gestoppt werden.
+  //   // Die Flaschen sollten sich selbst aus dem Array entfernen und ihre Intervalle stoppen,
+  //   // aber hier als Backup, falls noch welche da sind.
+  //   this.character.bottles.forEach(bottle => {
+  //     if (bottle && typeof bottle.stopAllIntervals === 'function') {
+  //       bottle.stopAllIntervals();
+  //     }
+  //   });
+  //   // Leere das Array nach dem Stoppen der Intervalle, um sicherzustellen, dass keine Referenzen übrig bleiben.
+  //   this.character.bottles = [];
+
+
+  //   // Optionale: Spielmusik stoppen
+  //   if (typeof game_music !== 'undefined' && typeof game_music.pause === 'function') {
+  //     game_music.pause();
+  //     game_music.currentTime = 0;
+  //   }
+  //   if (typeof endboss_music !== 'undefined' && typeof endboss_music.pause === 'function') {
+  //     endboss_music.pause();
+  //     endboss_music.currentTime = 0;
+  //   }
+
+  //   // Wenn du weitere globale Intervalle oder Sounds hast, die außerhalb von Klassen verwaltet werden,
+  //   // musst du sie hier ebenfalls stoppen.
+  // }
+
+  stopAllIntervals() {
+    // Stoppe das Haupt-Intervall der World-Klasse
+    if (this.worldInterval) {
+      clearInterval(this.worldInterval);
+      this.worldInterval = null;
+    }
+
+    // Stoppe Intervalle des Charakters
+    if (this.character && typeof this.character.stopAllIntervals === 'function') {
+      this.character.stopAllIntervals();
+    }
+
+    // Stoppe Intervalle aller Gegner (Endboss, Chicken, Chick)
+    this.level.enemiesArray.forEach(enemy => {
+      if (enemy && typeof enemy.stopAllIntervals === 'function') {
+        enemy.stopAllIntervals();
+      }
+    });
+
+    // Stoppe Intervalle aller geworfenen Flaschen
+    // Da Flaschen sich beim Aufprall selbst entfernen, sollten sie ihre Intervalle selbst stoppen.
+    // Dieser Teil ist eine zusätzliche Absicherung für den Fall, dass Flaschen noch in der Luft sind.
+    this.character.bottles.forEach(bottle => {
+      if (bottle && typeof bottle.stopAllIntervals === 'function') {
+        bottle.stopAllIntervals();
+      }
+    });
+    // Optional: Leere das Array, damit bei Resume keine alten Flaschen wiederbelebt werden
+    // this.character.bottles = []; // Nur wenn Sie sicherstellen wollen, dass Flaschen komplett verschwinden
+
+    // --- HIER MUSS DIE LOGIK FÜR COINS HIN ---
+    // Stoppe Intervalle aller Münzen
+    if (this.level.coinsArray) { // Prüfen, ob coinsArray existiert
+      this.level.coinsArray.forEach(coin => {
+        if (coin && typeof coin.stopAllIntervals === 'function') {
+          coin.stopAllIntervals();
+        }
+      });
+    }
+
+    // --- HIER MUSS DIE LOGIK FÜR CLOUDS HIN ---
+    // Stoppe Intervalle aller Wolken
+    if (this.level.cloudsArray) { // Prüfen, ob cloudsArray existiert
+      this.level.cloudsArray.forEach(cloud => {
+        if (cloud && typeof cloud.stopAllIntervals === 'function') {
+          cloud.stopAllIntervals();
+        }
+      });
+    }
+
+    // Globale Spielmusik und Sounds pausieren
+    if (typeof game_music !== 'undefined' && typeof game_music.pause === 'function') {
+      game_music.pause();
+      game_music.currentTime = 0;
+    }
+    if (typeof endboss_music !== 'undefined' && typeof endboss_music.pause === 'function') {
+      endboss_music.pause();
+      endboss_music.currentTime = 0;
+    }
+    allAudioArray.forEach(audio => { // Pause alle bekannten Audio-Objekte
+      if (audio && typeof audio.pause === 'function') {
+        audio.pause();
+      }
+    });
+  }
+
+  /**
+   * Startet alle Intervalle der World-Instanz und aller verwalteten Objekte neu.
+   * Dies wird beim Fortsetzen des Spiels nach einer Pause aufgerufen.
+   */
+  startAllIntervals() {
+    this.allwaysExecuted(); // Startet das Haupt-Intervall der World-Klasse neu
+
+    // Starte Intervalle des Charakters neu
+    if (this.character && typeof this.character.startAllIntervals === 'function') {
+      this.character.startAllIntervals();
+    }
+
+    // Starte Intervalle aller lebenden Gegner neu
+    this.level.enemiesArray.forEach(enemy => {
+      if (enemy && !enemy.isDead() && typeof enemy.startAllIntervals === 'function') {
+        enemy.startAllIntervals();
+      }
+    });
+
+    // --- HIER MUSS DIE LOGIK FÜR COINS HIN ---
+    // Starte Intervalle aller Münzen neu
+    if (this.level.coinsArray) {
+      this.level.coinsArray.forEach(coin => {
+        // Nur Münzen neu starten, die noch nicht eingesammelt wurden
+        // (falls Sie eine `isCollected` Eigenschaft in der Coin-Klasse haben)
+        // if (coin && !coin.isCollected && typeof coin.startAllIntervals === 'function') {
+        if (coin && typeof coin.startAllIntervals === 'function') { // Wenn keine isCollected-Eigenschaft
+          coin.startAllIntervals();
+        }
+      });
+    }
+
+    // --- HIER MUSS DIE LOGIK FÜR CLOUDS HIN ---
+    // Starte Intervalle aller Wolken neu
+    if (this.level.cloudsArray) {
+      this.level.cloudsArray.forEach(cloud => {
+        if (cloud && typeof cloud.startAllIntervals === 'function') {
+          cloud.startAllIntervals();
+        }
+      });
+    }
+
+    // Globale Spielmusik und Sounds fortsetzen
+    if (typeof game_music !== 'undefined' && typeof game_music.play === 'function') {
+      game_music.play();
+    }
+    // Endboss-Musik fortsetzen, falls sie aktiv war (prüfe Endboss-Zustand)
+    if (this.endboss && this.endboss.endbossActivated && typeof endboss_music !== 'undefined' && typeof endboss_music.play === 'function') {
+      endboss_music.play();
+    }
   }
 
 
