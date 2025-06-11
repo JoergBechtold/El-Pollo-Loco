@@ -1,7 +1,7 @@
 class Character extends MovableObject {
     height = 280;
     width = 150;
-    // groundLevel = 155;
+    groundLevel = 155;
     characterEnergy = 100;
     speed = 7.5;
     world;
@@ -105,7 +105,6 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.loadImages(this.IMAGE_SPEECH_BUBBLE);
-        this.groundLevel = 155;
         this.applyGravity();
         this.animate();
     }
@@ -194,26 +193,14 @@ class Character extends MovableObject {
             death_sound.volume = death_sound_volume;
             death_sound.play();
             setTimeout(() => {
-                this.handleYouLooseScreen()
+                handleYouLooseScreen()
             }, 1600);
             return true;
         }
         return false;
     }
 
-    handleYouLooseScreen() {
-        let overlayYouLooseRef = document.getElementById('overlay_you_loose');
-        game_over_voice.play();
-        endOfGameAudioArray.forEach(audio => {
-            audio.pause();
-            audio.currentTime = 0;
-        });
-        setTimeout(() => {
-            game_over_voice.pause();
-            game_over_voice.currentTime = 0;
-        }, 2000);
-        overlayYouLooseRef.classList.add('d-flex')
-    }
+
 
     checkAndHandleHurt() {
         if (this.isHurt()) {

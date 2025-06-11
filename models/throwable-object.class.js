@@ -9,12 +9,6 @@ class ThrowableObject extends MovableObject {
     isSplashing = false;
     world;
 
-    // throwMovementInterval;
-    // throwAnimationInterval;
-    // splashAnimationInterval;
-
-
-
     IMAGES_BOTTLES = [
         'assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'assets/img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -43,15 +37,13 @@ class ThrowableObject extends MovableObject {
         this.otherDirection = otherDirection;
         this.splashWidth = 80;
         this.splashHeight = 80;
-        this.applyGravity();
         this.throw();
-
     }
 
 
     throw() {
         this.speedY = 30;
-        // this.applyGravity();
+        this.applyGravity();
         let throwSpeedX = this.otherDirection ? -10 : 10;
         let movementInterval = setInterval(() => {
             this.x += throwSpeedX;
@@ -59,15 +51,12 @@ class ThrowableObject extends MovableObject {
                 clearInterval(movementInterval);
                 setTimeout(() => {
                     world.character.bottles.splice(0, 1);
-
                 }, 400);
 
                 if (this.y >= this.groundLevel) {
                     this.playBottleSplash();
                     clearInterval(this.animationInterval);
                 }
-
-
             }
         }, 25);
 
@@ -83,9 +72,6 @@ class ThrowableObject extends MovableObject {
         setInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
         }, 1000 / 10);
-
     }
-
-
 }
 

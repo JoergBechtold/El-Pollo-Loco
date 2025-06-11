@@ -19,7 +19,7 @@
 
     <div class="menu-container">
       <nav class="menu-nav">
-        <button id="start_game_btn" title="Spiel Starten" class="btn-desktop">Spiel Starten</button>
+        <button id="start_game_btn" title="Spiel Starten" class="btn-desktop" onclick="goToUrl('play.html')">Spiel Starten</button>
         <button title="Zum Startbildschirm" class="btn-desktop" onclick="goToUrl('index.html')">Startbildschirm</button>
       </nav>
 
@@ -97,12 +97,5 @@
     <script src="models/level.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="models/world.class.js"></script>
-    <script>
-      const startGameButtonRef = document.getElementById('start_game_btn');
-      startGameButtonRef.addEventListener('click', function () {
-        sessionStorage.setItem('gameStartedFromMenu', 'true');
-        window.location.href = 'play.html';
-      });
-    </script>
   </body>
 </html>

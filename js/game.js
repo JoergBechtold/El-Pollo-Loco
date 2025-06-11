@@ -8,7 +8,6 @@ const PATH_COLLECT_COIN_AUDIO = 'assets/audio/collect-coin.mp3';
 const PATH_BOUNCING_AUDIO = 'assets/audio/bouncing.mp3';
 const PATH_CHICKEN_DEATH_AUDIO = 'assets/audio/chicken-dead.mp3';
 
-
 let walkin_sound = new Audio('assets/audio/running.mp3');
 let game_music = new Audio('assets/audio/game-music1.mp3');
 let game_over_voice = new Audio('assets/audio/game-over.mp3');
@@ -23,8 +22,6 @@ let endboss_sound = new Audio('assets/audio/endboss-chicken.mp3');
 let endboss_hurt = new Audio('assets/audio/hurt-endboss.mp3');
 let endboss_death = new Audio('assets/audio/endboss-death.mp3');
 let endboss_alert = new Audio('assets/audio/endboss_alert.mp3');
-
-
 
 const allAudioArray = [
     walkin_sound,
@@ -59,7 +56,6 @@ const endOfGameAudioArray = [
 
 ];
 
-
 //volume setting
 let game_music_volume_silence = 0.03;
 let game_music_volume_loude = 0.1;
@@ -81,43 +77,116 @@ let bottle_splash_volume = 0.5;
 //         return;
 //     }
 
-//     isGamePaused = !isGamePaused; // Zustand umkehren (true wird false, false wird true)
-//     // updatePauseButtonText(); // Button-Text aktualisieren
+//     isGamePaused = !isGamePaused;
 
 //     if (isGamePaused) {
 //         // Spiel pausieren
-//         if (world.character && world.chick && world.cloud) {
+//         if (world.character) {
 //             world.character.stopAllIntervals();
-//             world.chick.stopAllIntervals();
-//             world.cloud.stopAllIntervals();
-
 //         }
+
+//         if (world.endboss) {
+//             world.endboss.stopAllIntervals();
+//         }
+
+//         //enemies
+//         if (world.level && world.level.enemiesArray) {
+//             world.level.enemiesArray.forEach(enemy => {
+//                 // Hier ist die entscheidende Prüfung:
+//                 if (enemy.stopAllIntervals && typeof enemy.stopAllIntervals === 'function') {
+//                     enemy.stopAllIntervals();
+//                 }
+//             });
+//         }
+
+//         //coins
+//         if (world.level && world.level.coinsArray) {
+//             world.level.coinsArray.forEach(coin => {
+//                 if (coin.stopAllIntervals && typeof coin.stopAllIntervals === 'function') {
+//                     coin.stopAllIntervals();
+//                 }
+//             });
+//         }
+
+//         //clouds
+//         if (world.level && world.level.cloudsArray) {
+//             world.level.cloudsArray.forEach(cloud => {
+//                 if (cloud.stopAllIntervals && typeof cloud.stopAllIntervals === 'function') { // Korrektur hier
+//                     cloud.stopAllIntervals();
+//                 }
+//             });
+//         }
+
+//         //movable-objects
+//         if (world.movableObject) {
+//             world.movableObject.stopAllIntervals();
+//         }
+
+
+
 //         // Alle Sounds pausieren
 //         allAudioArray.forEach(audio => {
 //             audio.pause();
 //         });
 
 //         gamePauseBoxImgPlayRef.src = 'assets/icons/play-icon.png';
-//         gamePauseBoxImgPlayRef.alt = 'Spiel fortsetzten-Icon'
-//         gamePauseBoxImgPlayRef.title = 'Fortsetzten'
-
+//         gamePauseBoxImgPlayRef.alt = 'Spiel fortsetzen-Icon'
+//         gamePauseBoxImgPlayRef.title = 'Fortsetzen'
 
 //         console.log('Spiel pausiert.');
 //     } else {
 //         // Spiel fortsetzen
-//         if (world.character && world.chick && world.cloud) {
-//             // Um die Intervalle neu zu starten, musst du die animate() Methode erneut aufrufen.
-//             // Stelle sicher, dass animate() die Intervalle nur einmal erstellt oder bestehende cleared.
-//             // Hier gehen wir davon aus, dass animate() die Intervalle korrekt startet.
+//         if (world.character) {
 //             world.character.animate();
-//             world.chick.animate();
-//             world.cloud.animate();
-//             // Startet die Charakter-Intervalle neu
 //         }
 
-//         // Relevante Sounds fortsetzen (oder neu starten, je nach Logik)
-//         // Hier müsstest du überlegen, welche Sounds wieder laufen sollen.
-//         // Die Hintergrundmusik sollte wahrscheinlich wieder spielen.
+//         if (world.endboss) {
+//             world.endboss.animate();
+//             world.endboss.endbosseMoveAnimation();
+
+//         }
+
+
+//         // if(world.)
+
+
+//         //enemies
+//         if (world.level && world.level.enemiesArray) {
+//             world.level.enemiesArray.forEach(enemy => {
+//                 if (enemy.animate && typeof enemy.animate === 'function') {
+//                     enemy.animate();
+//                 }
+//             });
+//         }
+
+//         //coins
+//         if (world.level && world.level.coinsArray) {
+//             world.level.coinsArray.forEach(coin => {
+//                 // Hier ist die entscheidende Prüfung:
+//                 if (coin.stopAllIntervals && typeof coin.stopAllIntervals === 'function') {
+//                     coin.animateFloating();
+//                 }
+//             });
+//         }
+
+
+//         // clouds
+//         if (world.level && world.level.cloudsArray) {
+//             world.level.cloudsArray.forEach(cloud => {
+//                 if (cloud.stopAllIntervals && typeof cloud.stopAllIntervals === 'function') { // Korrektur hier
+//                     cloud.animateClouds();
+//                 }
+//             });
+//         }
+
+//         //movable-objects
+//         if (world.movableObject) {
+//             world.movableObject.applyGravity();
+//             world.movableObject.enemyFollowCharacterAnimation();
+
+//         }
+
+//         // Relevante Sounds fortsetzen
 //         game_music.play();
 //         game_music.volume = game_music_volume_loude;
 
@@ -125,143 +194,37 @@ let bottle_splash_volume = 0.5;
 //         gamePauseBoxImgPlayRef.alt = 'Spiel pausieren-Icon'
 //         gamePauseBoxImgPlayRef.title = 'Pause'
 
-//         // Standardlautstärke wiederherstellen
-
-//         // Falls andere Objekte eigene Intervalle haben (z.B. Gegner), müssen diese ebenfalls neu gestartet werden.
-//         // Das hängt von deiner Implementierung ab. Beispiel:
-//         // world.level.enemies.forEach(enemy => enemy.animate());
-
 //         console.log('Spiel fortgesetzt.');
 //     }
 // }
 
-function toggleGamePause() {
-    const { gamePauseBoxImgPlayRef } = getIdRefs();
+function handleYouWinScreen() {
+    let overlayYouWinRef = document.getElementById('overlay_you_win');
+    endOfGameAudioArray.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+    });
+    game_win_audio.play();
 
-    if (!world) {
-        console.warn('World-Instanz ist nicht verfügbar.');
-        return;
-    }
+    setTimeout(() => {
+        game_win_audio.pause();
+        game_win_audio.currentTime = 0;
+    }, 3000);
+    overlayYouWinRef.classList.add('d-flex')
+}
 
-    isGamePaused = !isGamePaused;
-
-    if (isGamePaused) {
-        // Spiel pausieren
-        if (world.character) {
-            world.character.stopAllIntervals();
-        }
-
-        if (world.endboss) {
-            world.endboss.stopAllIntervals();
-        }
-
-        //enemies
-        if (world.level && world.level.enemiesArray) {
-            world.level.enemiesArray.forEach(enemy => {
-                // Hier ist die entscheidende Prüfung:
-                if (enemy.stopAllIntervals && typeof enemy.stopAllIntervals === 'function') {
-                    enemy.stopAllIntervals();
-                }
-            });
-        }
-
-        //coins
-        if (world.level && world.level.coinsArray) {
-            world.level.coinsArray.forEach(coin => {
-                if (coin.stopAllIntervals && typeof coin.stopAllIntervals === 'function') {
-                    coin.stopAllIntervals();
-                }
-            });
-        }
-
-        //clouds
-        if (world.level && world.level.cloudsArray) {
-            world.level.cloudsArray.forEach(cloud => {
-                if (cloud.stopAllIntervals && typeof cloud.stopAllIntervals === 'function') { // Korrektur hier
-                    cloud.stopAllIntervals();
-                }
-            });
-        }
-
-        //movable-objects
-        if (world.movableObject) {
-            world.movableObject.stopAllIntervals();
-        }
-
-
-
-        // Alle Sounds pausieren
-        allAudioArray.forEach(audio => {
-            audio.pause();
-        });
-
-        gamePauseBoxImgPlayRef.src = 'assets/icons/play-icon.png';
-        gamePauseBoxImgPlayRef.alt = 'Spiel fortsetzen-Icon'
-        gamePauseBoxImgPlayRef.title = 'Fortsetzen'
-
-        console.log('Spiel pausiert.');
-    } else {
-        // Spiel fortsetzen
-        if (world.character) {
-            world.character.animate();
-        }
-
-        if (world.endboss) {
-            world.endboss.animate();
-            world.endboss.endbosseMoveAnimation();
-
-        }
-
-
-        // if(world.)
-
-
-        //enemies
-        if (world.level && world.level.enemiesArray) {
-            world.level.enemiesArray.forEach(enemy => {
-                if (enemy.animate && typeof enemy.animate === 'function') {
-                    enemy.animate();
-                }
-            });
-        }
-
-        //coins
-        if (world.level && world.level.coinsArray) {
-            world.level.coinsArray.forEach(coin => {
-                // Hier ist die entscheidende Prüfung:
-                if (coin.stopAllIntervals && typeof coin.stopAllIntervals === 'function') {
-                    coin.animateFloating();
-                }
-            });
-        }
-
-
-        // clouds
-        if (world.level && world.level.cloudsArray) {
-            world.level.cloudsArray.forEach(cloud => {
-                if (cloud.stopAllIntervals && typeof cloud.stopAllIntervals === 'function') { // Korrektur hier
-                    cloud.animateClouds();
-                }
-            });
-        }
-
-        //movable-objects
-        if (world.movableObject) {
-            world.movableObject.applyGravity();
-            world.movableObject.enemyFollowCharacterAnimation();
-
-        }
-
-        // Relevante Sounds fortsetzen
-        game_music.play();
-        game_music.volume = game_music_volume_loude;
-
-        gamePauseBoxImgPlayRef.src = 'assets/icons/pause-icon.png';
-        gamePauseBoxImgPlayRef.alt = 'Spiel pausieren-Icon'
-        gamePauseBoxImgPlayRef.title = 'Pause'
-
-        console.log('Spiel fortgesetzt.');
-    }
+function handleYouLooseScreen() {
+    let overlayYouLooseRef = document.getElementById('overlay_you_loose');
+    game_over_voice.play();
+    endOfGameAudioArray.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+    });
+    setTimeout(() => {
+        game_over_voice.pause();
+        game_over_voice.currentTime = 0;
+    }, 2000);
+    overlayYouLooseRef.classList.add('d-flex')
 }
 
 

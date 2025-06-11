@@ -182,7 +182,7 @@ class World {
 
       if (this.bottleHitSomething) {
         this.removeBottle(bottleIndex);
-        this.playBottleBreakSound();
+        // this.playBottleBreakSound();
 
       }
     });
@@ -249,7 +249,7 @@ class World {
     } else if (enemy instanceof Endboss) {
       this.handleBottleHitEndboss(enemy, enemyIndex);
       this.bottleHitSomething = true;
-      this.playBottleBreakSound();
+      // this.playBottleBreakSound();
 
     }
   }
@@ -260,7 +260,7 @@ class World {
     this.playChickenDeathSound();
     this.removeEnemyAfterDelay(chicken, 500, enemyIndex);
     this.bottleHitSomething = true;
-    this.playBottleBreakSound();
+    // this.playBottleBreakSound();
 
 
   }
@@ -269,7 +269,7 @@ class World {
     this.level.barrelArray.forEach((barrel) => {
       if (bottle.isColliding(barrel)) {
         this.bottleHitSomething = true;
-        this.playBottleBreakSound();
+        // this.playBottleBreakSound();
       }
     });
   }

@@ -16,14 +16,13 @@
     </div>
 
     <div id="loading_spinner_overlay" class="loading-spinner-overlay">
-      <!-- <div class="spinner"></div> -->
       <img class="spinner" src="assets/icons/comic-wheel.png" alt="" />
     </div>
 
     <div class="overlay-you-loose" id="overlay_you_loose">
       <div class="you-loose-box">
         <nav class="loose-nav">
-          <button title="Neu Starten" class="btn-desktop">Neu Starten</button>
+          <button onclick="goToUrl('play.html')" title="Neu Starten" class="btn-desktop">Neu Starten</button>
           <button title="Zum Startbildschirm" class="btn-desktop" onclick="goToUrl('index.html')">Startbildschirm</button>
         </nav>
         <img class="you-loose-bg" src="assets/img/You-won-you-lost/Game-over-A.png" alt="Du hast verloren Bild" />
@@ -33,7 +32,7 @@
     <div class="overlay-you-win" id="overlay_you_win">
       <div class="you-win-box">
         <nav class="win-nav">
-          <button title="Neu Starten" class="btn-desktop">Neu Starten</button>
+          <button onclick="goToUrl('play.html')" title="Neu Starten" class="btn-desktop">Neu Starten</button>
           <button title="Zum Startbildschirm" class="btn-desktop" onclick="goToUrl('index.html')">Startbildschirm</button>
         </nav>
         <img class="you-win-bg" src="assets/img/You-won-you-lost/you-win-a.png" alt="Du hast verloren Bild" />
@@ -93,13 +92,6 @@
       <canvas class="canvas" id="canvas" width="720" height="480"> </canvas>
     </div>
 
-    <script>
-      if (sessionStorage.getItem('gameStartedFromMenu') !== 'true') {
-        window.location.href = 'menu.html';
-      } else {
-        sessionStorage.removeItem('gameStartedFromMenu');
-      }
-    </script>
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/cloud.class.js"></script>

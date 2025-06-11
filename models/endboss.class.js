@@ -15,8 +15,6 @@ class Endboss extends MovableObject {
     endbossAnimationInterval;
     endbossMoveAniationInterval;
 
-
-
     IMAGES_WALKING = [
         'assets/img/4_enemie_boss_chicken/1_walk/G1.png',
         'assets/img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -66,7 +64,6 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-
         this.x = 2500;
         this.animate();
         this.endbosseMoveAnimation()
@@ -82,7 +79,7 @@ class Endboss extends MovableObject {
                 endboss_music.pause();
                 clearInterval(this.endbossAnimationInterval);
                 setTimeout(() => {
-                    this.handleYouWinScreen()
+                    handleYouWinScreen()
                 }, 1600);
                 return;
             }
@@ -154,20 +151,6 @@ class Endboss extends MovableObject {
         }, 50);
     }
 
-    handleYouWinScreen() {
-        let overlayYouWinRef = document.getElementById('overlay_you_win');
-        game_win_audio.play();
-        endOfGameAudioArray.forEach(audio => {
-            audio.pause();
-            audio.currentTime = 0;
-        });
-        setTimeout(() => {
-            game_win_audio.pause();
-            game_win_audio.currentTime = 0;
-        }, 2000);
-        overlayYouWinRef.classList.add('d-flex')
-    }
-
 
 
     endbosseMoveAnimation() {
@@ -202,19 +185,17 @@ class Endboss extends MovableObject {
             game_music.currentTime = 0;
             endboss_music.volume = endboss_sound_volume;
             endboss_music.play();
-            console.log('endboss musik');
         }
     }
 
-    stopAllIntervals() {
-        if (this.endbossAnimationIntervalendbossMoveAniationInterval) {
-            clearInterval(this.endbossAnimationIntervalendbossMoveAniationInterval);
-            this.endbossAnimationIntervalendbossMoveAniationInterval = null;
-        }
-        if (this.endbossMoveAniationInterval) {
-            clearInterval(this.endbossMoveAniationInterval);
-            this.endbossMoveAniationInterval = null;
-        }
-
-    }
+    // stopAllIntervals() {
+    //     if (this.endbossAnimationIntervalendbossMoveAniationInterval) {
+    //         clearInterval(this.endbossAnimationIntervalendbossMoveAniationInterval);
+    //         this.endbossAnimationIntervalendbossMoveAniationInterval = null;
+    //     }
+    //     if (this.endbossMoveAniationInterval) {
+    //         clearInterval(this.endbossMoveAniationInterval);
+    //         this.endbossMoveAniationInterval = null;
+    //     }
+    // }
 }
