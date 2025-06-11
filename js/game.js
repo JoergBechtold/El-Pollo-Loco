@@ -214,15 +214,12 @@ function handleYouWinScreen() {
 function handleYouLooseScreen() {
     let overlayYouLooseRef = document.getElementById('overlay_you_loose');
     isGameFinish = true;
-
     endOfGameAudioArray.forEach(audio => {
         audio.pause();
         audio.currentTime = 0;
     });
-
     game_over_voice.play();
     game_over_voice.volume = game_over_voice_volime;
-
     setTimeout(() => {
         game_over_voice.pause();
         game_over_voice.currentTime = 0;
