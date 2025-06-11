@@ -293,12 +293,10 @@ class World {
   }
 
   handleBottleHitEndboss(endboss, enemyIndex) {
-    // debugger
+
     this.endboss.hit()
     this.endboss.playAnimation(this.endboss.IMAGES_HURT);
 
-    // this.endboss.hit();
-    // endboss.isDeadAnimationPlayed = false;
     // this.playChickenDeathSound();
     if (this.endboss.isDead()) {
       this.endboss.playAnimation(this.endboss.IMAGES_DEAD);

@@ -4,6 +4,7 @@ class Endboss extends MovableObject {
     speed = 5;
     y = 46;
     endbossEnergy = 100;
+    endbossActivated = false;
     offset = {
         top: 70,
         left: 0,
@@ -88,10 +89,13 @@ class Endboss extends MovableObject {
                 this.startEndbossMusic();
             }
 
-            if (this.world && this.world.character && this.world.character.x > 2200 && !this.hadFirstContact) {
-                this.world.showEndbossStatusBar = true;
-                this.hadFirstContact = true;
-                this.startEndbossMusic();
+            if (!this.endbossActivated && this.world) {
+                if (this.endbossEnergy <= 75 || (this.world.character && this.world.character.x > 2200)) {
+                    this.world.showEndbossStatusBar = true;
+                    this.hadFirstContact = true;
+                    this.endbossActivated = true;
+                    this.startEndbossMusic();
+                }
             }
 
             if (this.isHurt()) {
@@ -159,13 +163,14 @@ class Endboss extends MovableObject {
                 return;
             }
 
-
-            if (this.world && this.world.character && this.world.character.x > 2200 && !this.hadFirstContact) {
-                this.world.showEndbossStatusBar = true;
-                this.hadFirstContact = true;
-                this.startEndbossMusic();
+            if (!this.endbossActivated && this.world) {
+                if (this.endbossEnergy <= 75 || (this.world.character && this.world.character.x > 2200)) {
+                    this.world.showEndbossStatusBar = true;
+                    this.hadFirstContact = true;
+                    this.endbossActivated = true;
+                    this.startEndbossMusic();
+                }
             }
-
 
             if (this.hadFirstContact) {
                 if (this.world.character.x < this.x - 50) {
@@ -177,6 +182,10 @@ class Endboss extends MovableObject {
                 }
             }
         }, 1000 / 25);
+    }
+
+    hitEndbossBevorWalk() {
+        if (world.endbossEnergy == 75);
     }
 
     startEndbossMusic() {

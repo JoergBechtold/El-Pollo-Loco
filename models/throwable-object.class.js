@@ -47,6 +47,39 @@ class ThrowableObject extends MovableObject {
         let throwSpeedX = this.otherDirection ? -10 : 10;
         let movementInterval = setInterval(() => {
             this.x += throwSpeedX;
+            if (world.bottleHitSomething) {
+                // debugger
+                clearInterval(movementInterval);
+                // setTimeout(() => {
+                //     world.character.bottles.splice(0, 1);
+                // }, 50);
+                // world.character.bottles.splice(0, 1);
+
+
+
+
+                clearInterval(this.animationInterval);
+                this.playBottleSplash();
+
+
+
+
+                console.log('etwas getroffen');
+
+                // clearInterval(movementInterval);
+                // setTimeout(() => {
+                //     world.character.bottles.splice(0, 1);
+                // }, 400);
+
+                // if (this.y >= this.groundLevel) {
+                //     this.playBottleSplash();
+                //     clearInterval(this.animationInterval);
+                // }
+                return
+            }
+
+
+
             if (this.y >= this.groundLevel) {
                 clearInterval(movementInterval);
                 setTimeout(() => {
@@ -54,6 +87,7 @@ class ThrowableObject extends MovableObject {
                 }, 400);
 
                 if (this.y >= this.groundLevel) {
+                    // debugger
                     this.playBottleSplash();
                     clearInterval(this.animationInterval);
                 }
@@ -62,7 +96,7 @@ class ThrowableObject extends MovableObject {
 
         this.animationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLES);
-        }, 1000 / 10);
+        }, 1000 / 25);
     }
 
     playBottleSplash() {

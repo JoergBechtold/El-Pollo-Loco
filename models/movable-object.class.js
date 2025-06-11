@@ -93,7 +93,6 @@ class MovableObject extends DrawableObject {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
         return timepassed < 0.4;
-
     }
 
     isDead() {
