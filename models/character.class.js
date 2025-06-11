@@ -156,7 +156,7 @@ class Character extends MovableObject {
     }
 
     manageWalkSound() {
-        if (!this.isAboveGround()) {
+        if (!this.isAboveGround() && !isGameFinish) {
             walkin_sound.play();
         } else {
             walkin_sound.pause();
@@ -166,7 +166,9 @@ class Character extends MovableObject {
 
     handleJump() {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-            jump_sound.play();
+            if (!isGameFinish) {
+                jump_sound.play();
+            }
             this.jump();
         }
     }
@@ -190,8 +192,10 @@ class Character extends MovableObject {
     checkAndHandleDeath() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
-            death_sound.volume = death_sound_volume;
-            death_sound.play();
+            if (!isGameFinish) {
+                death_sound.volume = death_sound_volume;
+                death_sound.play();
+            }
             setTimeout(() => {
                 handleYouLooseScreen()
             }, 1600);
@@ -205,7 +209,10 @@ class Character extends MovableObject {
     checkAndHandleHurt() {
         if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
-            hurt_sound.play();
+            if (!isGameFinish) {
+                hurt_sound.play();
+
+            }
             this.lastActivityTime = Date.now();
             return true;
         }
@@ -278,9 +285,12 @@ class Character extends MovableObject {
     handleIdleAnimations() {
         if (this.isIdle()) {
             this.playAnimation(this.IMAGES_LONG_IDLE);
-            snoring_audio.play();
-            snoring_audio.volume = snoring_audio_volume;
-            game_music.volume = game_music_volume_silence;
+            if (!isGameFinish) {
+                snoring_audio.play();
+                snoring_audio.volume = snoring_audio_volume;
+                game_music.volume = game_music_volume_silence;
+            }
+
         } else {
             this.playAnimation(this.IMAGES_IDLE);
             snoring_audio.pause();

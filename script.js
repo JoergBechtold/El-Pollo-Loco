@@ -1,4 +1,5 @@
 let isMuted;
+let isGameFinish = false;
 let isTouchDeviceGlobal = false;
 
 const isPortrait = window.matchMedia("(orientation: portrait)").matches;

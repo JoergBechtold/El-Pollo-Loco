@@ -3,6 +3,7 @@ let world;
 let keyboard = new Keyboard();
 let isGamePaused = false;
 
+
 const PATH_COLLECT_BOTTLE_AUDIO = 'assets/audio/collect-bottle.mp3';
 const PATH_COLLECT_COIN_AUDIO = 'assets/audio/collect-coin.mp3';
 const PATH_BOUNCING_AUDIO = 'assets/audio/bouncing.mp3';
@@ -70,6 +71,8 @@ let endboss_sound_volume = 0.3;
 let death_sound_volume = 0.3;
 let endboss_death_volume = 0.5;
 let bottle_splash_volume = 0.5;
+let game_win_audio_volume = 0.5;
+let game_over_voice_volime = 0.5;
 
 // function toggleGamePause() {
 //     const { gamePauseBoxImgPlayRef } = getIdRefs();
@@ -202,26 +205,24 @@ let bottle_splash_volume = 0.5;
 
 function handleYouWinScreen() {
     let overlayYouWinRef = document.getElementById('overlay_you_win');
-    endOfGameAudioArray.forEach(audio => {
-        audio.pause();
-        audio.currentTime = 0;
-    });
+    isGameFinish = true;
     game_win_audio.play();
-
-    setTimeout(() => {
-        game_win_audio.pause();
-        game_win_audio.currentTime = 0;
-    }, 3000);
+    game_win_audio.volume = game_win_audio_volume;
     overlayYouWinRef.classList.add('d-flex')
 }
 
 function handleYouLooseScreen() {
     let overlayYouLooseRef = document.getElementById('overlay_you_loose');
-    game_over_voice.play();
+    isGameFinish = true;
+
     endOfGameAudioArray.forEach(audio => {
         audio.pause();
         audio.currentTime = 0;
     });
+
+    game_over_voice.play();
+    game_over_voice.volume = game_over_voice_volime;
+
     setTimeout(() => {
         game_over_voice.pause();
         game_over_voice.currentTime = 0;
@@ -229,20 +230,7 @@ function handleYouLooseScreen() {
     overlayYouLooseRef.classList.add('d-flex')
 }
 
-function handleYouWinScreen() {
-    let overlayYouWinRef = document.getElementById('overlay_you_win');
-    endOfGameAudioArray.forEach(audio => {
-        audio.pause();
-        audio.currentTime = 0;
-    });
-    game_win_audio.play();
 
-    setTimeout(() => {
-        game_win_audio.pause();
-        game_win_audio.currentTime = 0;
-    }, 3000);
-    overlayYouWinRef.classList.add('d-flex')
-}
 
 
 

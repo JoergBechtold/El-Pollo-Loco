@@ -9,6 +9,8 @@ class ThrowableObject extends MovableObject {
     isSplashing = false;
     world;
 
+
+
     IMAGES_BOTTLES = [
         'assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'assets/img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -39,6 +41,8 @@ class ThrowableObject extends MovableObject {
         this.splashHeight = 80;
         this.throw();
     }
+
+
 
 
     throw() {

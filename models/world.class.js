@@ -95,7 +95,7 @@ class World {
   }
 
   playCollectibleSound(audioPath, volume, timeoutMs) {
-    if (!isMuted) {
+    if (!isMuted && !isGameFinish) {
       let audio = new Audio(audioPath);
       audio.play();
       audio.volume = volume;
@@ -223,12 +223,12 @@ class World {
     this.playBouncingSound();
     this.character.bounce(endboss);
     if (endboss.isDead()) {
-      this.removeEnemyAfterDelay(endboss, 500);
+      // this.removeEnemyAfterDelay(endboss, 500);
     }
   }
 
   playBouncingSound() {
-    if (!isMuted) {
+    if (!isMuted && !isGameFinish) {
       let bouncing_audio = new Audio(PATH_BOUNCING_AUDIO);
       bouncing_audio.volume = bouncing_audio_volume;
       bouncing_audio.play();
@@ -298,14 +298,14 @@ class World {
     this.endboss.playAnimation(this.endboss.IMAGES_HURT);
 
     // this.playChickenDeathSound();
-    if (this.endboss.isDead()) {
-      this.endboss.playAnimation(this.endboss.IMAGES_DEAD);
-      this.removeEnemyAfterDelay(endboss, 500, enemyIndex);
-    }
+    // if (this.endboss.isDead()) {
+    //   this.endboss.playAnimation(this.endboss.IMAGES_DEAD);
+    //   this.removeEnemyAfterDelay(endboss, 500, enemyIndex);
+    // }
   }
 
   playBottleBreakSound() {
-    if (!isMuted) {
+    if (!isMuted && !isGameFinish) {
       bottle_splash.play();
       bottle_splash.volume = bottle_splash_volume;
       setTimeout(() => {
@@ -316,7 +316,7 @@ class World {
   }
 
   playChickenDeathSound() {
-    if (!isMuted) {
+    if (!isMuted && !isGameFinish) {
       let chicken_death_audio = new Audio(PATH_CHICKEN_DEATH_AUDIO);
       chicken_death_audio.volume = chicken_death_audio_volume;
       chicken_death_audio.play();
