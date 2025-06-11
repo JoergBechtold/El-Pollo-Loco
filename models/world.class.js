@@ -306,15 +306,8 @@ class World {
   }
 
   handleBottleHitEndboss(endboss, enemyIndex) {
-
     this.endboss.hit()
     this.endboss.playAnimation(this.endboss.IMAGES_HURT);
-
-    // this.playChickenDeathSound();
-    // if (this.endboss.isDead()) {
-    //   this.endboss.playAnimation(this.endboss.IMAGES_DEAD);
-    //   this.removeEnemyAfterDelay(endboss, 500, enemyIndex);
-    // }
   }
 
   playBottleBreakSound() {

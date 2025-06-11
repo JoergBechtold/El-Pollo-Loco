@@ -83,8 +83,11 @@ class Endboss extends MovableObject {
                 endboss_death.play();
                 endboss_death.volume = endboss_death_volume;
                 setTimeout(() => {
+                    endboss_death.pause();
+                    endboss_death.currentTime = 0;
+                }, 1400);
+                setTimeout(() => {
                     endboss_music.pause();
-
                 }, 1800);
                 clearInterval(this.endbossAnimationInterval);
                 setTimeout(() => {
@@ -156,8 +159,11 @@ class Endboss extends MovableObject {
                 if (this.isCurrentlyAttackingSoundPlaying) {
                     endboss_alert.currentTime = 0;
                     endboss_alert.play()
-                    endboss_sound.pause();
-                    endboss_sound.currentTime = 0;
+                    setTimeout(() => {
+                        endboss_sound.pause();
+                        endboss_sound.currentTime = 0;
+                    }, 500);
+
                     this.isCurrentlyAttackingSoundPlaying = false;
                 }
             }
