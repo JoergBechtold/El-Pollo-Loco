@@ -88,7 +88,6 @@ class Endboss extends MovableObject {
                 }, 1800);
                 clearInterval(this.endbossAnimationInterval);
                 setTimeout(() => {
-                    // debugger
                     handleYouWinScreen()
                 }, 2300);
                 return;
@@ -109,14 +108,15 @@ class Endboss extends MovableObject {
 
             if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-                endboss_hurt.currentTime = 0;
-                endboss_hurt.play();
 
-                if (this.isCurrentlyAttackingSoundPlaying) {
-                    endboss_sound.pause();
-                    endboss_sound.currentTime = 0;
-                    this.isCurrentlyAttackingSoundPlaying = false;
-                }
+                let endboss_hurt_new = new Audio(PATH_ENDBOSS_HURT_AUDIO);
+                endboss_hurt_new.volume = bouncing_audio_volume;
+                endboss_hurt_new.play();
+
+                setTimeout(() => {
+                    endboss_hurt_new.pause();
+                    endboss_hurt_new.currentTime = 0;
+                }, 1000);
             } else if (this.hadFirstContact) {
 
                 if (this.world.character.x < this.x - 50) {
