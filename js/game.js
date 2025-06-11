@@ -227,6 +227,21 @@ function handleYouLooseScreen() {
     overlayYouLooseRef.classList.add('d-flex')
 }
 
+function handleYouWinScreen() {
+    let overlayYouWinRef = document.getElementById('overlay_you_win');
+    endOfGameAudioArray.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+    });
+    game_win_audio.play();
+
+    setTimeout(() => {
+        game_win_audio.pause();
+        game_win_audio.currentTime = 0;
+    }, 3000);
+    overlayYouWinRef.classList.add('d-flex')
+}
+
 
 
 

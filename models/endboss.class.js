@@ -78,9 +78,9 @@ class Endboss extends MovableObject {
                 endboss_death.volume = endboss_death_volume;
                 endboss_music.pause();
                 clearInterval(this.endbossAnimationInterval);
-                setTimeout(() => {
-                    handleYouWinScreen()
-                }, 1600);
+                // setTimeout(() => {
+                //     handleYouWinScreen()
+                // }, 1600);
                 return;
             }
 
