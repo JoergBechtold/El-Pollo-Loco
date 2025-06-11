@@ -1,6 +1,6 @@
 class World {
   character = new Character();
-  endboss = new Endboss();
+  endboss;
   movableObject = new MovableObject();
   level = level1;
   canvas;
@@ -37,6 +37,7 @@ class World {
 
   setWorld() {
     this.character.world = this;
+    this.endboss = this.level.enemiesArray.find(enemy => enemy instanceof Endboss);
     this.level.enemiesArray.forEach(enemy => {
       enemy.world = this;
       if (enemy instanceof Chicken || enemy instanceof Chick || enemy instanceof Endboss) {
@@ -44,6 +45,7 @@ class World {
       }
     });
   }
+
 
   allwaysExecuted() {
     setInterval(() => {
@@ -57,7 +59,9 @@ class World {
 
   updateStatusBars() {
     this.statusBarHealth.setPercentage(this.character.characterEnergy);
-    this.statusBarEndboss.setPercentage(this.endboss.endbossEnergy);
+    if (this.endboss) {
+      this.statusBarEndboss.setPercentage(this.endboss.endbossEnergy);
+    }
 
     this.helpFunctionUpdateStatusBar(
       this.totalCoinsInLevel,
@@ -71,6 +75,7 @@ class World {
       this.statusBarBottles
     );
   }
+
 
   helpFunctionUpdateStatusBar(totalItems, collectedItemsArray, statusBar) {
     if (totalItems > 0) {
@@ -288,11 +293,15 @@ class World {
   }
 
   handleBottleHitEndboss(endboss, enemyIndex) {
-    this.endboss.hit();
-    endboss.isDeadAnimationPlayed = false;
-    this.playChickenDeathSound();
+    // debugger
+    this.endboss.hit()
+    this.endboss.playAnimation(this.endboss.IMAGES_HURT);
+
+    // this.endboss.hit();
+    // endboss.isDeadAnimationPlayed = false;
+    // this.playChickenDeathSound();
     if (this.endboss.isDead()) {
-      this.playAnimation(this.IMAGES_DEAD);
+      this.endboss.playAnimation(this.endboss.IMAGES_DEAD);
       this.removeEnemyAfterDelay(endboss, 500, enemyIndex);
     }
   }

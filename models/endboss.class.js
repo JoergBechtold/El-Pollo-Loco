@@ -77,7 +77,7 @@ class Endboss extends MovableObject {
                 endboss_death.play();
                 endboss_death.volume = endboss_death_volume;
                 endboss_music.pause();
-                clearInterval(this.endbossAnimationInterval);
+                // clearInterval(this.endbossAnimationInterval);
                 // setTimeout(() => {
                 //     handleYouWinScreen()
                 // }, 1600);
@@ -148,7 +148,7 @@ class Endboss extends MovableObject {
                     this.isCurrentlyAttackingSoundPlaying = false;
                 }
             }
-        }, 50);
+        }, 250);
     }
 
 
