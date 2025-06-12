@@ -84,27 +84,27 @@ function toggleGamePause() {
 
     if (isGamePaused) {
         world.stopAllIntervals();
-        allAudioArray.forEach(audio => {
-            if (audio && typeof audio.pause === 'function') {
-                audio.pause();
-            }
-        });
-
-        if (gamePauseBoxImgPlayRef) {
-            gamePauseBoxImgPlayRef.src = 'assets/icons/play-icon.png';
-            gamePauseBoxImgPlayRef.alt = 'Spiel fortsetzen-Icon';
-            gamePauseBoxImgPlayRef.title = 'Fortsetzen';
-        }
+        pauseAllAudio();
+        setIcon(gamePauseBoxImgPlayRef, 'assets/icons/play-icon.png', 'Spiel fortsetzen-Icon', 'Fortsetzen')
     } else {
         world.startAllIntervals();
-        if (gamePauseBoxImgPlayRef) {
-            gamePauseBoxImgPlayRef.src = 'assets/icons/pause-icon.png'; // Beispielpfad
-            gamePauseBoxImgPlayRef.alt = 'Spiel pausieren-Icon';
-            gamePauseBoxImgPlayRef.title = 'Pause';
-        }
+        setIcon(gamePauseBoxImgPlayRef, 'assets/icons/pause-icon.png', 'Spiel pausieren-Icon', 'Pause')
     }
 }
 
+function pauseAllAudio() {
+    allAudioArray.forEach(audio => {
+        if (audio && typeof audio.pause === 'function') {
+            audio.pause();
+        }
+    });
+}
+
+function setIcon(ref, icon, altText, title) {
+    ref.src = icon
+    ref.alt = altText;
+    ref.title = title;
+}
 
 function handleYouWinScreen() {
     let overlayYouWinRef = document.getElementById('overlay_you_win');
