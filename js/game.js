@@ -78,181 +78,33 @@ let game_over_voice_volime = 0.5;
 let enemy_bouncing_dead_audio_volume = 0.5;
 
 function toggleGamePause() {
-    // Stellen Sie sicher, dass Sie ein HTML-Element mit der ID 'gamePauseBoxImgPlay' haben,
-    // das das Icon für Pause/Play anzeigt.
-    // const gamePauseBoxImgPlayRef = document.getElementById('game_pause_box_img_play');
     const { gamePauseBoxImgPlayRef } = getIdRefs();
 
-
-    if (!world) {
-        console.warn('World-Instanz ist nicht verfügbar. Spiel nicht initialisiert.');
-        return;
-    }
-
-    // Umschalten des Pausenzustands
     isGamePaused = !isGamePaused;
 
     if (isGamePaused) {
-        // Spiel pausieren
-        world.stopAllIntervals(); // Zentraler Aufruf zum Stoppen aller Spielaktivitäten
-
-        // Alle im `allAudioArray` definierten Sounds pausieren
+        world.stopAllIntervals();
         allAudioArray.forEach(audio => {
             if (audio && typeof audio.pause === 'function') {
                 audio.pause();
             }
         });
 
-        // Update des Pause/Play-Icons
         if (gamePauseBoxImgPlayRef) {
-            gamePauseBoxImgPlayRef.src = 'assets/icons/play-icon.png'; // Beispielpfad
+            gamePauseBoxImgPlayRef.src = 'assets/icons/play-icon.png';
             gamePauseBoxImgPlayRef.alt = 'Spiel fortsetzen-Icon';
             gamePauseBoxImgPlayRef.title = 'Fortsetzen';
         }
-        console.log('Spiel pausiert.');
     } else {
-        // Spiel fortsetzen
-        world.startAllIntervals(); // Zentraler Aufruf zum Neustart aller Spielaktivitäten
-        // Die Musik wird bereits in world.startAllIntervals() gestartet, keine doppelten Aufrufe hier.
-
-        // Update des Pause/Play-Icons
+        world.startAllIntervals();
         if (gamePauseBoxImgPlayRef) {
             gamePauseBoxImgPlayRef.src = 'assets/icons/pause-icon.png'; // Beispielpfad
             gamePauseBoxImgPlayRef.alt = 'Spiel pausieren-Icon';
             gamePauseBoxImgPlayRef.title = 'Pause';
         }
-        console.log('Spiel fortgesetzt.');
     }
 }
 
-// function toggleGamePause() {
-//     const { gamePauseBoxImgPlayRef } = getIdRefs();
-
-//     if (!world) {
-//         console.warn('World-Instanz ist nicht verfügbar.');
-//         return;
-//     }
-
-//     isGamePaused = !isGamePaused;
-
-//     if (isGamePaused) {
-//         // Spiel pausieren
-//         if (world.character) {
-//             world.character.stopAllIntervals();
-//         }
-
-//         if (world.endboss) {
-//             world.endboss.stopAllIntervals();
-//         }
-
-//         //enemies
-//         if (world.level && world.level.enemiesArray) {
-//             world.level.enemiesArray.forEach(enemy => {
-//                 // Hier ist die entscheidende Prüfung:
-//                 if (enemy.stopAllIntervals && typeof enemy.stopAllIntervals === 'function') {
-//                     enemy.stopAllIntervals();
-//                 }
-//             });
-//         }
-
-//         //coins
-//         if (world.level && world.level.coinsArray) {
-//             world.level.coinsArray.forEach(coin => {
-//                 if (coin.stopAllIntervals && typeof coin.stopAllIntervals === 'function') {
-//                     coin.stopAllIntervals();
-//                 }
-//             });
-//         }
-
-//         //clouds
-//         if (world.level && world.level.cloudsArray) {
-//             world.level.cloudsArray.forEach(cloud => {
-//                 if (cloud.stopAllIntervals && typeof cloud.stopAllIntervals === 'function') { // Korrektur hier
-//                     cloud.stopAllIntervals();
-//                 }
-//             });
-//         }
-
-//         //movable-objects
-//         if (world.movableObject) {
-//             world.movableObject.stopAllIntervals();
-//         }
-
-
-
-//         // Alle Sounds pausieren
-//         allAudioArray.forEach(audio => {
-//             audio.pause();
-//         });
-
-//         gamePauseBoxImgPlayRef.src = 'assets/icons/play-icon.png';
-//         gamePauseBoxImgPlayRef.alt = 'Spiel fortsetzen-Icon'
-//         gamePauseBoxImgPlayRef.title = 'Fortsetzen'
-
-//         console.log('Spiel pausiert.');
-//     } else {
-//         // Spiel fortsetzen
-//         if (world.character) {
-//             world.character.animate();
-//         }
-
-//         if (world.endboss) {
-//             world.endboss.animate();
-//             world.endboss.endbosseMoveAnimation();
-
-//         }
-
-
-//         // if(world.)
-
-
-//         //enemies
-//         if (world.level && world.level.enemiesArray) {
-//             world.level.enemiesArray.forEach(enemy => {
-//                 if (enemy.animate && typeof enemy.animate === 'function') {
-//                     enemy.animate();
-//                 }
-//             });
-//         }
-
-//         //coins
-//         if (world.level && world.level.coinsArray) {
-//             world.level.coinsArray.forEach(coin => {
-//                 // Hier ist die entscheidende Prüfung:
-//                 if (coin.stopAllIntervals && typeof coin.stopAllIntervals === 'function') {
-//                     coin.animateFloating();
-//                 }
-//             });
-//         }
-
-
-//         // clouds
-//         if (world.level && world.level.cloudsArray) {
-//             world.level.cloudsArray.forEach(cloud => {
-//                 if (cloud.stopAllIntervals && typeof cloud.stopAllIntervals === 'function') { // Korrektur hier
-//                     cloud.animateClouds();
-//                 }
-//             });
-//         }
-
-//         //movable-objects
-//         if (world.movableObject) {
-//             world.movableObject.applyGravity();
-//             world.movableObject.enemyFollowCharacterAnimation();
-
-//         }
-
-//         // Relevante Sounds fortsetzen
-//         game_music.play();
-//         game_music.volume = game_music_volume_loude;
-
-//         gamePauseBoxImgPlayRef.src = 'assets/icons/pause-icon.png';
-//         gamePauseBoxImgPlayRef.alt = 'Spiel pausieren-Icon'
-//         gamePauseBoxImgPlayRef.title = 'Pause'
-
-//         console.log('Spiel fortgesetzt.');
-//     }
-// }
 
 function handleYouWinScreen() {
     let overlayYouWinRef = document.getElementById('overlay_you_win');
