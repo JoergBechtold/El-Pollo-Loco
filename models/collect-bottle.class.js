@@ -11,8 +11,6 @@ class CollectBottle extends MovableObject {
 
     constructor(path) {
         super().loadImage(path)
-        // let randomX = 300 + Math.random() * 2400;
-        // this.x = Math.round(randomX / 150) * 150;
         this.x = 300 + Math.random() * 2400;
 
     }
