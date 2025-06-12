@@ -303,9 +303,8 @@ class Character extends MovableObject {
     }
 
     stopAllIntervals() {
-        super.stopAllIntervals(); // Ruft die stopAllIntervals-Methode der Elternklasse auf (z.B. für gravity)
+        super.stopAllIntervals();
 
-        // Stoppe alle spezifischen Charakter-Intervalle
         if (this.characterMovementInterval) {
             clearInterval(this.characterMovementInterval);
             this.characterMovementInterval = null;
@@ -319,50 +318,25 @@ class Character extends MovableObject {
             this.characterIdleAnimationInterval = null;
         }
 
-        // Auch die Sounds und Timeouts, die der Charakter direkt steuert, anhalten/löschen
+
         walkin_sound.pause();
         walkin_sound.currentTime = 0;
         snoring_audio.pause();
         snoring_audio.currentTime = 0;
 
+        this.showSpeechBubble = false;
         if (this.speechBubbleTimeout) {
             clearTimeout(this.speechBubbleTimeout);
             this.speechBubbleTimeout = null;
         }
     }
 
-    /**
-     * Startet alle Intervalle neu, die vom Charakter verwaltet werden,
-     * einschließlich derer, die von MovableObject geerbt wurden.
-     */
     startAllIntervals() {
-        // Sicherstellen, dass der Charakter nicht tot ist, bevor Animationen gestartet werden
         if (!this.isDead()) {
-            super.startAllIntervals(); // Ruft die startAllIntervals-Methode der Elternklasse auf (z.B. für gravity)
-            this.animate(); // Startet alle Animations- und Bewegungsintervalle des Charakters neu
+            super.startAllIntervals();
+            this.animate();
         }
-        // WICHTIG: Die Musik sollte in der World-Klasse oder global behandelt werden,
-        // um nicht doppelt gestartet zu werden oder sich mit der Endboss-Musik zu überschneiden.
-        // Falls die Musik durch den Schnarchsound leise gemacht wurde, wird sie in handleIdleAnimations() wieder laut.
     }
-
-
-
-    // stopAllIntervals() {
-    //     if (this.characterMovementInterval) {
-    //         clearInterval(this.characterMovementInterval);
-    //         this.characterMovementInterval = null;
-    //     }
-    //     if (this.characterAnimationInterval) {
-    //         clearInterval(this.characterAnimationInterval);
-    //         this.characterAnimationInterval = null;
-    //     }
-    //     if (this.characterIdleAnimationInterval) {
-    //         clearInterval(this.characterIdleAnimationInterval);
-    //         this.characterIdleAnimationInterval = null;
-    //     }
-
-    // }
 
     draw(ctx) {
         super.draw(ctx);
