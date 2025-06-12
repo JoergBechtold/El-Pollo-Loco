@@ -47,7 +47,7 @@ function getIdRefs() {
         canvasRef: document.getElementById('canvas'),
         fullscreenRef: document.getElementById('fullscreen'),
         fullscreenImgRef: document.getElementById('fullscreen_img'),
-        gamePauseBoxImgPlayRef: document.getElementById('game-pause_box_img_play'),
+        gamePauseBoxImgPlayRef: document.getElementById('game_pause_box_img_play'),
 
     };
 }

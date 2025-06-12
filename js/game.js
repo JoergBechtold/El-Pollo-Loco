@@ -80,7 +80,9 @@ let enemy_bouncing_dead_audio_volume = 0.5;
 function toggleGamePause() {
     // Stellen Sie sicher, dass Sie ein HTML-Element mit der ID 'gamePauseBoxImgPlay' haben,
     // das das Icon für Pause/Play anzeigt.
-    const gamePauseBoxImgPlayRef = document.getElementById('gamePauseBoxImgPlay');
+    // const gamePauseBoxImgPlayRef = document.getElementById('game_pause_box_img_play');
+    const { gamePauseBoxImgPlayRef } = getIdRefs();
+
 
     if (!world) {
         console.warn('World-Instanz ist nicht verfügbar. Spiel nicht initialisiert.');
