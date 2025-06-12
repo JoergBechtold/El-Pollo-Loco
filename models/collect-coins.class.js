@@ -69,24 +69,28 @@ class CollectCoins extends MovableObject {
 
     /**
      * 
-     * Stops all active animation intervals for the clouds.
-     * Specifically clears and nullifies `this.animateCloudsIntervall`.
-     * @memberof Cloud
+     * Stops all active animation and floating intervals for the coins.
+     * Clears and nullifies `coinsAnimationInterval` and `coinsFloatingInterval`.
+     * @memberof Coin // Assuming these methods are part of a Coin class
      */
     stopAllIntervals() {
-        if (this.animateCloudsIntervall) {
-            clearInterval(this.animateCloudsIntervall);
-            this.animateCloudsIntervall = null;
+        if (this.coinsAnimationInterval) {
+            clearInterval(this.coinsAnimationInterval);
+            this.coinsAnimationInterval = null;
+        }
+        if (this.coinsFloatingInterval) {
+            clearInterval(this.coinsFloatingInterval);
+            this.coinsFloatingInterval = null;
         }
     }
 
     /**
      * 
-     * Initiates all necessary intervals for the clouds, primarily their animation.
-     * This calls `animateClouds()` to start the movement.
-     * @memberof Cloud
+     * Starts all necessary intervals for the coin, including its floating animation.
+     * Calls `animateFloating()` to initiate the animation and movement.
+     * @memberof Coin // Assuming these methods are part of a Coin class
      */
     startAllIntervals() {
-        this.animateClouds();
+        this.animateFloating();
     }
 }
