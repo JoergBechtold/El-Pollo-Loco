@@ -92,12 +92,10 @@
 
 @media screen and (min-width: 321px) and (max-width: 844px) and (orientation: portrait) {
   .content-desktop {
-    /* Vielleicht auch 'none' im Portrait auf diesen Geräten, wenn du nur mobil willst */
     display: none;
   }
 
   .content-mobile {
-    /* Oder 'flex'/'block' für mobile Inhalte im Portrait */
     display: flex;
   }
 }
@@ -111,10 +109,3 @@
     display: flex;
   }
 }
-
-/* @media screen and (max-width: 740px) and (orientation: portrait) {
-  .menu-container {
-    width: clamp(320px, 15.2381px + 95.2381vw, 720px);
-    height: clamp(213.33px, 10.1529px + 63.4929vw, 480px);
-  }
-} */
