@@ -10,51 +10,42 @@ class Cloud extends MovableObject {
         this.x = x;
         this.y = 10 + Math.random() * 35;
         this.animateClouds();
-
     }
 
+    /**
+     * 
+     * Starts the continuous leftward movement animation for the clouds.
+     * This function ensures only one animation interval is active at a time.
+     * @memberof Cloud // Assuming this is within a Cloud class
+     */
     animateClouds() {
-        // Füge diese Bedingung hinzu: Starte das Intervall nur, wenn es noch nicht läuft
         if (!this.animateCloudsIntervall) {
             this.animateCloudsIntervall = setInterval(() => {
-                this.moveLeft();
-            }, 1000 / 60);
+                this.moveLeft(); // Moves the cloud to the left
+            }, 1000 / 60); // Runs at approximately 60 frames per second
         }
     }
 
+    /**
+     * 
+     * Stops all active animation intervals for the clouds.
+     * Specifically clears and nullifies `this.animateCloudsIntervall`.
+     * @memberof Cloud
+     */
     stopAllIntervals() {
         if (this.animateCloudsIntervall) {
             clearInterval(this.animateCloudsIntervall);
-            this.animateCloudsIntervall = null; // Setze es auf null, damit animateClouds() es neu starten kann
+            this.animateCloudsIntervall = null;
         }
-        // Wenn MovableObject auch Intervalle hat, solltest du super.stopAllIntervals() aufrufen
-        // super.stopAllIntervals();
     }
 
+    /**
+     * 
+     * Initiates all necessary intervals for the clouds, primarily their animation.
+     * This calls `animateClouds()` to start the movement.
+     * @memberof Cloud
+     */
     startAllIntervals() {
-        // Rufe animateClouds auf, das jetzt prüft, ob ein Intervall schon läuft
         this.animateClouds();
-        // Wenn MovableObject auch Intervalle hat, solltest du super.startAllIntervals() aufrufen
-        // super.startAllIntervals();
     }
-
-    // animateClouds() {
-    //     this.animateCloudsIntervall = setInterval(() => {
-    //         this.moveLeft();
-    //     }, 1000 / 60);
-
-    // }
-
-    // stopAllIntervals() {
-    //     if (this.animateCloudsIntervall) {
-    //         clearInterval(this.animateCloudsIntervall);
-    //         this.animateCloudsIntervall = null;
-    //     }
-    // }
-
-
-    // startAllIntervals() {
-    //     this.animateClouds();
-    // }
-
 }
