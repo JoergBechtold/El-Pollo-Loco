@@ -465,6 +465,12 @@ class World {
       }
     });
 
+    this.character.bottles.forEach(bottle => {
+      if (bottle && typeof bottle.startAllIntervals === 'function') {
+        bottle.startAllIntervals();
+      }
+    });
+
 
     if (this.level.coinsArray) {
       this.level.coinsArray.forEach(coin => {

@@ -118,85 +118,70 @@ class ThrowableObject extends MovableObject {
 
     throw() {
         this.speedY = 30;
-        this.applyGravity(); // Gravitation wird in MovableObject verwaltet und startet dort ein Intervall
+        this.applyGravity();
+        this.wasThrown = true; // Markiere, dass die Flasche geworfen wurde.
 
-        let throwSpeedX = this.otherDirection ? -10 : 10;
-        this.movementInterval = setInterval(() => { // Speichere das Intervall in einer Klassenvariable
-            this.x += throwSpeedX;
+        // Initialisiere die Intervalle nur, wenn sie nicht bereits laufen
+        if (!this.movementInterval && !this.isSplashing) { // Prevent starting if already splashing
+            let throwSpeedX = this.otherDirection ? -10 : 10;
+            this.movementInterval = setInterval(() => {
+                this.x += throwSpeedX;
 
-            if (this.isSplashing) { // Wenn die Spritz-Animation aktiv ist, stoppe die Bewegung und Rotation
-                clearInterval(this.movementInterval);
-                this.movementInterval = null;
-                clearInterval(this.rotationAnimationInterval);
-                this.rotationAnimationInterval = null;
-                return;
-            }
-
-            // Bedingung für Treffer oder Bodenkontakt
-            if (world.bottleHitSomething || this.y >= this.groundLevel) {
-                // Setze 'isSplashing' hier, um die Spritz-Animation auszulösen
-                this.isSplashing = true;
-                this.playBottleSplash(); // Startet die Spritz-Animation und ein neues Intervall
-                // world.bottleHitSomething sollte danach zurückgesetzt werden, um nicht alle Flaschen zu beeinflussen
-                // Hier solltest du überlegen, wie world.bottleHitSomething gesetzt und zurückgesetzt wird.
-                // Ideal wäre es, wenn diese Klasse selbst entscheidet, wann sie aufhört.
-                // Zum Beispiel: wenn die Flasche den Boden berührt ODER ein Objekt trifft.
-                // Nach dem Aufruf von playBottleSplash() und dem Start der Spritz-Animation sollte sich die Flasche selbst entfernen.
-
-                // Intervalle sofort stoppen, wenn ein Ereignis eintritt
-                clearInterval(this.movementInterval);
-                this.movementInterval = null;
-                clearInterval(this.rotationAnimationInterval);
-                this.rotationAnimationInterval = null;
-
-                // Beispiel für Entfernung nach der Spritz-Animation
-                setTimeout(() => {
-                    // Logik zum Entfernen der Flasche aus dem `world.character.bottles`-Array
-                    // Dies sollte über die `World`-Klasse oder eine zentrale Spielverwaltung geschehen.
-                    // Beispiel: world.removeThrowableObject(this);
-                    const index = world.character.bottles.indexOf(this);
-                    if (index > -1) {
-                        world.character.bottles.splice(index, 1);
+                if (this.isSplashing || world.bottleHitSomething || this.y >= this.groundLevel) {
+                    // This logic is duplicated in startAllIntervals.
+                    // It's better to have a single source of truth for collision handling.
+                    // For now, let's keep it here, but ideally checkCollisions should handle this.
+                    if (!this.isSplashing) { // Prevent multiple calls
+                        this.isSplashing = true;
+                        this.playBottleSplash();
+                        this.stopMovementAndRotationIntervals();
+                        // This timeout should remove the bottle from the world.character.bottles array
+                        setTimeout(() => {
+                            const index = world.character.bottles.indexOf(this);
+                            if (index > -1) {
+                                world.character.bottles.splice(index, 1);
+                            }
+                            this.stopAllIntervals(); // Stop gravity and any other intervals
+                        }, 500);
                     }
-                    this.stopAllIntervals(); // Wichtig: Auch die Gravitation stoppen
-                }, 500); // Verzögerung, damit die Spritz-Animation sichtbar ist
-            }
-        }, 25);
+                }
+            }, 25);
+        }
 
-        this.rotationAnimationInterval = setInterval(() => { // Speichere das Intervall
-            if (!this.isSplashing) { // Nur rotieren, wenn sie nicht spritzt
+        if (!this.rotationAnimationInterval && !this.isSplashing) { // Prevent starting if already splashing
+            this.rotationAnimationInterval = setInterval(() => {
                 this.playAnimation(this.IMAGES_BOTTLES);
-            }
-        }, 1000 / 25);
+            }, 1000 / 25);
+        }
     }
 
     playBottleSplash() {
-        if (!this.isSplashing) return; // Stelle sicher, dass dies nur einmal aufgerufen wird
+        if (!this.isSplashing) return; // Stellen Sie sicher, dass dies nur einmal aufgerufen wird, nachdem isSplashing gesetzt wurde.
 
         bottle_splash.play();
         this.width = this.splashWidth;
         this.height = this.splashHeight;
 
         // Sicherstellen, dass das alte Rotationsintervall gestoppt ist, bevor das neue startet
-        if (this.rotationAnimationInterval) {
-            clearInterval(this.rotationAnimationInterval);
-            this.rotationAnimationInterval = null;
-        }
+        this.stopMovementAndRotationIntervals(); // Stop any ongoing movement/rotation
 
         // Dieses Intervall wird nur für die Spritz-Animation verwendet
-        this.splashAnimationInterval = setInterval(() => {
-            this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
-            // Optional: Stoppe die Animation, nachdem sie einmal komplett abgespielt wurde
-            if (this.currentImage % this.IMAGES_BOTTLE_SPLASH.length === 0 && this.currentImage > 0) {
-                clearInterval(this.splashAnimationInterval);
-                this.splashAnimationInterval = null;
-                // Hier könnte man auch das Objekt komplett aus dem Spiel entfernen, wenn die Animation beendet ist.
-            }
-        }, 1000 / 10);
+        if (!this.splashAnimationInterval) {
+            this.splashAnimationInterval = setInterval(() => {
+                this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
+                if (this.currentImage % this.IMAGES_BOTTLE_SPLASH.length === 0 && this.currentImage > 0) {
+                    clearInterval(this.splashAnimationInterval);
+                    this.splashAnimationInterval = null;
+                    // At this point, the splash animation is complete.
+                    // The bottle removal is handled in the `throw` or `startAllIntervals`
+                    // method's collision/ground check.
+                }
+            }, 1000 / 10);
+        }
     }
-
     stopAllIntervals() {
         super.stopAllIntervals(); // Stoppt applyGravityInterval
+
         if (this.movementInterval) {
             clearInterval(this.movementInterval);
             this.movementInterval = null;
@@ -210,6 +195,82 @@ class ThrowableObject extends MovableObject {
             this.splashAnimationInterval = null;
         }
     }
+
+    startAllIntervals() {
+        super.startAllIntervals(); // Startet applyGravityInterval wieder (wenn nicht aktiv)
+
+        // Nur starten, wenn die Flasche noch nicht gespritzt ist
+        if (!this.isSplashing) {
+            // Die Logik aus dem throw() muss hier wiederholt werden, aber nur wenn die Flasche noch in Bewegung war
+            // Eine bessere Herangehensweise ist es, den Zustand der Flasche zu speichern (z.B. ob sie geworfen wurde)
+            // und basierend darauf die Intervalle neu zu setzen.
+
+            // Problem: Die speedY und throwSpeedX sind schon gesetzt und die Flasche ist in der Luft.
+            // Wir müssen die Bewegung und Rotation von dem Punkt an fortsetzen, wo sie gestoppt wurde.
+            // Die einfachste Lösung ist, die `throw()`-Methode aufzurufen, aber wir müssen verhindern,
+            // dass eine neue "Wurf"-Logik (wie z.B. speedY neu setzen) ausgeführt wird,
+            // wenn die Flasche bereits in der Luft war.
+
+            // Um dies zu beheben, müssen wir den "Wurf"-Zustand persistenter machen.
+            // Eine einfachere Lösung für jetzt: einfach die Intervalle starten, wenn sie null sind.
+            // Da `throw()` die Intervalle setzt, könnten wir `throw()` beim Starten aufrufen,
+            // aber nur, wenn die Flasche noch nicht "getroffen" hat.
+
+            // Besser: Separieren der Initialisierung der Intervalle vom Wurf selbst.
+            // In diesem Fall, wenn `movementInterval` oder `rotationAnimationInterval` null sind,
+            // bedeutet das, sie wurden gestoppt und müssen wieder gestartet werden.
+            // Aber die Logik, wann sie stoppen (z.B. bei Kollision oder Bodenkontakt)
+            // muss beim Neustart ebenfalls berücksichtigt werden.
+
+            // Da `throw()` bereits die gesamte Logik für Bewegung und Rotation enthält,
+            // ist es am besten, einen Weg zu finden, `throw()` erneut aufzurufen,
+            // aber nur, um die Intervalle zu initialisieren, nicht um die Flasche neu zu werfen.
+
+            // Ansatz 1: Speichern, ob die Flasche bereits "geworfen" wurde.
+            if (this.wasThrown && !this.movementInterval) {
+                // Wenn die Flasche geworfen wurde, aber die Bewegung gestoppt ist, starte sie neu
+                let throwSpeedX = this.otherDirection ? -10 : 10;
+                this.movementInterval = setInterval(() => {
+                    this.x += throwSpeedX;
+                    // Die Kollisionslogik sollte weiterhin im World-Loop passieren.
+                    // Das `isSplashing` wird in `checkCollisions` gesetzt.
+                    if (this.isSplashing || this.y >= this.groundLevel) {
+                        this.isSplashing = true; // Sicherstellen, dass Spritz-Animation ausgelöst wird
+                        this.playBottleSplash(); // Startet die Spritz-Animation
+                        this.stopMovementAndRotationIntervals(); // Stopper die Bewegung/Rotation hier
+                        setTimeout(() => {
+                            const index = world.character.bottles.indexOf(this);
+                            if (index > -1) {
+                                world.character.bottles.splice(index, 1);
+                            }
+                            this.stopAllIntervals(); // Auch Gravitation stoppen
+                        }, 500);
+                    }
+                }, 25);
+            }
+
+            if (this.wasThrown && !this.rotationAnimationInterval) {
+                this.rotationAnimationInterval = setInterval(() => {
+                    if (!this.isSplashing) {
+                        this.playAnimation(this.IMAGES_BOTTLES);
+                    }
+                }, 1000 / 25);
+            }
+        }
+    }
+
+    stopMovementAndRotationIntervals() {
+        if (this.movementInterval) {
+            clearInterval(this.movementInterval);
+            this.movementInterval = null;
+        }
+        if (this.rotationAnimationInterval) {
+            clearInterval(this.rotationAnimationInterval);
+            this.rotationAnimationInterval = null;
+        }
+    }
+
+
 
     // stopAllIntervals() {
     //     super.stopAllIntervals(); // Stoppt applyGravityInterval
