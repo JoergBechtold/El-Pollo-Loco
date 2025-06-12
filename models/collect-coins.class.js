@@ -34,16 +34,37 @@ class CollectCoins extends MovableObject {
 
     /**
      * 
-     * Starts the continuous leftward movement animation for the clouds.
-     * This function ensures only one animation interval is active at a time.
-     * @memberof Cloud // Assuming this is within a Cloud class
+     * Initiates the coin's floating and animation effects.
+     * This includes setting up an interval for visual animation and another for vertical floating movement.
+     * @memberof Coin // Assuming this is within a Coin class
      */
-    animateClouds() {
-        if (!this.animateCloudsIntervall) {
-            this.animateCloudsIntervall = setInterval(() => {
-                this.moveLeft(); // Moves the cloud to the left
-            }, 1000 / 60); // Runs at approximately 60 frames per second
-        }
+    animateFloating() {
+        this.coinsAnimationInterval = setInterval(() => {
+            this.playAnimation(this.IMAGES_COINS)
+        }, 400);
+        this.handleCoinsFloatingInterval()
+    }
+
+    /**
+     * 
+     * Manages the continuous up-and-down floating movement of the coin.
+     * The coin moves within a defined `animationRangeY` around its `initialY` position.
+     * @memberof Coin
+     */
+    handleCoinsFloatingInterval() {
+        this.coinsFloatingInterval = setInterval(() => {
+            if (this.animationDirection === 1) {
+                this.y -= this.animationSpeedY;
+                if (this.y <= this.initialY - this.animationRangeY) {
+                    this.animationDirection = -1;
+                }
+            } else {
+                this.y += this.animationSpeedY;
+                if (this.y >= this.initialY + this.animationRangeY) {
+                    this.animationDirection = 1;
+                }
+            }
+        }, 1000 / 60);
     }
 
     /**

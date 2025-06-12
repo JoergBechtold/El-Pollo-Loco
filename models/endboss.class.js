@@ -5,16 +5,16 @@ class Endboss extends MovableObject {
     y = 46;
     endbossEnergy = 100;
     endbossActivated = false;
+    character;
+    endbossMusic = null;
+    endbossAnimationInterval;
+    endbossMovementInterval;
     offset = {
         top: 70,
         left: 0,
         right: 0,
         bottom: 0
     };
-    character;
-    endbossMusic = null;
-    endbossAnimationInterval;
-    endbossMovementInterval;
 
     IMAGES_WALKING = [
         'assets/img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -69,10 +69,17 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-
         if (this.endbossAnimationInterval) {
             clearInterval(this.endbossAnimationInterval);
         }
+        this.handleEndbossAnimationInterval()
+        if (this.endbossMovementInterval) {
+            clearInterval(this.endbossMovementInterval);
+        }
+        this.handleEndbossMovementInterval()
+    }
+
+    handleEndbossAnimationInterval() {
         this.endbossAnimationInterval = setInterval(() => {
             if (this.isDead()) {
                 if (!this.isDeadAnimationPlayed) {
@@ -121,11 +128,9 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_ALERT);
             }
         }, 250);
+    }
 
-
-        if (this.endbossMovementInterval) {
-            clearInterval(this.endbossMovementInterval);
-        }
+    handleEndbossMovementInterval() {
         this.endbossMovementInterval = setInterval(() => {
             if (this.isDead()) {
                 return;
