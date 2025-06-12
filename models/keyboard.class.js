@@ -6,14 +6,23 @@ class Keyboard {
     DOWN = false;
     D = false;
 
-
     constructor() {
         this.bindKeyPressEvents();
         this.bindBtsPressEvents();
 
     }
 
-
+    /**
+    * 
+    * Binds touch events to UI buttons for mobile controls.
+    *
+    * This function sets up `touchstart` and `touchend` listeners for directional (left, right),
+    * jump, and throw buttons. It prevents default touch behavior and updates
+    * corresponding internal boolean flags (`this.LEFT`, `this.RIGHT`, `this.SPACE`, `this.D`)
+    * to reflect button press states.
+    *
+    * @memberof World // Or the class responsible for game input/UI
+    */
     bindBtsPressEvents() {
         document.getElementById('btn_left').addEventListener('touchstart', (event) => {
             event.preventDefault();
@@ -54,19 +63,21 @@ class Keyboard {
             event.preventDefault();
             this.D = false;
         })
-
-
     }
 
+    /**
+    * 
+    * Binds keyboard press and release events for game controls.
+    *
+    * This function sets up `keydown` and `keyup` event listeners on the window.
+    * It updates boolean flags in the global `keyboard` object (e.g., `keyboard.SPACE`,
+    * `keyboard.LEFT`, `keyboard.RIGHT`, `keyboard.UP`, `keyboard.DOWN`, `keyboard.D`)
+    * to reflect the pressed state of corresponding keys (Space, Arrow keys, 'D').
+    * It also handles pausing and resetting the `walkin_sound` when left or right keys are released.
+    *
+    * @memberof World // Or the class managing overall game input
+    */
     bindKeyPressEvents() {
-
-        /**
-         * 
-         * @listens keydown
-         * Listens for the 'keydown' event on the window and updates the 'keyboard' state
-         * based on the pressed key.
-         * @param {KeyboardEvent} event - The keyboard event object.
-         */
         window.addEventListener('keydown', (event) => {
             if (event.keyCode == 32) {
                 keyboard.SPACE = true;
@@ -93,18 +104,7 @@ class Keyboard {
             }
         });
 
-
-
-        /**
-         * 
-         * @listens keyup
-         * Listens for the 'keyup' event on the window and updates the 'keyboard' state
-         * based on the released key. It also handles pausing and resetting the walking sound
-         * when left or right arrow keys are released.
-         * @param {KeyboardEvent} event - The keyboard event object.
-         */
         window.addEventListener('keyup', (event) => {
-
             if (event.keyCode == 32) {
                 keyboard.SPACE = false;
             }
@@ -134,5 +134,4 @@ class Keyboard {
             }
         });
     }
-
 }
