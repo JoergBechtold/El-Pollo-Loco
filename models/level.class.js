@@ -7,7 +7,6 @@ class Level {
     barrelArray;
     level_end_x = 2800;
 
-
     constructor(enemiesArray, cloudsArray, backgroundObjectsArray, bottlesArray, coinsArray, barrelArray) {
         this.enemiesArray = enemiesArray;
         this.cloudsArray = cloudsArray;
@@ -15,8 +14,5 @@ class Level {
         this.bottlesArray = bottlesArray;
         this.coinsArray = coinsArray;
         this.barrelArray = barrelArray;
-
-
     }
-
 }
