@@ -3,15 +3,12 @@ let world;
 let keyboard = new Keyboard();
 let isGamePaused = false;
 
-
 const PATH_COLLECT_BOTTLE_AUDIO = 'assets/audio/collect-bottle.mp3';
 const PATH_COLLECT_COIN_AUDIO = 'assets/audio/collect-coin.mp3';
 const PATH_BOUNCING_AUDIO = 'assets/audio/bouncing.mp3';
 const PATH_CHICKEN_DEATH_JUMP_AUDIO = 'assets/audio/enemy-death-new.mp3';
 const PATH_CHICKEN_DEATH_AUDIO = 'assets/audio/chicken-dead.mp3';
 const PATH_ENDBOSS_HURT_AUDIO = 'assets/audio/endboss-hurt-new.mp3';
-
-
 
 let walkin_sound = new Audio('assets/audio/running.mp3');
 let game_music = new Audio('assets/audio/game-music1.mp3');
@@ -58,7 +55,6 @@ const endOfGameAudioArray = [
     endboss_hurt,
     endboss_death,
     endboss_alert,
-
 ];
 
 //volume setting
@@ -77,6 +73,19 @@ let game_win_audio_volume = 0.5;
 let game_over_voice_volime = 0.5;
 let enemy_bouncing_dead_audio_volume = 0.5;
 
+/**
+ * 
+ * Toggles the game's pause state, affecting game intervals, audio, and UI.
+ *
+ * This function flips the `isGamePaused` boolean.
+ * - If the game is paused, it stops all game intervals, pauses all audio,
+ * and updates the pause/play icon to show 'Play'.
+ * - If the game is unpaused, it restarts all game intervals, and updates
+ * the pause/play icon to show 'Pause'.
+ *
+ * @global
+ * @function
+ */
 function toggleGamePause() {
     const { gamePauseBoxImgPlayRef } = getIdRefs();
 
@@ -92,6 +101,13 @@ function toggleGamePause() {
     }
 }
 
+/**
+ * 
+ * Pauses all audio elements contained within the `allAudioArray`.
+ *
+ * This function iterates through each item in `allAudioArray` and,
+ * if the item is a valid audio object with a `pause` method, it calls `pause()` on it.
+ */
 function pauseAllAudio() {
     allAudioArray.forEach(audio => {
         if (audio && typeof audio.pause === 'function') {
@@ -100,12 +116,31 @@ function pauseAllAudio() {
     });
 }
 
+/**
+ * 
+ * Sets the source, alt text, and title for an image element.
+ *
+ * This utility function is used to dynamically update the attributes of an `<img>` tag,
+ * making it easy to change the displayed icon and its descriptive text.
+ *
+ * @param {HTMLImageElement} ref - A reference to the HTML `<img>` element.
+ * @param {string} icon - The URL or path to the new image icon.
+ * @param {string} altText - The alternative text for the image (for accessibility).
+ * @param {string} title - The title text for the image (often displayed as a tooltip).
+ */
 function setIcon(ref, icon, altText, title) {
     ref.src = icon
     ref.alt = altText;
     ref.title = title;
 }
 
+/**
+ * 
+ * Activates the "You Win" game screen and plays associated audio.
+ *
+ * This function stops all game intervals, sets `isGameFinish` to true,
+ * plays a game-win sound, and displays the `overlay_you_win` element.
+ */
 function handleYouWinScreen() {
     let overlayYouWinRef = document.getElementById('overlay_you_win');
     world.stopAllIntervals()
@@ -115,6 +150,14 @@ function handleYouWinScreen() {
     overlayYouWinRef.classList.add('d-flex')
 }
 
+/**
+ * 
+ * Activates the "You Lose" game screen and plays associated audio.
+ *
+ * This function stops all game intervals, sets `isGameFinish` to true,
+ * plays a game-over sound, and displays the `overlay_you_loose` element
+ * after a brief audio delay.
+ */
 function handleYouLooseScreen() {
     let overlayYouLooseRef = document.getElementById('overlay_you_loose');
     world.stopAllIntervals()
