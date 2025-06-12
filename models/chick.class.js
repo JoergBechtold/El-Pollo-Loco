@@ -32,7 +32,7 @@ class Chick extends MovableObject {
         this.loadImages(this.IMAGE_DEAD);
         this.applyGravity();
 
-        let randomX = 500 + Math.random() * 2000;
+        let randomX = 900 + Math.random() * 2000;
         this.x = Math.round(randomX / 150) * 150;
         this.speed = 0.85 + Math.random() * 1.1;
         this.animate();
