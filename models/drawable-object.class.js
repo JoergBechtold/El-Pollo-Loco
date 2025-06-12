@@ -8,7 +8,6 @@ class DrawableObject {
     currentImage = 0;
 
     constructor() {
-
     }
 
     /**
