@@ -108,6 +108,7 @@ function setIcon(ref, icon, altText, title) {
 
 function handleYouWinScreen() {
     let overlayYouWinRef = document.getElementById('overlay_you_win');
+    world.stopAllIntervals()
     isGameFinish = true;
     game_win_audio.play();
     game_win_audio.volume = game_win_audio_volume;
@@ -116,11 +117,8 @@ function handleYouWinScreen() {
 
 function handleYouLooseScreen() {
     let overlayYouLooseRef = document.getElementById('overlay_you_loose');
+    world.stopAllIntervals()
     isGameFinish = true;
-    endOfGameAudioArray.forEach(audio => {
-        audio.pause();
-        audio.currentTime = 0;
-    });
     game_over_voice.play();
     game_over_voice.volume = game_over_voice_volime;
     setTimeout(() => {
