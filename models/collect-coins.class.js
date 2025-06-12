@@ -56,22 +56,7 @@ class CollectCoins extends MovableObject {
         }, 1000 / 60);
     }
 
-    // stopAllIntervals() {
-
-    //     if (this.coinsAnimationInterval) {
-    //         clearInterval(this.coinsAnimationInterval);
-    //         this.coinsAnimationInterval = null;
-    //     }
-    //     if (this.coinsFloatingInterval) {
-    //         clearInterval(this.coinsFloatingInterval);
-    //         this.coinsFloatingInterval = null;
-    //     }
-
-    // }
-
     stopAllIntervals() {
-        // No need to call super.stopAllIntervals() here unless MovableObject
-        // has intervals that apply to coins (like gravity), which is unlikely for collectible items.
         if (this.coinsAnimationInterval) {
             clearInterval(this.coinsAnimationInterval);
             this.coinsAnimationInterval = null;
@@ -82,12 +67,9 @@ class CollectCoins extends MovableObject {
         }
     }
 
-    /**
-     * Starts all intervals specifically managed by the CollectCoins class.
-     */
+
     startAllIntervals() {
-        // No need to call super.startAllIntervals() here.
-        this.animateFloating(); // Restart both the animation and floating movement
+        this.animateFloating();
     }
 
 
