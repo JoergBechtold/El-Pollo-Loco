@@ -13,7 +13,6 @@ class Endboss extends MovableObject {
     };
     character;
     endbossMusic = null;
-    isDeadAnimationFinished = false;
     endbossAnimationInterval;
     endbossMovementInterval;
 
@@ -57,7 +56,6 @@ class Endboss extends MovableObject {
         'assets/img/4_enemie_boss_chicken/5_dead/G24.png',
         'assets/img/4_enemie_boss_chicken/5_dead/G25.png',
         'assets/img/4_enemie_boss_chicken/5_dead/G26.png',
-
     ];
 
     constructor() {
@@ -69,11 +67,10 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.x = 2500;
         this.animate();
-        // this.endbosseMoveAnimation()
     }
 
     animate() {
-        // --- Animationsintervall (Bildwechsel) ---
+
         if (this.endbossAnimationInterval) {
             clearInterval(this.endbossAnimationInterval);
         }
@@ -87,7 +84,7 @@ class Endboss extends MovableObject {
                 return;
             }
 
-            // Normales Animationsverhalten, nur wenn Endboss nicht tot ist
+
             if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
                 if (!isMuted) {
@@ -99,8 +96,8 @@ class Endboss extends MovableObject {
                         endboss_hurt_new.currentTime = 0;
                     }, 1000);
                 }
-            } else if (this.hadFirstContact) { // Hier wird unterschieden!
-                // Wenn im Angriffsradius
+            } else if (this.hadFirstContact) {
+
                 if (this.character && Math.abs(this.character.x - this.x) < 200) {
                     this.playAnimation(this.IMAGES_ATTACK);
                     if (!this.isCurrentlyAttackingSoundPlaying) {
@@ -111,9 +108,9 @@ class Endboss extends MovableObject {
                         }
                         this.isCurrentlyAttackingSoundPlaying = true;
                     }
-                } else { // Wenn außerhalb des Angriffsradius, aber Kontakt gehabt (WALK oder ALERT)
-                    this.playAnimation(this.IMAGES_WALKING); // Standard Walking Animation
-                    // Setze den Attack-Sound zurück, wenn außerhalb des Angriffsradius
+                } else {
+                    this.playAnimation(this.IMAGES_WALKING);
+
                     if (this.isCurrentlyAttackingSoundPlaying) {
                         endboss_sound.pause();
                         endboss_sound.currentTime = 0;
@@ -126,7 +123,7 @@ class Endboss extends MovableObject {
             }
         }, 250);
 
-        // --- Bewegungsintervall (Verfolgung des Charakters und Aktivierung) ---
+
         if (this.endbossMovementInterval) {
             clearInterval(this.endbossMovementInterval);
         }
@@ -135,16 +132,14 @@ class Endboss extends MovableObject {
                 return;
             }
 
-            // Endboss-Aktivierungslogik
-            // Diese Logik steuert, wann der Endboss "aktiv" wird und reagiert
             if (!this.endbossActivated && this.world && this.world.character) {
                 if (this.endbossEnergy <= 75 || this.world.character.x > 2200) {
                     this.world.showEndbossStatusBar = true;
                     this.hadFirstContact = true;
                     this.endbossActivated = true;
-                    this.startEndbossMusic(); // Startet die Musik, sobald aktiviert
+                    this.startEndbossMusic();
 
-                    // Spielen des Alert-Sounds einmalig bei Aktivierung
+
                     if (!isMuted) {
                         endboss_alert.currentTime = 0;
                         endboss_alert.play();
@@ -153,12 +148,11 @@ class Endboss extends MovableObject {
                             endboss_alert.pause();
                             endboss_alert.currentTime = 0;
                         }, 1200);
-                        // Keine isCurrentlyAttackingSoundPlaying, da dies für Attack-Sound ist
                     }
                 }
             }
 
-            // Bewegungslogik, nachdem Kontakt hergestellt wurde
+
             if (this.hadFirstContact) {
                 if (this.world.character.x < this.x - 50) {
                     this.moveLeft();
@@ -168,14 +162,11 @@ class Endboss extends MovableObject {
                     this.otherDirection = true;
                 }
             }
-        }, 1000 / 60); // Bewegungsgeschwindigkeit: ca. 60 FPS
+        }, 1000 / 60);
     }
 
-    /**
-     * Handhabt die Logik, wenn der Endboss stirbt.
-     */
     handleEndbossDeath() {
-        this.stopAllIntervals(); // Stoppt alle Intervalle sofort
+        this.stopAllIntervals();
 
         if (!isMuted) {
             endboss_death.currentTime = 0;
@@ -214,9 +205,6 @@ class Endboss extends MovableObject {
     }
 
     stopAllIntervals() {
-
-
-        // Stoppt die Endboss-spezifischen Intervalle
         if (this.endbossAnimationInterval) {
             clearInterval(this.endbossAnimationInterval);
             this.endbossAnimationInterval = null;
@@ -226,8 +214,6 @@ class Endboss extends MovableObject {
             this.endbossMovementInterval = null;
         }
 
-        // Zusätzliche Logik zum Stoppen von Sounds
-        // Diese Annahme erfordert, dass die globalen Audio-Variablen immer vorhanden sind.
         endboss_death.pause();
         endboss_death.currentTime = 0;
         endboss_music.pause();
@@ -238,14 +224,9 @@ class Endboss extends MovableObject {
         endboss_alert.currentTime = 0;
     }
 
-
-    /**
-     * Startet alle Intervalle neu, die direkt in dieser Klasse oder der Basisklasse gestartet werden.
-     */
     startAllIntervals() {
         if (!this.isDead()) {
-            // Startet Intervalle der Elternklasse (z.B. Gravity)
-            this.animate(); // Startet die Endboss-spezifischen Animations- und Bewegungsintervalle neu
+            this.animate();
         }
     }
 }
