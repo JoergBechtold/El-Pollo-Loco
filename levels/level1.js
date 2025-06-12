@@ -2,7 +2,6 @@ let level1;
 
 function initLevel() {
   level1 = new Level(
-
     [
       new Chicken(),
       new Chicken(),
@@ -59,8 +58,6 @@ function initLevel() {
       new BackgroundObject('assets/img/5_background/layers/3_third_layer/1.png', 719 * 4),
       new BackgroundObject('assets/img/5_background/layers/2_second_layer/1.png', 719 * 4),
       new BackgroundObject('assets/img/5_background/layers/1_first_layer/1.png', 719 * 4),
-
-
     ],
 
     [
@@ -86,5 +83,4 @@ function initLevel() {
       new Barrel('assets/img/wooden_barrel_final_cleaned-1.png'),
     ]
   );
-
 }
