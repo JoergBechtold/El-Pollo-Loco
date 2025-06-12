@@ -7,16 +7,14 @@ class CollectCoins extends MovableObject {
     animationDirection = 1;
     animationSpeedY = 0.8;
     animationRangeY = 12;
-
+    coinsAnimationInterval;
+    coinsFloatingInterval;
     offset = {
         top: 47,
         left: 47,
         right: 48,
         bottom: 47
     };
-
-    coinsAnimationInterval;
-    coinsFloatingInterval;
 
     IMAGES_COINS = [
         'assets/img/8_coin/coin_1.png',
@@ -34,44 +32,40 @@ class CollectCoins extends MovableObject {
         this.animateFloating();
     }
 
-
-    animateFloating() {
-        this.coinsAnimationInterval = setInterval(() => {
-            this.playAnimation(this.IMAGES_COINS)
-        }, 400);
-
-        this.coinsFloatingInterval = setInterval(() => {
-
-            if (this.animationDirection === 1) {
-                this.y -= this.animationSpeedY;
-                if (this.y <= this.initialY - this.animationRangeY) {
-                    this.animationDirection = -1;
-                }
-            } else {
-                this.y += this.animationSpeedY;
-                if (this.y >= this.initialY + this.animationRangeY) {
-                    this.animationDirection = 1;
-                }
-            }
-        }, 1000 / 60);
+    /**
+     * 
+     * Starts the continuous leftward movement animation for the clouds.
+     * This function ensures only one animation interval is active at a time.
+     * @memberof Cloud // Assuming this is within a Cloud class
+     */
+    animateClouds() {
+        if (!this.animateCloudsIntervall) {
+            this.animateCloudsIntervall = setInterval(() => {
+                this.moveLeft(); // Moves the cloud to the left
+            }, 1000 / 60); // Runs at approximately 60 frames per second
+        }
     }
 
+    /**
+     * 
+     * Stops all active animation intervals for the clouds.
+     * Specifically clears and nullifies `this.animateCloudsIntervall`.
+     * @memberof Cloud
+     */
     stopAllIntervals() {
-        if (this.coinsAnimationInterval) {
-            clearInterval(this.coinsAnimationInterval);
-            this.coinsAnimationInterval = null;
-        }
-        if (this.coinsFloatingInterval) {
-            clearInterval(this.coinsFloatingInterval);
-            this.coinsFloatingInterval = null;
+        if (this.animateCloudsIntervall) {
+            clearInterval(this.animateCloudsIntervall);
+            this.animateCloudsIntervall = null;
         }
     }
 
-
+    /**
+     * 
+     * Initiates all necessary intervals for the clouds, primarily their animation.
+     * This calls `animateClouds()` to start the movement.
+     * @memberof Cloud
+     */
     startAllIntervals() {
-        this.animateFloating();
+        this.animateClouds();
     }
-
-
-
 }
