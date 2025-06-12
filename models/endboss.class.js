@@ -1,7 +1,7 @@
 class Endboss extends MovableObject {
     height = 400;
     width = 250;
-    speed = 5;
+    speed = 3;
     y = 46;
     endbossEnergy = 100;
     endbossActivated = false;
@@ -15,7 +15,7 @@ class Endboss extends MovableObject {
     endbossMusic = null;
     isDeadAnimationFinished = false;
     endbossAnimationInterval;
-    endbossMoveAniationInterval;
+    endbossMovementInterval;
 
 
     IMAGES_WALKING = [
@@ -69,46 +69,25 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.x = 2500;
         this.animate();
-        this.endbosseMoveAnimation()
+        // this.endbosseMoveAnimation()
     }
 
     animate() {
+        // --- Animationsintervall (Bildwechsel) ---
+        if (this.endbossAnimationInterval) {
+            clearInterval(this.endbossAnimationInterval);
+        }
         this.endbossAnimationInterval = setInterval(() => {
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-                clearInterval(this.endbossMoveAniationInterval);
-                this.loadImage(this.IMAGES_DEAD[2]);
-                endboss_death.currentTime = 0;
-
-                endboss_death.play();
-                endboss_death.volume = endboss_death_volume;
-                setTimeout(() => {
-                    endboss_death.pause();
-                    endboss_death.currentTime = 0;
-                }, 1400);
-                setTimeout(() => {
-                    endboss_music.pause();
-                }, 1800);
-                clearInterval(this.endbossAnimationInterval);
-                setTimeout(() => {
-                    handleYouWinScreen()
-                }, 2300);
+                if (!this.isDeadAnimationPlayed) {
+                    this.playAnimation(this.IMAGES_DEAD);
+                    this.isDeadAnimationPlayed = true;
+                    this.handleEndbossDeath();
+                }
                 return;
             }
 
-            if (this.world && this.world.character && this.world.character.x > 1800) {
-                this.startEndbossMusic();
-            }
-
-            if (!this.endbossActivated && this.world) {
-                if (this.endbossEnergy <= 75 || (this.world.character && this.world.character.x > 2200)) {
-                    this.world.showEndbossStatusBar = true;
-                    this.hadFirstContact = true;
-                    this.endbossActivated = true;
-                    this.startEndbossMusic();
-                }
-            }
-
+            // Normales Animationsverhalten, nur wenn Endboss nicht tot ist
             if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
                 if (!isMuted) {
@@ -120,76 +99,66 @@ class Endboss extends MovableObject {
                         endboss_hurt_new.currentTime = 0;
                     }, 1000);
                 }
-
-
-
-            } else if (this.hadFirstContact) {
-
-                if (this.world.character.x < this.x - 50) {
-                    this.moveLeft();
-                    this.otherDirection = false;
-                } else if (this.world.character.x > this.x + 50) {
-                    this.moveRight();
-                    this.otherDirection = true;
-                }
-
-
+            } else if (this.hadFirstContact) { // Hier wird unterschieden!
+                // Wenn im Angriffsradius
                 if (this.character && Math.abs(this.character.x - this.x) < 200) {
                     this.playAnimation(this.IMAGES_ATTACK);
-
-
                     if (!this.isCurrentlyAttackingSoundPlaying) {
-                        endboss_sound.currentTime = 0;
-                        endboss_sound.play();
-                        endboss_sound.volume = endboss_sound_volume;
+                        if (!isMuted) {
+                            endboss_sound.currentTime = 0;
+                            endboss_sound.play();
+                            endboss_sound.volume = endboss_sound_volume;
+                        }
                         this.isCurrentlyAttackingSoundPlaying = true;
-
                     }
-                } else {
-                    this.playAnimation(this.IMAGES_WALKING);
-
+                } else { // Wenn außerhalb des Angriffsradius, aber Kontakt gehabt (WALK oder ALERT)
+                    this.playAnimation(this.IMAGES_WALKING); // Standard Walking Animation
+                    // Setze den Attack-Sound zurück, wenn außerhalb des Angriffsradius
                     if (this.isCurrentlyAttackingSoundPlaying) {
                         endboss_sound.pause();
                         endboss_sound.currentTime = 0;
                         this.isCurrentlyAttackingSoundPlaying = false;
-
                     }
                 }
             } else {
 
                 this.playAnimation(this.IMAGES_ALERT);
-
-                if (this.isCurrentlyAttackingSoundPlaying) {
-                    endboss_alert.currentTime = 0;
-                    endboss_alert.play()
-                    setTimeout(() => {
-                        endboss_sound.pause();
-                        endboss_sound.currentTime = 0;
-                    }, 500);
-
-                    this.isCurrentlyAttackingSoundPlaying = false;
-                }
             }
-        }, 450);
-    }
+        }, 250);
 
-
-
-    endbosseMoveAnimation() {
-        this.endbossMoveAniationInterval = setInterval(() => {
+        // --- Bewegungsintervall (Verfolgung des Charakters und Aktivierung) ---
+        if (this.endbossMovementInterval) {
+            clearInterval(this.endbossMovementInterval);
+        }
+        this.endbossMovementInterval = setInterval(() => {
             if (this.isDead()) {
                 return;
             }
 
-            if (!this.endbossActivated && this.world) {
-                if (this.endbossEnergy <= 75 || (this.world.character && this.world.character.x > 2200)) {
+            // Endboss-Aktivierungslogik
+            // Diese Logik steuert, wann der Endboss "aktiv" wird und reagiert
+            if (!this.endbossActivated && this.world && this.world.character) {
+                if (this.endbossEnergy <= 75 || this.world.character.x > 2200) {
                     this.world.showEndbossStatusBar = true;
                     this.hadFirstContact = true;
                     this.endbossActivated = true;
-                    this.startEndbossMusic();
+                    this.startEndbossMusic(); // Startet die Musik, sobald aktiviert
+
+                    // Spielen des Alert-Sounds einmalig bei Aktivierung
+                    if (!isMuted) {
+                        endboss_alert.currentTime = 0;
+                        endboss_alert.play();
+
+                        setTimeout(() => {
+                            endboss_alert.pause();
+                            endboss_alert.currentTime = 0;
+                        }, 1200);
+                        // Keine isCurrentlyAttackingSoundPlaying, da dies für Attack-Sound ist
+                    }
                 }
             }
 
+            // Bewegungslogik, nachdem Kontakt hergestellt wurde
             if (this.hadFirstContact) {
                 if (this.world.character.x < this.x - 50) {
                     this.moveLeft();
@@ -199,12 +168,41 @@ class Endboss extends MovableObject {
                     this.otherDirection = true;
                 }
             }
-        }, 1000 / 25);
+        }, 1000 / 60); // Bewegungsgeschwindigkeit: ca. 60 FPS
     }
 
-    hitEndbossBevorWalk() {
-        if (world.endbossEnergy == 75);
+    /**
+     * Handhabt die Logik, wenn der Endboss stirbt.
+     */
+    handleEndbossDeath() {
+        this.stopAllIntervals(); // Stoppt alle Intervalle sofort
+
+        if (!isMuted) {
+            endboss_death.currentTime = 0;
+            endboss_death.play();
+            endboss_death.volume = endboss_death_volume;
+        }
+
+        setTimeout(() => {
+            if (!isMuted) {
+                endboss_death.pause();
+                endboss_death.currentTime = 0;
+            }
+        }, 1400);
+
+        setTimeout(() => {
+            if (!isMuted) {
+                endboss_music.pause();
+                endboss_music.currentTime = 0;
+            }
+        }, 1800);
+
+        setTimeout(() => {
+            handleYouWinScreen();
+        }, 2300);
     }
+
+
 
     startEndbossMusic() {
         if (!isMuted) {
@@ -216,29 +214,38 @@ class Endboss extends MovableObject {
     }
 
     stopAllIntervals() {
-        super.stopAllIntervals();
+
+
+        // Stoppt die Endboss-spezifischen Intervalle
         if (this.endbossAnimationInterval) {
             clearInterval(this.endbossAnimationInterval);
             this.endbossAnimationInterval = null;
         }
-        if (this.endbossMoveAniationInterval) {
-            clearInterval(this.endbossMoveAniationInterval);
-            this.endbossMoveAniationInterval = null;
+        if (this.endbossMovementInterval) {
+            clearInterval(this.endbossMovementInterval);
+            this.endbossMovementInterval = null;
         }
 
-        if (this.isDead()) {
-            endboss_death.pause();
-            endboss_death.currentTime = 0;
-            endboss_music.pause();
-            endboss_music.currentTime = 0;
-        }
+        // Zusätzliche Logik zum Stoppen von Sounds
+        // Diese Annahme erfordert, dass die globalen Audio-Variablen immer vorhanden sind.
+        endboss_death.pause();
+        endboss_death.currentTime = 0;
+        endboss_music.pause();
+        endboss_music.currentTime = 0;
+        endboss_sound.pause();
+        endboss_sound.currentTime = 0;
+        endboss_alert.pause();
+        endboss_alert.currentTime = 0;
     }
 
 
+    /**
+     * Startet alle Intervalle neu, die direkt in dieser Klasse oder der Basisklasse gestartet werden.
+     */
     startAllIntervals() {
         if (!this.isDead()) {
-            this.animate();
-            this.endbosseMoveAnimation();
+            // Startet Intervalle der Elternklasse (z.B. Gravity)
+            this.animate(); // Startet die Endboss-spezifischen Animations- und Bewegungsintervalle neu
         }
     }
 }
