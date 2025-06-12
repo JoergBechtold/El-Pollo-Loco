@@ -9,7 +9,6 @@ class Keyboard {
     constructor() {
         this.bindKeyPressEvents();
         this.bindBtsPressEvents();
-
     }
 
     /**
