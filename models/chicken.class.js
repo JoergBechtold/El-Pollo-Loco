@@ -11,7 +11,8 @@ class Chicken extends MovableObject {
         bottom: 0
     };
 
-    chickenAnimationAndMovementInterval;
+    chickenAnimationInterval;
+    chickenMovementInterval;
 
     IMAGES_WALKING = [
         'assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
@@ -31,35 +32,36 @@ class Chicken extends MovableObject {
         let randomX = 500 + Math.random() * 2000;
         this.x = Math.round(randomX / 150) * 150;
         this.animate();
-        // this.startAllIntervals();
+
     }
     animate() {
-        // Stellt sicher, dass kein altes Intervall weiterläuft, bevor ein neues gestartet wird
-        if (this.chickenAnimationAndMovementInterval) {
-            clearInterval(this.chickenAnimationAndMovementInterval);
+        // --- Animationsintervall (Bildwechsel) ---
+        // Stellt sicher, dass kein altes Animationsintervall weiterläuft
+        if (this.chickenAnimationInterval) {
+            clearInterval(this.chickenAnimationInterval);
         }
-
-        this.chickenAnimationAndMovementInterval = setInterval(() => {
+        this.chickenAnimationInterval = setInterval(() => {
             if (this.isDead()) {
-                // Wenn das Chicken tot ist, spiele die Todesanimation nur einmal ab
                 if (!this.isDeadAnimationPlayed) {
                     this.playAnimation(this.IMAGE_DEAD);
                     this.isDeadAnimationPlayed = true;
-                    // Optional: Du könntest hier auch das Intervall komplett stoppen,
-                    // wenn das tote Chicken sich nicht mehr bewegen soll:
-                    // clearInterval(this.chickenAnimationAndMovementInterval);
-                    // this.chickenAnimationAndMovementInterval = null;
+                    // Optional: Stoppe die Animation, wenn die Todesanimation einmal durch ist
+                    // clearInterval(this.chickenAnimationInterval);
+                    // this.chickenAnimationInterval = null;
                 }
             } else {
-                // Animationslogik: Wechselt die Bilder für die Lauf-Animation
-
                 this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 150); // Animationsgeschwindigkeit: 150ms pro Bild, wie bei Chick
 
-
-                // this.playAnimation(this.IMAGES_WALKING);
-
-                // Bewegungslogik: Chicken verfolgt den Charakter
-                // Wir prüfen, ob ein 'character' zugewiesen wurde, um Fehler zu vermeiden
+        // --- Bewegungsintervall (Verfolgung des Charakters) ---
+        // Stellt sicher, dass kein altes Bewegungsintervall weiterläuft
+        if (this.chickenMovementInterval) {
+            clearInterval(this.chickenMovementInterval);
+        }
+        this.chickenMovementInterval = setInterval(() => {
+            if (!this.isDead()) { // Bewege dich nur, wenn das Chicken nicht tot ist
+                // Hier kommt die Logik zum Verfolgen des Charakters
                 if (this.character) {
                     if (this.character.x > this.x + 10) { // Charakter ist rechts vom Chicken
                         this.moveRight();
@@ -74,18 +76,21 @@ class Chicken extends MovableObject {
                     this.otherDirection = false;
                 }
             }
-        }, 1000 / 40); // Dieses Intervall läuft ca. 60 Mal pro Sekunde für flüssige Bewegung
+        }, 1000 / 60); // Bewegungsgeschwindigkeit: ca. 60 FPS für flüssige Bewegung
     }
 
 
     stopAllIntervals() {
-        // Zuerst die Intervalle der Elternklasse stoppen (z.B. Gravitation)
-        super.stopAllIntervals();
+        super.stopAllIntervals(); // Ruft stopAllIntervals von MovableObject auf (stoppt z.B. Gravitation)
 
-        // Dann das spezifische kombinierte Animations- und Bewegungsintervall des Chickens stoppen
-        if (this.chickenAnimationAndMovementInterval) {
-            clearInterval(this.chickenAnimationAndMovementInterval);
-            this.chickenAnimationAndMovementInterval = null;
+        // Stoppt die Chicken-spezifischen Intervalle
+        if (this.chickenAnimationInterval) {
+            clearInterval(this.chickenAnimationInterval);
+            this.chickenAnimationInterval = null;
+        }
+        if (this.chickenMovementInterval) {
+            clearInterval(this.chickenMovementInterval);
+            this.chickenMovementInterval = null;
         }
     }
 
@@ -93,13 +98,10 @@ class Chicken extends MovableObject {
      * Startet alle Intervalle, die von dieser Klasse und der Elternklasse verwaltet werden.
      */
     startAllIntervals() {
-        // Nur neu starten, wenn das Chicken nicht tot ist
-        if (!this.isDead()) {
-            // Startet die Intervalle der Elternklasse (z.B. Gravitation)
-            // super.startAllIntervals();
+        if (!this.isDead()) { // Nur neu starten, wenn das Chicken nicht tot ist
+            // Startet Intervalle der Elternklasse (z.B. Gravitation)
 
-            // Startet das kombinierte Animations- und Bewegungsintervall neu
-            // Dies ist ein direkter Aufruf, da 'animate' nun das einzige Intervall ist
+            // Startet die Chicken-spezifischen Animations- und Bewegungsintervalle neu
             this.animate();
         }
     }

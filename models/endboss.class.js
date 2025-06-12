@@ -70,7 +70,6 @@ class Endboss extends MovableObject {
         this.x = 2500;
         this.animate();
         this.endbosseMoveAnimation()
-        // this.enemyFollowCharacterAnimation();
     }
 
     animate() {
@@ -217,7 +216,7 @@ class Endboss extends MovableObject {
     }
 
     stopAllIntervals() {
-        super.stopAllIntervals(); // Stoppt Gravity und enemyFollow
+        super.stopAllIntervals();
         if (this.endbossAnimationInterval) {
             clearInterval(this.endbossAnimationInterval);
             this.endbossAnimationInterval = null;
@@ -226,34 +225,20 @@ class Endboss extends MovableObject {
             clearInterval(this.endbossMoveAniationInterval);
             this.endbossMoveAniationInterval = null;
         }
-        // Zusätzliche Logik beim Tod
+
         if (this.isDead()) {
-            endboss_death.pause(); // Musik stoppen, wenn er tot ist
+            endboss_death.pause();
             endboss_death.currentTime = 0;
             endboss_music.pause();
             endboss_music.currentTime = 0;
         }
     }
 
-    /**
-     * Startet alle Intervalle neu, die direkt in dieser Klasse oder der Basisklasse gestartet werden.
-     */
+
     startAllIntervals() {
-        if (!this.isDead()) { // Nur neu starten, wenn der Endboss nicht tot ist
-            // super.startAllIntervals(); // Startet Gravity und enemyFollow
+        if (!this.isDead()) {
             this.animate();
             this.endbosseMoveAnimation();
         }
     }
-
-    // stopAllIntervals() {
-    //     if (this.endbossAnimationIntervalendbossMoveAniationInterval) {
-    //         clearInterval(this.endbossAnimationIntervalendbossMoveAniationInterval);
-    //         this.endbossAnimationIntervalendbossMoveAniationInterval = null;
-    //     }
-    //     if (this.endbossMoveAniationInterval) {
-    //         clearInterval(this.endbossMoveAniationInterval);
-    //         this.endbossMoveAniationInterval = null;
-    //     }
-    // }
 }
