@@ -20,17 +20,15 @@ class Character extends MovableObject {
     canMoveRight = true;
     canMoveLeft = true;
     isOnBarrel = false;
+    characterMovementInterval;
+    characterAnimationInterval;
+    characterIdleAnimationInterval;
     offset = {
         top: 120,
         left: 30,
         right: 50,
         bottom: 15
     };
-
-
-    characterMovementInterval;
-    characterAnimationInterval;
-    characterIdleAnimationInterval;
 
     IMAGES_WALKING = [
         'assets/img/2_character_pepe/2_walk/W-21.png',
@@ -110,23 +108,43 @@ class Character extends MovableObject {
         this.animate();
     }
 
-    resetsCharacterToY() {
-        return 155;
-    }
-
-    isIdle() {
-        let timePassed = Date.now() - this.lastActivityTime;
-        return timePassed > this.lengthOfInactivity;
-    }
-
-
+    /**
+     * 
+     * Initializes and starts all primary animation and movement intervals for the character.
+     * @memberof Character
+     */
     animate() {
-        // this.stopCharacterIntervals();
         this.setupMovementInterval();
         this.setupAnimationInterval();
         this.setupIdleAnimationInterval();
     }
 
+    /**
+     * 
+     * Returns the default Y-coordinate to which the character should be reset.
+     * @returns {number} The Y-coordinate for character reset.
+     * @memberof Character
+     */
+    resetsCharacterToY() {
+        return 155;
+    }
+
+    /**
+     * 
+     * Checks if the character has been idle for a specified duration.
+     * @returns {boolean} True if `lastActivityTime` exceeds `lengthOfInactivity`.
+     * @memberof Character
+     */
+    isIdle() {
+        let timePassed = Date.now() - this.lastActivityTime;
+        return timePassed > this.lengthOfInactivity;
+    }
+
+    /**
+     * 
+     * Sets up a continuous interval for character movement and camera tracking.
+     * @memberof Character
+     */
     setupMovementInterval() {
         this.characterMovementInterval = setInterval(() => {
             this.updateLastActivityTime();
@@ -135,12 +153,22 @@ class Character extends MovableObject {
         }, 1000 / 60);
     }
 
+    /**
+     * 
+     * Handles all directional and jump movements for the character.
+     * @memberof Character
+     */
     handleMovement() {
         this.handleRightMovement();
         this.handleLeftMovement();
         this.handleJump();
     }
 
+    /**
+     * 
+     * Manages the character's movement to the right based on input and boundaries.
+     * @memberof Character
+     */
     handleRightMovement() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && this.canMoveRight) {
             this.moveRight();
@@ -149,6 +177,11 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * 
+     * Manages the character's movement to the left based on input and boundaries.
+     * @memberof Character
+     */
     handleLeftMovement() {
         if (this.world.keyboard.LEFT && this.x > 0 && this.canMoveLeft) {
             this.moveLeft();
@@ -157,6 +190,11 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * 
+     * Manages the character's walking sound based on ground contact and game state.
+     * @memberof Character
+     */
     manageWalkSound() {
         if (!this.isAboveGround() && !isGameFinish) {
             walkin_sound.play();
@@ -166,6 +204,11 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * 
+     * Handles the character's jump action based on input and ground contact.
+     * @memberof Character
+     */
     handleJump() {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             if (!isGameFinish) {
@@ -175,12 +218,22 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * 
+     * Updates the `lastActivityTime` if any character movement or action key is pressed.
+     * @memberof Character
+     */
     updateLastActivityTime() {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE || this.world.keyboard.D) {
             this.lastActivityTime = Date.now();
         }
     }
 
+    /**
+     * 
+     * Sets up the main animation interval for the character, handling various states like death, hurt, and movement.
+     * @memberof Character
+     */
     setupAnimationInterval() {
         this.characterAnimationInterval = setInterval(() => {
             if (this.checkAndHandleDeath()) return;
@@ -191,6 +244,12 @@ class Character extends MovableObject {
         }, 50);
     }
 
+    /**
+     * 
+     * Checks if the character is dead, plays death animation/sound, stops intervals, and triggers game over.
+     * @returns {boolean} True if the character is dead and handled.
+     * @memberof Character
+     */
     checkAndHandleDeath() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
@@ -200,21 +259,24 @@ class Character extends MovableObject {
             }
             this.stopAllIntervals();
             setTimeout(() => {
-                handleYouLooseScreen()
+                handleYouLooseScreen();
             }, 1600);
             return true;
         }
         return false;
     }
 
-
-
+    /**
+     * 
+     * Checks if the character is hurt, plays hurt animation/sound, and updates activity time.
+     * @returns {boolean} True if the character is hurt and handled.
+     * @memberof Character
+     */
     checkAndHandleHurt() {
         if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
             if (!isGameFinish) {
                 hurt_sound.play();
-
             }
             this.lastActivityTime = Date.now();
             return true;
@@ -222,6 +284,12 @@ class Character extends MovableObject {
         return false;
     }
 
+    /**
+     * 
+     * Checks if the character is above ground and plays the jumping animation.
+     * @returns {boolean} True if the character is above ground and jump animation is played.
+     * @memberof Character
+     */
     checkAndHandleJumpAnimation() {
         if (this.isAboveGround()) {
             this.playAnimation(this.IMAGES_JUMPING);
@@ -231,12 +299,22 @@ class Character extends MovableObject {
         return false;
     }
 
+    /**
+     * 
+     * Plays the walking animation if the character is moving left or right.
+     * @memberof Character
+     */
     checkAndHandleWalkAnimation() {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
             this.playAnimation(this.IMAGES_WALKING);
         }
     }
 
+    /**
+     * 
+     * Handles the logic for throwing a bottle based on keyboard input and throw cooldown.
+     * @memberof Character
+     */
     handleThrowBottle() {
         if (this.world.keyboard.D) {
             let currentTime = new Date().getTime();
@@ -250,6 +328,12 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * 
+     * Executes the bottle throwing action, creating a new `ThrowableObject`.
+     * @param {number} currentTime - The current timestamp when the throw is performed.
+     * @memberof Character
+     */
     performBottleThrow(currentTime) {
         let bottleX = this.x + (this.otherDirection ? -5 : 80);
         this.collectBottlesArray.splice(0, 1);
@@ -260,6 +344,11 @@ class Character extends MovableObject {
         this.clearSpeechBubble();
     }
 
+    /**
+     * 
+     * Displays a speech bubble indicating that the character has no bottles.
+     * @memberof Character
+     */
     showEmptyBottleSpeechBubble() {
         if (!this.showSpeechBubble) {
             setTimeout(() => {
@@ -271,11 +360,21 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * 
+     * Hides the speech bubble and clears its timeout.
+     * @memberof Character
+     */
     clearSpeechBubble() {
         this.showSpeechBubble = false;
         if (this.speechBubbleTimeout) clearTimeout(this.speechBubbleTimeout);
     }
 
+    /**
+     * 
+     * Sets up an interval for playing idle and long idle animations based on character activity.
+     * @memberof Character
+     */
     setupIdleAnimationInterval() {
         this.characterIdleAnimationInterval = setInterval(() => {
             const isCharacterMoving = this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE || this.world.keyboard.D;
@@ -285,6 +384,11 @@ class Character extends MovableObject {
         }, 200);
     }
 
+    /**
+     * 
+     * Handles playing the appropriate idle animation (normal or long idle) and associated sounds.
+     * @memberof Character
+     */
     handleIdleAnimations() {
         if (this.isIdle()) {
             this.playAnimation(this.IMAGES_LONG_IDLE);
@@ -293,7 +397,6 @@ class Character extends MovableObject {
                 snoring_audio.volume = snoring_audio_volume;
                 game_music.volume = game_music_volume_silence;
             }
-
         } else {
             this.playAnimation(this.IMAGES_IDLE);
             snoring_audio.pause();
@@ -302,9 +405,28 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * 
+     * Stops all intervals specific to the character and resets related audio and UI states.
+     * Overrides the base `stopAllIntervals` method.
+     * @override
+     * @memberof Character
+     */
     stopAllIntervals() {
-        super.stopAllIntervals();
+        super.stopAllIntervals(); // Call parent's stopAllIntervals
+        this.handleAllIntervalCharacter(); // Clear character-specific intervals
+        this.resetAudio(); // Reset audio states
+        this.showSpeechBubble = false; // Hide speech bubble
+        this.clearSpeechBubbleTimeout(); // Clear speech bubble timeout
+    }
 
+    /**
+     * 
+     * Clears and nullifies all character-specific animation and movement intervals.
+     * @private
+     * @memberof Character
+     */
+    handleAllIntervalCharacter() {
         if (this.characterMovementInterval) {
             clearInterval(this.characterMovementInterval);
             this.characterMovementInterval = null;
@@ -317,31 +439,58 @@ class Character extends MovableObject {
             clearInterval(this.characterIdleAnimationInterval);
             this.characterIdleAnimationInterval = null;
         }
+    }
 
-
+    /**
+     * 
+     * Pauses and resets specific audio elements related to character actions (walking, snoring).
+     * @private
+     * @memberof Character
+     */
+    resetAudio() {
         walkin_sound.pause();
         walkin_sound.currentTime = 0;
         snoring_audio.pause();
         snoring_audio.currentTime = 0;
+    }
 
-        this.showSpeechBubble = false;
+    /**
+     * 
+     * Clears any active timeout for the speech bubble and nullifies its reference.
+     * @private
+     * @memberof Character
+     */
+    clearSpeechBubbleTimeout() {
         if (this.speechBubbleTimeout) {
             clearTimeout(this.speechBubbleTimeout);
             this.speechBubbleTimeout = null;
         }
     }
 
+    /**
+     * 
+     * Starts all necessary intervals for the character's operation, if the character is not dead.
+     * Overrides the base `startAllIntervals` method.
+     * @override
+     * @memberof Character
+     */
     startAllIntervals() {
         if (!this.isDead()) {
-            super.startAllIntervals();
-            this.animate();
+            super.startAllIntervals(); // Call parent's startAllIntervals
+            this.animate(); // Start character-specific animations and movements
         }
     }
 
+    /**
+     * 
+     * Draws the character on the canvas.
+     * @param {CanvasRenderingContext2D} ctx - The 2D rendering context of the canvas.
+     * @override
+     * @memberof Character
+     */
     draw(ctx) {
-        super.draw(ctx);
+        super.draw(ctx); // Call parent's draw method
     }
-
 }
 
 
