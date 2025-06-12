@@ -50,6 +50,18 @@ class StatusBar extends MovableObject {
         this.setHealthBarPercentage();
     }
 
+    /**
+    * 
+    * Initializes the percentage for 'health' and 'endboss' status bars to 100%,
+    * and other types to 0%.
+    *
+    * This method acts as a default setup for the initial display of status bars.
+    * It calls `setPercentage()` to update the bar's visual state based on its `statusBarType`:
+    * - If `statusBarType` is 'health' or 'endboss', the percentage is set to 100% (full).
+    * - For any other `statusBarType`, the percentage is set to 0%.
+    *
+    * @memberof StatusBar // Or whatever your class name is
+    */
     setHealthBarPercentage() {
         if (this.statusBarType === 'health') {
             this.setPercentage(100);
@@ -60,6 +72,21 @@ class StatusBar extends MovableObject {
         }
     }
 
+    /**
+    * 
+    * Sets the status bar's vertical (and sometimes horizontal) position based on its type.
+    *
+    * This method assigns `this.y` (and potentially `this.x`) coordinates to position the
+    * status bar correctly on the screen, depending on the value of `this.statusBarType`.
+    * It's crucial for arranging different status elements (e.g., health, coins) without overlap.
+    *
+    * - 'health': y = 0
+    * - 'coins': y = 50
+    * - 'bottle': y = 100
+    * - 'endboss': y = 8, x = 480 (positioned specifically for an end boss health bar)
+    *
+    * @memberof StatusBar // Or whatever your class name is (e.g., GameUI, DisplayElement)
+    */
     setPositionByType() {
         if (this.statusBarType === 'health') {
             this.y = 0;
@@ -73,6 +100,23 @@ class StatusBar extends MovableObject {
         }
     }
 
+    /**
+    * 
+    * Returns the appropriate image array for the status bar's current type.
+    *
+    * This helper method dynamically provides the correct set of image paths
+    * (e.g., for different health levels, coin counts, or bottle amounts)
+    * based on `this.statusBarType`. This allows the `setPercentage` (or similar)
+    * method to correctly display the visual state.
+    *
+    * - 'health': Returns `this.IMAGES_HEALTH`
+    * - 'coins': Returns `this.IMAGES_COINS`
+    * - 'bottle': Returns `this.IMAGES_BOTTLE`
+    * - 'endboss': Returns `this.IMAGES_ENDBOSS`
+    *
+    * @returns {string[]} An array of image paths relevant to the status bar's type.
+    * @memberof StatusBar // Or whatever your class name is
+    */
     getImageArray() {
         if (this.statusBarType === 'health') {
             return this.IMAGES_HEALTH;
@@ -85,6 +129,18 @@ class StatusBar extends MovableObject {
         }
     }
 
+    /**
+    * 
+    * Updates the object's visual representation based on a given percentage.
+    *
+    * This method sets the internal `percentage` property, then determines
+    * the correct image to display by calling `resolveImageIndex()`. It retrieves
+    * the corresponding image path from `getImageArray()` and updates the
+    * object's current image (`this.img`) using the `imageCache`.
+    *
+    * @param {number} percentage - The percentage value (0-100) that determines the image to display.
+    * @memberof YourClassName // Replace 'YourClassName' with the actual class name (e.g., StatusBar, HealthBar)
+    */
     setPercentage(percentage) {
         this.percentage = percentage;
         const imageArray = this.getImageArray();
@@ -92,6 +148,24 @@ class StatusBar extends MovableObject {
         this.img = this.imageCache[path];
     }
 
+    /**
+    * 
+    * Resolves the appropriate image array index based on the current percentage value.
+    *
+    * This private helper method maps a percentage range to a specific index in an image array.
+    * It's typically used to control visual states like health levels, bottle fullness, etc.
+    *
+    * - 100% maps to index 5
+    * - 80% or higher maps to index 4
+    * - 60% or higher maps to index 3
+    * - 40% or higher maps to index 2
+    * - 20% or higher maps to index 1
+    * - Less than 20% maps to index 0
+    *
+    * @returns {number} The image array index corresponding to the current `this.percentage`.
+    * @private
+    * @memberof YourClassName // Replace 'YourClassName' with the actual class name
+    */
     resolveImageIndex() {
         if (this.percentage === 100) {
             return 5;
