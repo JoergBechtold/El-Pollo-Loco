@@ -240,7 +240,7 @@ class Endboss extends MovableObject {
      */
     startAllIntervals() {
         if (!this.isDead()) { // Nur neu starten, wenn der Endboss nicht tot ist
-            super.startAllIntervals(); // Startet Gravity und enemyFollow
+            // super.startAllIntervals(); // Startet Gravity und enemyFollow
             this.animate();
             this.endbosseMoveAnimation();
         }

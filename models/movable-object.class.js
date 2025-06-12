@@ -207,8 +207,8 @@ class MovableObject extends DrawableObject {
         bottom: 0
     };
 
-    enemyFollowCharacterAnimationInterval;
-    applyGravityInterval;
+    // enemyFollowCharacterAnimationInterval;
+    // applyGravityInterval;
     gravityInterval;
 
     constructor() {
@@ -330,56 +330,53 @@ class MovableObject extends DrawableObject {
         }, 200);
     }
 
-    enemyFollowCharacterAnimation() {
-        // Stellt sicher, dass nur ein Follow-Intervall läuft
-        if (this.enemyFollowInterval) clearInterval(this.enemyFollowInterval);
+    // enemyFollowCharacterAnimation() {
+    //     // Stellt sicher, dass nur ein Follow-Intervall läuft
+    //     if (this.enemyFollowInterval) clearInterval(this.enemyFollowInterval);
 
-        this.enemyFollowInterval = setInterval(() => {
-            if (!this.isDead()) {
-                if (this.character) {
-                    if (this.character.x > this.x + 10) {
-                        this.moveRight();
-                        this.otherDirection = true;
-                    } else if (this.character.x < this.x - 10) {
-                        this.moveLeft();
-                        this.otherDirection = false;
-                    }
-                } else {
-                    this.moveLeft();
-                    this.otherDirection = false;
-                }
-            }
-        }, 1000 / 60);
-    }
+    //     this.enemyFollowInterval = setInterval(() => {
+    //         if (!this.isDead()) {
+    //             if (this.character) {
+    //                 if (this.character.x > this.x + 10) {
+    //                     this.moveRight();
+    //                     this.otherDirection = true;
+    //                 } else if (this.character.x < this.x - 10) {
+    //                     this.moveLeft();
+    //                     this.otherDirection = false;
+    //                 }
+    //             } else {
+    //                 this.moveLeft();
+    //                 this.otherDirection = false;
+    //             }
+    //         }
+    //     }, 1000 / 60);
+    // }
 
     /**
      * Stoppt alle Intervalle, die direkt in dieser Klasse gestartet werden.
      */
     stopAllIntervals() {
-        // Alle Intervalle, die in MovableObject gestartet wurden, stoppen
         if (this.gravityInterval) {
             clearInterval(this.gravityInterval);
             this.gravityInterval = null;
         }
-        if (this.enemyFollowInterval) {
-            clearInterval(this.enemyFollowInterval);
-            this.enemyFollowInterval = null;
-        }
-        // ... andere MovableObject spezifische Intervalle hier stoppen
+        // Das enemyFollowInterval gibt es hier nicht mehr
+        // if (this.enemyFollowInterval) {
+        //     clearInterval(this.enemyFollowInterval);
+        //     this.enemyFollowInterval = null;
+        // }
     }
 
     startAllIntervals() {
-        // Alle Intervalle, die in MovableObject gestartet wurden, neu starten
-        // Nur starten, wenn sie nicht bereits laufen
+        // Starte nur die Gravitation, da die Bewegungslogik jetzt in den Unterklassen liegt (z.B. Chicken.animate())
         if (!this.gravityInterval) {
-            this.applyGravity(); // Startet das Intervall für die Schwerkraft
+            this.applyGravity();
         }
-        // enemyFollowCharacterAnimation nur für Gegner starten
-        if (this instanceof Chicken || this instanceof Endboss) {
-            if (!this.enemyFollowInterval) {
-                this.enemyFollowCharacterAnimation(); // Startet das Verfolgungs-Intervall
-            }
-        }
-        // ... andere MovableObject spezifische Intervalle hier starten
+        // Der Block für enemyFollowCharacterAnimation wird hier entfernt
+        // if (this instanceof Chicken || this instanceof Endboss) {
+        //     if (!this.enemyFollowInterval) {
+        //         this.enemyFollowCharacterAnimation();
+        //     }
+        // }
     }
 }
