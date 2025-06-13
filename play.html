@@ -86,6 +86,14 @@
       <canvas class="canvas" id="canvas" width="720" height="480"> </canvas>
     </div>
 
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function () {
+        if (performance.navigation.type === 1) {
+          window.location.href = 'menu.html';
+        }
+      });
+    </script>
+
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/cloud.class.js"></script>
@@ -105,9 +113,9 @@
     <script src="levels/level1.js"></script>
     <script src="script.js"></script>
     <script src="models/world.class.js"></script>
-    <script src="js-templates/helper-character/character-actions-manager.js"></script>
-    <script src="js-templates/helper-world/world-sound-manager.js"></script>
-    <script src="js-templates/helper-world/world-collision.manager.js"></script>
-    <script src="js-templates/helper-world/world-interval-manager.js"></script>
+    <script src="js-helpers/helper-character/character-actions-manager.js"></script>
+    <script src="js-helpers/helper-world/world-sound-manager.js"></script>
+    <script src="js-helpers/helper-world/world-collision.manager.js"></script>
+    <script src="js-helpers/helper-world/world-interval-manager.js"></script>
   </body>
 </html>
