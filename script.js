@@ -1,4 +1,4 @@
-let isMuted;
+let isMuted = true;
 let isGameFinish = false;
 let isTouchDeviceGlobal = false;
 let initialCanvasRef;
@@ -109,7 +109,7 @@ function goToUrl(url) {
  * in `localStorage`, so it's compared to the string 'true' to set the boolean `isMuted` variable.
  */
 function initPlay() {
-    isMuted = localStorage.getItem('isMuted') === 'true';
+    // isMuted = localStorage.getItem('isMuted') === 'true';
     updateSoundToggleDisplay();
 }
 
@@ -262,7 +262,7 @@ function startBackgroundMusic() {
  */
 function soundToggle() {
     isMuted = !isMuted;
-    localStorage.setItem('isMuted', isMuted);
+    // localStorage.setItem('isMuted', isMuted);
     updateSoundToggleDisplay();
 }
 
