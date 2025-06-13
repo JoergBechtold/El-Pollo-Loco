@@ -51,7 +51,7 @@ h2 {
   --padding-top-nav: clamp(5px, -10.2381px + 4.7619vw, 25px);
 
   --image-size-loose: clamp(270px, 251px + 5.9375vw, 365px);
-  --image-size-win: clamp(215px, 167px + 15vw, 455px);
+  --image-size-win: clamp(215px, 195px + 6.25vw, 315px);
 }
 
 .start-screen {
