@@ -202,6 +202,7 @@ class ThrowableObject extends MovableObject {
     * @memberof Bottle
     */
     startAllIntervals() {
+        super.startAllIntervals();
         if (!this.isSplashing) {
             if (this.wasThrown && !this.movementInterval) {
                 let throwSpeedX = this.otherDirection ? -10 : 10;
@@ -232,10 +233,10 @@ class ThrowableObject extends MovableObject {
 
     /**
      * 
- * Stops both the movement and rotation intervals of the bottle.
- * This is crucial when the bottle hits something or lands.
- * @memberof Bottle
- */
+     * Stops both the movement and rotation intervals of the bottle.
+     * This is crucial when the bottle hits something or lands.
+     * @memberof Bottle
+     */
     stopMovementAndRotationIntervals() {
         if (this.movementInterval) {
             clearInterval(this.movementInterval);
