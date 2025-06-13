@@ -71,8 +71,8 @@ class World {
  */
   allwaysExecuted() {
     this.worldInterval = setInterval(() => {
-      this.checkCollisions();
-      this.checkCollisionsBarrel();
+      checkCollisions();
+      checkCollisionsBarrel();
       this.collectObjects(this.level.bottlesArray, this.character.collectBottlesArray, PATH_COLLECT_BOTTLE_AUDIO, collect_bottle_audio_volume, 800);
       this.collectObjects(this.level.coinsArray, this.character.collectCoinsArray, PATH_COLLECT_COIN_AUDIO, collect_coin_audio_volume, 500);
       this.updateStatusBars();
@@ -160,351 +160,6 @@ class World {
 
   /**
    * 
-   * Manages all collision checks and related logic between the character and barrels in the level.
-   *
-   * This function performs a comprehensive check for character-barrel interactions in each game loop.
-   * It first resets all character flags related to barrel collisions. Then, it iterates through
-   * every barrel in the level, handling both **lateral (side-to-side)** and **vertical (standing on top)**
-   * collisions. Finally, it updates the character's ground level based on whether they are currently
-   * standing on any barrel, ensuring proper gravity and movement.
-   *
-   * @memberof World
-   */
-  checkCollisionsBarrel() {
-    this.resetBarrelCollisionFlags();
-    let characterIsCurrentlyOnABarrel = false;
-
-    this.level.barrelArray.forEach((barrel) => {
-      this.handleLateralBarrelCollisions(barrel);
-      characterIsCurrentlyOnABarrel = this.handleVerticalBarrelCollision(barrel) || characterIsCurrentlyOnABarrel;
-    });
-
-    this.updateCharacterGroundLevel(characterIsCurrentlyOnABarrel);
-  }
-
-  /**
-   * 
- * Handles horizontal collisions between the character and a barrel.
- *
- * This function is called when the character is generally colliding with a barrel.
- * It then dispatches to more specific functions (`checkAndSetRightCollision` and
- * `checkAndSetLeftCollision`) to determine and apply movement restrictions based
- * on which side of the barrel the character is hitting.
- *
- * @param {MovableObject} barrel - The barrel object the character is colliding with.
- * @memberof World
- */
-  handleLateralBarrelCollisions(barrel) {
-    if (this.character.isColliding(barrel)) {
-      this.checkAndSetRightCollision(barrel);
-      this.checkAndSetLeftCollision(barrel);
-    }
-  }
-
-  /**
-   * 
-   * Checks for a collision on the right side of the character with a barrel and updates character movement flags.
-   *
-   * This function determines if the character is currently colliding with the left edge of a barrel
-   * (meaning the character is trying to move right into the barrel). If a collision is detected,
-   * it sets `character.canMoveRight` to `false` to prevent further right movement and
-   * sets `character.barrelRight` to `true` to indicate a right barrel collision.
-   *
-   * @param {MovableObject} barrel - The barrel object being checked for collision.
-   * @memberof World
-   */
-  checkAndSetRightCollision(barrel) {
-    if (this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.offset.left &&
-      this.character.x + this.character.offset.left < barrel.x + barrel.offset.left) {
-      this.character.canMoveRight = false;
-      this.character.barrelRight = true;
-    }
-  }
-
-  /**
-   * 
-  * Checks for a collision on the left side of the character with a barrel and updates character movement flags.
-  *
-  * This function determines if the character is currently colliding with the right edge of a barrel
-  * (meaning the character is trying to move left into the barrel). If a collision is detected,
-  * it sets `character.canMoveLeft` to `false` to prevent further left movement and
-  * sets `character.barrelLeft` to `true` to indicate a left barrel collision.
-  *
-  * @param {MovableObject} barrel - The barrel object being checked for collision.
-  * @memberof World
-  */
-  checkAndSetLeftCollision(barrel) {
-    if (this.character.x + this.character.offset.left < barrel.x + barrel.width - barrel.offset.right &&
-      this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.width - barrel.offset.right) {
-      this.character.canMoveLeft = false;
-      this.character.barrelLeft = true;
-    }
-  }
-
-  /**
-   * 
-   * Handles vertical collision detection between the character and a barrel, determining if the character is standing on it.
-   *
-   * This function checks for both vertical alignment (character's bottom roughly at barrel's top)
-   * and horizontal overlap. If both conditions are met, it means the character is standing on the barrel.
-   * In this case, `character.isOnBarrel` is set to `true`, and `character.groundLevel` is adjusted
-   * to the top of the barrel, preventing the character from falling through it.
-   *
-   * @param {MovableObject} barrel - The barrel object being checked for vertical collision.
-   * @returns {boolean} `true` if the character is standing on the barrel, `false` otherwise.
-   * @memberof World
-   */
-  handleVerticalBarrelCollision(barrel) {
-    const charBottom = this.character.y + this.character.height - this.character.offset.bottom;
-    const barrelTop = barrel.y + barrel.offset.top;
-    const isVerticallyAligned = charBottom >= barrelTop - 10 && charBottom <= barrelTop + 10;
-    const isHorizontallyOverlapping = this.character.x + this.character.offset.left < barrel.x + barrel.width - barrel.offset.right &&
-      this.character.x + this.character.width - this.character.offset.right > barrel.x + barrel.offset.left;
-
-    if (isVerticallyAligned && isHorizontallyOverlapping) {
-      this.character.isOnBarrel = true;
-      this.character.groundLevel = barrelTop - (this.character.height - this.character.offset.bottom);
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * 
-  * Updates the character's ground level based on whether they are currently standing on a barrel.
-  *
-  * If the character is **not** currently detected as being on a barrel, this function
-  * resets their `isOnBarrel` flag to `false` and restores their `groundLevel`
-  * to the default ground level (obtained via `resetsCharacterToY()`). This ensures
-  * the character correctly falls if they move off a barrel.
-  *
-  * @param {boolean} characterIsCurrentlyOnABarrel - A boolean indicating if the character is currently on any barrel.
-  * @memberof World
-  */
-  updateCharacterGroundLevel(characterIsCurrentlyOnABarrel) {
-    if (!characterIsCurrentlyOnABarrel) {
-      this.character.isOnBarrel = false;
-      this.character.groundLevel = this.character.resetsCharacterToY();
-    }
-  }
-
-  /**
-   * 
-   * Resets all character flags related to barrel collisions.
-   *
-   * This function is called at the beginning of each barrel collision check cycle
-   * to ensure that movement restrictions (`canMoveLeft`, `canMoveRight`) and
-   * barrel-specific collision flags (`barrelLeft`, `barrelRight`) are cleared.
-   * This prevents lingering collision states from affecting character movement
-   * in subsequent frames.
-   *
-   * @memberof World
-   */
-  resetBarrelCollisionFlags() {
-    this.character.canMoveLeft = true;
-    this.character.canMoveRight = true;
-    this.character.barrelLeft = false;
-    this.character.barrelRight = false;
-  }
-
-  /**
-   * 
-  * Orchestrates all collision checks within the game world.
-  * This method is the central point for detecting interactions between different game entities.
-  * It specifically checks for collisions between the **character and enemies**,
-  * and then delegates the comprehensive collision handling for **bottles** to a separate function.
-  *
-  * @memberof World
-  */
-  checkCollisions() {
-    this.level.enemiesArray.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
-        this.handleCharacterEnemyCollision(enemy);
-      }
-    });
-
-    this.handleCharacterAndBottles();
-  }
-
-  /**
-   * 
-   * Manages all collision detection and resolution for bottles thrown by the character.
-   *
-   * For each active bottle, this function performs checks against both **enemies** and **barrels**.
-   * If a bottle collides with any of these elements, a `bottleHitSomething` flag is set,
-   * and the bottle is then removed from the game world.
-   *
-   * @memberof World
-   */
-  handleCharacterAndBottles() {
-    this.character.bottles.forEach((bottle, bottleIndex) => {
-      this.bottleHitSomething = false;
-      this.handleBottleEnemyCollisions(bottle, bottleIndex);
-      this.handleBottleBarrelCollisions(bottle);
-
-      if (this.bottleHitSomething) {
-        this.removeBottle(bottleIndex);
-      }
-    });
-  }
-
-
-  /**
-   * 
- * Handles the immediate consequences when the character collides with an enemy.
- *
- * This function determines if the collision is a jump attack (character is falling onto the enemy)
- * or a direct hit. If the character is above ground and moving downwards while colliding with
- * a live enemy, it dispatches to `handleCharacterJumpAttack`. Otherwise, if the enemy is alive,
- * it triggers the character's `hit` method, indicating the character took damage.
- *
- * @param {MovableObject} enemy - The enemy instance with which the character has collided.
- * @memberof World
- */
-  handleCharacterEnemyCollision(enemy) {
-    if (this.character.isAboveGround() && this.character.speedY < 0 && !enemy.isDead()) {
-      this.handleCharacterJumpAttack(enemy);
-    }
-    else if (!enemy.isDead()) {
-      this.character.hit();
-    }
-  }
-
-  /**
-   * 
-   * Dispatches to the appropriate jump attack handler based on the type of enemy.
-   *
-   * This function serves as a router for jump attacks, ensuring that specific logic
-   * is applied depending on whether the character jumped on a `Chicken`/`Chick` or an `Endboss`.
-   *
-   * @param {MovableObject} enemy - The enemy instance that the character jumped on.
-   * @memberof World
-   */
-  handleCharacterJumpAttack(enemy) {
-    if (enemy instanceof Chicken || enemy instanceof Chick) {
-      this.handleChickenJumpDeath(enemy);
-    }
-    else if (enemy instanceof Endboss) {
-      this.handleEndbossJumpDamage(enemy);
-    }
-  }
-
-  /**
-   * 
-  * Handles the specific logic when the character performs a jump attack (bounces) on a chicken or chick.
-  *
-  * This function sets the chicken's energy to zero, ensuring it's marked as defeated. It then
-  * flags that the death animation hasn't started yet, plays the appropriate sound effect,
-  * triggers the character's bounce animation, and schedules the chicken's removal from the level after a delay.
-  *
-  * @param {Chicken|Chick} chicken - The chicken or chick instance that was jumped on.
-  * @memberof World
-  */
-  handleChickenJumpDeath(chicken) {
-    chicken.energy = 0;
-    chicken.isDeadAnimationPlayed = false;
-    playEnemyBounceDeadSound();
-    this.character.bounce(chicken);
-    this.removeEnemyAfterDelay(chicken, 500);
-  }
-
-  /**
-   * 
-   * Handles the logic when the character performs a jump attack (bounces) on the Endboss.
-   *
-   * This function causes the Endboss to take damage from the bounce. It also ensures
-   * the Endboss's death animation flag is reset (allowing hurt animation to play if applicable),
-   * plays a generic bouncing sound, and makes the character bounce off the Endboss.
-   *
-   * @param {Endboss} endboss - The Endboss instance that was jumped on.
-   * @memberof World
-   */
-  handleEndbossJumpDamage(endboss) {
-    this.endboss.takeBounceDamage();
-    endboss.isDeadAnimationPlayed = false;
-    playBouncingSound();
-    this.character.bounce(endboss);
-  }
-
-  /**
-   * 
-  * Handles collisions between a thrown bottle and the enemies in the level.
-  * This function iterates through all enemies. If a bottle collides with an active (not dead) enemy,
-  * it sets the `bottleHitSomething` flag and calls `handleBottleHitEnemy` to process the specific interaction
-  * based on the type of enemy.
-  *
-  * @param {MovableObject} bottle - The bottle instance that is currently active and potentially colliding.
-  * @memberof World
-  */
-  handleBottleEnemyCollisions(bottle) {
-    this.level.enemiesArray.forEach((enemy, enemyIndex) => {
-      if (bottle.isColliding(enemy) && !enemy.isDead()) {
-        this.bottleHitSomething = true;
-        this.handleBottleHitEnemy(enemy, enemyIndex);
-      }
-    });
-  }
-
-  /**
-   * 
-   * Dispatches the bottle hit event to the appropriate handler based on the enemy type.
-   * This function acts as a central point for determining how different types of enemies
-   * react when hit by a bottle.
-   *
-   * @param {MovableObject} enemy - The enemy instance that was hit by the bottle.
-   * @param {number} enemyIndex - The index of the enemy in the enemies array.
-   * @memberof World
-   */
-  handleBottleHitEnemy(enemy, enemyIndex) {
-    if (enemy instanceof Chicken || enemy instanceof Chick) {
-      this.handleBottleHitChicken(enemy, enemyIndex);
-    }
-    else if (enemy instanceof Endboss) {
-      this.handleBottleHitEndboss(enemy, enemyIndex);
-      this.bottleHitSomething = true;
-    }
-  }
-
-  /**
-   * 
- * Handles the specific logic when a bottle hits a chicken or chick enemy.
- * This function is called when a thrown bottle collides with a chicken-type enemy.
- * It sets the chicken's energy to zero, flags that its death animation hasn't started yet,
- * plays the chicken death sound, schedules the chicken's removal after a delay,
- * and sets `bottleHitSomething` to true to indicate the bottle successfully hit a target.
- *
- * @param {Chicken|Chick} chicken - The chicken or chick instance that was hit by the bottle.
- * @param {number} enemyIndex - The index of the chicken/chick in the enemies array.
- * @memberof World
- */
-  handleBottleHitChicken(chicken, enemyIndex) {
-    chicken.energy = 0;
-    chicken.isDeadAnimationPlayed = false;
-    playChickenDeathSound();
-    this.removeEnemyAfterDelay(chicken, 500, enemyIndex);
-    this.bottleHitSomething = true;
-  }
-
-  /**
-   * 
-   * Handles collisions between a thrown bottle and barrels in the level.
-   * This function iterates through all barrels. If a bottle collides with any barrel,
-   * it sets the `bottleHitSomething` flag to `true`, indicating that the bottle
-   * should likely be removed or its state changed (e.g., breaking).
-   *
-   * @param {Bottle} bottle - The bottle instance that might be colliding with barrels.
-   * @memberof World
-   */
-  handleBottleBarrelCollisions(bottle) {
-    this.level.barrelArray.forEach((barrel) => {
-      if (bottle.isColliding(barrel)) {
-        this.bottleHitSomething = true;
-      }
-    });
-  }
-
-  /**
-   * 
   * Removes an enemy from the `level.enemiesArray` after a specified delay.
   * This is typically used for enemies that have a "death" animation or sound
   * that should play before they disappear from the game.
@@ -543,34 +198,61 @@ class World {
 
   /**
    * 
-  * Handles the logic when a thrown bottle hits the Endboss.
-  *
-  * This function triggers the Endboss's `hit` method to register damage
-  * and then plays the Endboss's "hurt" animation.
-  *
-  * @param {Endboss} endboss - The Endboss instance that was hit by the bottle.
-  * @param {number} enemyIndex - The index of the Endboss in the enemies array (though not used in this specific function, it's common in collision handlers).
-  * @memberof World
-  */
-  handleBottleHitEndboss(endboss, enemyIndex) {
-    this.endboss.hit();
-    this.endboss.playAnimation(this.endboss.IMAGES_HURT);
+   * Main drawing loop that continuously renders game objects on the canvas.
+   * It calls various methods to draw different layers of objects and then requests the next animation frame
+   * to maintain a continuous drawing cycle.
+   * @returns {void}
+   */
+  draw() {
+    this.setFirstInstanceDrawObjects()
+    // ------------Space for fixed objects-----------
+    this.setSecondInstanceDrawObjects()
+    this.setThirdInstanceDrawObjects()
+    let self = this;
+    requestAnimationFrame(function () {
+      self.draw();
+    });
   }
 
-  draw() {
+  /**
+   * 
+   * Draws the first instance of game objects, primarily background elements.
+   * This includes clearing the canvas, applying camera translation for background parallax,
+   * and adding background and cloud objects to the map.
+   * @returns {void}
+   */
+  setFirstInstanceDrawObjects() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObjectsArray);
     this.addObjectsToMap(this.level.cloudsArray);
     this.ctx.translate(-this.camera_x, 0);
-    // ------------Space for fixed objects-----------
+  }
+
+  /**
+   * 
+   * Draws the second instance of game objects, specifically the status bars.
+   * This includes the health, coin, and bottle status bars, and conditionally, the endboss status bar.
+   * These are typically drawn at a fixed position on the screen, not affected by camera movement.
+   * @returns {void}
+   */
+  setSecondInstanceDrawObjects() {
     this.addToMap(this.statusBarHealth);
     this.addToMap(this.statusBarCoins);
     this.addToMap(this.statusBarBottles);
     if (this.showEndbossStatusBar) {
       this.addToMap(this.statusBarEndboss);
     }
+  }
 
+  /**
+   * 
+   * Draws the third instance of game objects, which includes interactive elements and the character.
+   * This applies camera translation to simulate movement, then adds coins, barrels, the main character,
+   * enemies, and bottles to the map.
+   * @returns {void}
+   */
+  setThirdInstanceDrawObjects() {
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.coinsArray);
     this.addObjectsToMap(this.level.barrelArray);
@@ -579,11 +261,6 @@ class World {
     this.addObjectsToMap(this.level.bottlesArray);
     this.addObjectsToMap(this.character.bottles);
     this.ctx.translate(-this.camera_x, 0);
-
-    let self = this;
-    requestAnimationFrame(function () {
-      self.draw();
-    });
   }
 
   /**
@@ -613,7 +290,6 @@ class World {
     if (movableObject.otherDirection) {
       this.flipImage(movableObject);
     }
-
     movableObject.draw(this.ctx);
 
     if (movableObject.otherDirection) {
@@ -666,163 +342,5 @@ class World {
     this.ctx.restore();
   }
 
-  /**
-   * 
-   * Stops all active intervals and pauses all relevant audio within the game world.
-   * This function orchestrates the stopping of intervals for the main world loop,
-   * the character, enemies, bottles, coins, and clouds, and pauses game-specific music.
-   * This is typically called when the game ends or is reset.
-   * @memberof World
-   */
-  stopAllIntervals() {
-    this.stopWorldMainInterval();
-    this.stopCharacterIntervals();
-    this.stopIntervalsForCollection(this.level.enemiesArray);
-    this.stopIntervalsForCollection(this.character.bottles);
-    this.stopIntervalsForCollection(this.level.coinsArray);
-    this.stopIntervalsForCollection(this.level.cloudsArray);
-    this.pauseSpecificGameMusic();
-    this.pauseAllGameAudio();
-  }
-
-  /**
-   * Stops the main world interval.
-   * @memberof World
-   */
-  stopWorldMainInterval() {
-    if (this.worldInterval) {
-      clearInterval(this.worldInterval);
-      this.worldInterval = null;
-    }
-  }
-
-  /**
-   * 
-   * Stops all intervals associated with the main character.
-   * @memberof World
-   */
-  stopCharacterIntervals() {
-    if (this.character && typeof this.character.stopAllIntervals === 'function') {
-      this.character.stopAllIntervals();
-    }
-  }
-
-  /**
-   * 
-   * Iterates through an array of game objects (like enemies, bottles, coins, clouds)
-   * and stops all intervals for each if they have a `stopAllIntervals` method.
-   * @param {Array<Object>} objectsArray - The array of game objects to process.
-   * @memberof World
-   */
-  stopIntervalsForCollection(objectsArray) {
-    if (objectsArray) {
-      objectsArray.forEach(obj => {
-        if (obj && typeof obj.stopAllIntervals === 'function') {
-          obj.stopAllIntervals();
-        }
-      });
-    }
-  }
-
-  /**
-   * 
-   * Pauses and resets specific background music tracks for the game.
-   * @memberof World
-   */
-  pauseSpecificGameMusic() {
-    if (typeof game_music !== 'undefined' && typeof game_music.pause === 'function') {
-      game_music.pause();
-      game_music.currentTime = 0;
-    }
-    if (typeof endboss_music !== 'undefined' && typeof endboss_music.pause === 'function') {
-      endboss_music.pause();
-      endboss_music.currentTime = 0;
-    }
-  }
-
-  /**
-   * 
-   * Pauses all audio elements in the `allAudioArray`.
-   * @memberof World
-   */
-  pauseAllGameAudio() {
-    allAudioArray.forEach(audio => {
-      if (audio && typeof audio.pause === 'function') {
-        audio.pause();
-      }
-    });
-  }
-
-  /**
-   * 
- * Orchestrates the starting of all game-related intervals and music.
- * This function is typically called when the game starts or resumes.
- * It ensures the main world loop, character, enemies, collectibles, and background elements
- * all begin their active processes.
- * @memberof World
- */
-  startAllIntervals() {
-    this.startMainWorldLoop();
-    this.startCharacterIntervals();
-    this.startIntervalsForCollection(this.level.enemiesArray);
-    this.startIntervalsForCollection(this.character.bottles);
-    this.startIntervalsForCollection(this.level.coinsArray);
-    this.startIntervalsForCollection(this.level.cloudsArray);
-    this.startBackgroundMusicTracks();
-  }
-
-  /**
-   * 
-   * Starts the main continuous game loop, which includes checking for collisions and updating game elements.
-   * This is the primary interval for the game world.
-   * @memberof World
-   */
-  startMainWorldLoop() {
-    this.allwaysExecuted();
-  }
-
-  /**
-   * 
-   * Starts all intervals associated with the main character if the character object and its
-   * `startAllIntervals` method exist.
-   * @memberof World
-   */
-  startCharacterIntervals() {
-    if (this.character && typeof this.character.startAllIntervals === 'function') {
-      this.character.startAllIntervals();
-    }
-  }
-
-  /**
-   * 
-   * Iterates through a collection of game objects (e.g., enemies, bottles, coins, clouds)
-   * and starts their individual intervals if they are not dead and have a `startAllIntervals` method.
-   * @param {Array<Object>} objectsArray - The array of game objects to process.
-   * @memberof World
-   */
-  startIntervalsForCollection(objectsArray) {
-    if (objectsArray) {
-      objectsArray.forEach(obj => {
-        const canStart = (obj instanceof Character || obj instanceof MovableObject) ? !obj.isDead() : true;
-        if (obj && canStart && typeof obj.startAllIntervals === 'function') {
-          obj.startAllIntervals();
-        }
-      });
-    }
-  }
-
-  /**
-   * 
-   * Starts playing the main background game music if it's defined and its `play` method exists.
-   * @memberof World
-   */
-  startBackgroundMusicTracks() {
-    if (typeof game_music !== 'undefined' && typeof game_music.play === 'function') {
-      game_music.play();
-    }
-    if (this.endboss && this.endboss.endbossActivated && typeof endboss_music !== 'undefined' && typeof endboss_music.play === 'function') {
-      endboss_music.play();
-    }
-  }
 }
 

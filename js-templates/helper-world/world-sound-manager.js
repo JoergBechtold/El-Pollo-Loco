@@ -108,3 +108,46 @@ function playChickenDeathSound() {
         }, 1000);
     }
 }
+
+/**
+ * 
+ * Starts playing the main background game music if it's defined and its `play` method exists.
+ * @memberof World
+ */
+function startBackgroundMusicTracks() {
+    if (typeof game_music !== 'undefined' && typeof game_music.play === 'function') {
+        game_music.play();
+    }
+    if (this.endboss && this.endboss.endbossActivated && typeof endboss_music !== 'undefined' && typeof endboss_music.play === 'function') {
+        endboss_music.play();
+    }
+}
+
+/**
+ * 
+ * Pauses all audio elements in the `allAudioArray`.
+ * @memberof World
+ */
+function pauseAllGameAudio() {
+    allAudioArray.forEach(audio => {
+        if (audio && typeof audio.pause === 'function') {
+            audio.pause();
+        }
+    });
+}
+
+/**
+  * 
+  * Pauses and resets specific background music tracks for the game.
+  * @memberof World
+  */
+function pauseSpecificGameMusic() {
+    if (typeof game_music !== 'undefined' && typeof game_music.pause === 'function') {
+        game_music.pause();
+        game_music.currentTime = 0;
+    }
+    if (typeof endboss_music !== 'undefined' && typeof endboss_music.pause === 'function') {
+        endboss_music.pause();
+        endboss_music.currentTime = 0;
+    }
+}

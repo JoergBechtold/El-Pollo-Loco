@@ -181,7 +181,7 @@ async function handleTry(canvasRef) {
 async function resetGame() {
     const { overlayYouWinRef, overlayYouLooseRef, canvasRef, gamePauseBoxImgPlayRef } = getIdRefs();
 
-    world.stopAllIntervals();
+    stopAllIntervals();
     resetAudioPlayback();
     resetGameUIAndState(overlayYouWinRef, overlayYouLooseRef, canvasRef, gamePauseBoxImgPlayRef);
     await initializeNewGameWorld();

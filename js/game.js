@@ -92,11 +92,11 @@ function toggleGamePause() {
     isGamePaused = !isGamePaused;
 
     if (isGamePaused) {
-        world.stopAllIntervals();
+        stopAllIntervals();
         pauseAllAudio();
         setIcon(gamePauseBoxImgPlayRef, 'assets/icons/play-icon.png', 'Spiel fortsetzen-Icon', 'Fortsetzen')
     } else {
-        world.startAllIntervals();
+        startAllIntervals();
         setIcon(gamePauseBoxImgPlayRef, 'assets/icons/pause-icon.png', 'Spiel pausieren-Icon', 'Pause')
     }
 }
@@ -143,7 +143,7 @@ function setIcon(ref, icon, altText, title) {
  */
 function handleYouWinScreen() {
     let overlayYouWinRef = document.getElementById('overlay_you_win');
-    world.stopAllIntervals()
+    stopAllIntervals()
     isGameFinish = true;
     game_win_audio.play();
     game_win_audio.volume = game_win_audio_volume;
@@ -160,7 +160,7 @@ function handleYouWinScreen() {
  */
 function handleYouLooseScreen() {
     let overlayYouLooseRef = document.getElementById('overlay_you_loose');
-    world.stopAllIntervals()
+    stopAllIntervals()
     isGameFinish = true;
     game_over_voice.play();
     game_over_voice.volume = game_over_voice_volime;

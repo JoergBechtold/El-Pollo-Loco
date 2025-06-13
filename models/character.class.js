@@ -413,11 +413,11 @@ class Character extends MovableObject {
      * @memberof Character
      */
     stopAllIntervals() {
-        super.stopAllIntervals(); // Call parent's stopAllIntervals
-        this.handleAllIntervalCharacter(); // Clear character-specific intervals
-        this.resetAudio(); // Reset audio states
-        this.showSpeechBubble = false; // Hide speech bubble
-        this.clearSpeechBubbleTimeout(); // Clear speech bubble timeout
+        super.stopAllIntervals();
+        this.handleAllIntervalCharacter();
+        this.resetAudio();
+        this.showSpeechBubble = false;
+        this.clearSpeechBubbleTimeout();
     }
 
     /**
@@ -476,8 +476,8 @@ class Character extends MovableObject {
      */
     startAllIntervals() {
         if (!this.isDead()) {
-            super.startAllIntervals(); // Call parent's startAllIntervals
-            this.animate(); // Start character-specific animations and movements
+            super.startAllIntervals();
+            this.animate();
         }
     }
 
@@ -489,7 +489,7 @@ class Character extends MovableObject {
      * @memberof Character
      */
     draw(ctx) {
-        super.draw(ctx); // Call parent's draw method
+        super.draw(ctx);
     }
 }
 
