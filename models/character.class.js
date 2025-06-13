@@ -236,96 +236,12 @@ class Character extends MovableObject {
      */
     setupAnimationInterval() {
         this.characterAnimationInterval = setInterval(() => {
-            if (this.checkAndHandleDeath()) return;
-            if (this.checkAndHandleHurt()) return;
-            if (this.checkAndHandleJumpAnimation()) return;
-            this.checkAndHandleWalkAnimation();
-            this.handleThrowBottle();
+            if (checkAndHandleDeath(this)) return;
+            if (checkAndHandleHurt(this)) return;
+            if (checkAndHandleJumpAnimation(this)) return;
+            checkAndHandleWalkAnimation(this);
+            handleThrowBottle(this);
         }, 50);
-    }
-
-    /**
-     * 
-     * Checks if the character is dead, plays death animation/sound, stops intervals, and triggers game over.
-     * @returns {boolean} True if the character is dead and handled.
-     * @memberof Character
-     */
-    checkAndHandleDeath() {
-        if (this.isDead()) {
-            this.playAnimation(this.IMAGES_DEAD);
-            if (!isGameFinish) {
-                death_sound.volume = death_sound_volume;
-                death_sound.play();
-            }
-            this.stopAllIntervals();
-            setTimeout(() => {
-                handleYouLooseScreen();
-            }, 1600);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 
-     * Checks if the character is hurt, plays hurt animation/sound, and updates activity time.
-     * @returns {boolean} True if the character is hurt and handled.
-     * @memberof Character
-     */
-    checkAndHandleHurt() {
-        if (this.isHurt()) {
-            this.playAnimation(this.IMAGES_HURT);
-            if (!isGameFinish) {
-                hurt_sound.play();
-            }
-            this.lastActivityTime = Date.now();
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 
-     * Checks if the character is above ground and plays the jumping animation.
-     * @returns {boolean} True if the character is above ground and jump animation is played.
-     * @memberof Character
-     */
-    checkAndHandleJumpAnimation() {
-        if (this.isAboveGround()) {
-            this.playAnimation(this.IMAGES_JUMPING);
-            this.lastActivityTime = Date.now();
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 
-     * Plays the walking animation if the character is moving left or right.
-     * @memberof Character
-     */
-    checkAndHandleWalkAnimation() {
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-            this.playAnimation(this.IMAGES_WALKING);
-        }
-    }
-
-    /**
-     * 
-     * Handles the logic for throwing a bottle based on keyboard input and throw cooldown.
-     * @memberof Character
-     */
-    handleThrowBottle() {
-        if (this.world.keyboard.D) {
-            let currentTime = new Date().getTime();
-            let timeSinceLastThrow = currentTime - this.lastThrow;
-
-            if (timeSinceLastThrow >= this.throwInterval && this.collectBottlesArray.length > 0) {
-                this.performBottleThrow(currentTime);
-            } else if (this.collectBottlesArray.length === 0) {
-                this.showEmptyBottleSpeechBubble();
-            }
-        }
     }
 
     /**

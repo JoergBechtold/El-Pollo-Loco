@@ -31,7 +31,6 @@ class World {
   }
 
   /**
-   * 
    * Initializes the game world by establishing critical references and relationships between objects.
    *
    * This function performs essential setup tasks:
@@ -55,20 +54,13 @@ class World {
   }
 
   /**
-   * 
- * Initiates the main game loop, which runs continuously to handle essential game logic.
- *
- * This function sets up an `setInterval` that executes a series of critical game operations
- * every 20 milliseconds. These operations include:
- * - **Collision detection**: Checking for interactions between various game entities.
- * - **Barrel collisions**: Specifically handling interactions with barrels, including movement restrictions and standing on them.
- * - **Object collection**: Detecting and processing the collection of bottles and coins by the character,
- * including playing associated sounds and removing collected items from the level.
- * - **Status bar updates**: Ensuring that all game status bars (health, coins, bottles, endboss)
- * are visually updated to reflect the current game state.
- *
- * @memberof World
- */
+   * Initiates a recurring interval for core game logic and interactions.
+   * This includes checking for various collisions, handling object collection,
+   * and updating status bars.
+   * * @memberof World
+   * @function alwaysExecuted
+   * @returns {void}
+   */
   allwaysExecuted() {
     this.worldInterval = setInterval(() => {
       checkCollisions();
